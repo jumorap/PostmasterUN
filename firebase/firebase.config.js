@@ -1,10 +1,11 @@
 import firebase from "firebase/app"
 import "firebase/storage"
 import "firebase/firestore"
+import "firebase/auth"
 
 
 var firebaseConfig = {
-    apiKey: process.env.REACT_APP_apiKey,
+    apiKey: "AIzaSyBjHn702pSf-nHhgeoBB88U0aXfvwQ5zVc",
     authDomain: "postmaster-un.firebaseapp.com",
     projectId: process.env.REACT_APP_projectId,
     storageBucket: process.env.REACT_APP_storageBucket,
