@@ -1,0 +1,57 @@
+.generalDiv {
+    background-color: var(--blueWhite);
+    width: 100%;
+    /* mobile viewport bug fix */
+    height: -webkit-fill-available;
+    /* height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available;*/
+    display: flex;
+}
+
+.leftDiv {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)), url("../public/assets/login_asset.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 50%;
+    color: #DDD;
+    font-size: 0.8rem;
+    text-align: center;
+    align-items: center;
+    vertical-align: middle;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    flex: 1;
+    padding: 1.5em 1em;
+    transition: 300ms;
+    box-sizing: border-box;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+.rightDiv {
+    background-color: var(--blueWhite);
+    color: #555;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.logoContainer {
+    width: 80%;
+}
