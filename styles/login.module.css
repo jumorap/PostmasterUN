@@ -10,7 +10,7 @@
 }
 
 .leftDiv {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)), url("../public/assets/login_asset.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("../public/assets/login_asset.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -26,14 +26,15 @@
     align-items: center;
     vertical-align: middle;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     display: flex;
     flex: 1;
     padding: 1.5em 1em;
     transition: 300ms;
     box-sizing: border-box;
-    border-bottom-right-radius: 50px;
-    border-top-right-radius: 50px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
 }
 
 .rightDiv {
@@ -41,7 +42,7 @@
     color: #555;
     flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100%;
     width: 50%;
@@ -52,6 +53,85 @@
     bottom: 0;
 }
 
+.rightDiv_up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 0 20px; */
+    text-align: center;
+    height: 50%;
+    justify-content: flex-end;
+}
+
+.rightDiv_down {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50%;
+    text-align: center;
+    justify-content: flex-start;
+}
+
 .logoContainer {
     width: 80%;
 }
+
+.link {
+    color: #DDD;
+}
+
+.link:hover,
+.link:focus,
+.link:active {
+    color: #FF2525a2;
+}
+
+.title {
+    font-size: 5em;
+    text-align: center;
+    color: white;
+    margin: 0;
+    text-shadow: 2px 7px 16px rgba(0, 0, 0, 0.4);
+}
+
+.description {
+    margin: 0;
+    color: rgba(255, 37, 37, 0.836);
+    padding: 0 5%;
+}
+
+@media only screen and (max-width: 800px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    .generalDiv {
+        flex-direction: column;
+    }
+    .leftDiv {
+        position: relative;
+        width: 100%;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+        margin-bottom: 30px;
+        flex-direction: column-reverse;
+        padding: 0;
+    }
+    .rightDiv {
+        position: relative;
+        width: 100%;
+        padding: 0;
+    }
+    .logoContainer {
+        width: 75%;
+    }
+    .title {
+        display: none;
+    }
+    .description {
+        padding: 0 12%;
+    }
+    .footer {
+        font-size: 0.7em;
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {}

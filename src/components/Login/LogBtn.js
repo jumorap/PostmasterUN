@@ -6,6 +6,9 @@ import { FcGoogle } from "react-icons/fc"
 import { FaSignOutAlt } from "react-icons/fa"
 
 
+import styles from "./LogBtn.module.css"
+
+
 // create a login form
 const logButton = (props) => {
     const {
@@ -31,7 +34,7 @@ const logButton = (props) => {
             <div className = {containerClassName}>
                 <Tooltip title = {title}>
                     <Button onClick={clickUse}
-                            className={classNameStyles}
+                            className={styles.btn}
                             startIcon={btnIcon}
                             aria-label="sign in and sign out"
                     >{text}</Button>
