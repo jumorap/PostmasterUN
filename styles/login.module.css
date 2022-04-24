@@ -35,10 +35,10 @@
     border-bottom-right-radius: 30px;
     border-top-right-radius: 30px;
     box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
+    z-index: 5;
 }
 
 .rightDiv {
-    background-color: var(--blueWhite);
     color: #555;
     flex: 1;
     display: flex;
@@ -83,10 +83,10 @@
 .link:hover,
 .link:focus,
 .link:active {
-    color: #FF2525a2;
+    color: var(--redActive);
 }
 
-.title {
+.PUNTitle {
     font-size: 5em;
     text-align: center;
     color: white;
@@ -96,11 +96,11 @@
 
 .description {
     margin: 0;
-    color: rgba(255, 37, 37, 0.836);
+    color: var(--redTransparent);
     padding: 0 5%;
 }
 
-@media only screen and (max-width: 800px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+@media only screen and (max-width: 800px) {
     .generalDiv {
         flex-direction: column;
     }
@@ -120,9 +120,9 @@
         padding: 0;
     }
     .logoContainer {
-        width: 75%;
+        width: 60%;
     }
-    .title {
+    .PUNTitle {
         display: none;
     }
     .description {

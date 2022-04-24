@@ -1,3 +1,5 @@
+@import "colors.css";
+
 html,
 body {
   padding: 0;
@@ -13,8 +15,4 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-:root {
-  --blueWhite: #F0F4F6;
 }

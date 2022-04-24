@@ -1,4 +1,5 @@
 import React from "react"
+import Router from "next/router"
 import { firebaseAppAuth, providers } from "../../../firebase/firebase.config"
 import withFirebaseAuth from "react-with-firebase-auth"
 import { Button, Tooltip } from "@mui/material"
@@ -29,12 +30,12 @@ const logButton = (props) => {
      * @param containerClassName {string} - class name to apply to the tooltip container
      * @returns {JSX.Element}
      */
-    function logButtons(clickUse, classNameStyles, btnIcon, text, title="", containerClassName) {
+    const logButtons = (clickUse, classNameStyles, btnIcon, text, title="", containerClassName) =>{
         return (
             <div className = {containerClassName}>
                 <Tooltip title = {title}>
                     <Button onClick={clickUse}
-                            className={styles.btn}
+                            className={classNameStyles}
                             startIcon={btnIcon}
                             aria-label="sign in and sign out"
                     >{text}</Button>
@@ -44,14 +45,20 @@ const logButton = (props) => {
     }
 
     return (
-        <div className="input-group">
+        <>
             {/* if the user is logged in, show the logout button */}
             {
                 isUnalUser && user
-                    ? logButtons(signOut, 'google-sign google-out', <FaSignOutAlt />, 'Sign Out', "Sign Out", "signOut-container")
-                    : logButtons(signInWithGoogle, 'google-sign', <FcGoogle />, 'Sign in UNAL', "" ,"signIn-container")
+                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, 'Sign Out', "Sign Out", "signOut-container")
+                    : logButtons(signInWithGoogle, styles.loginBtn, <FcGoogle />, 'Sign in UNAL', "Sign In" ,"signIn-container")
             }
-        </div>
+            {/*
+                isUnalUser && Router.pathname === '/login'
+                    ? Router.push('/').then(r => Router.reload())
+                    : ""
+                */
+            }
+        </>
     )
 }
 
