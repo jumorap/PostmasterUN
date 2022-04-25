@@ -1,0 +1,137 @@
+.generalDiv {
+    background-color: var(--blueWhite);
+    width: 100%;
+    /* mobile viewport bug fix */
+    height: -webkit-fill-available;
+    /* height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available;*/
+    display: flex;
+}
+
+.leftDiv {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("../public/assets/login_asset.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 50%;
+    color: #DDD;
+    font-size: 0.8rem;
+    text-align: center;
+    align-items: center;
+    vertical-align: middle;
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex;
+    flex: 1;
+    padding: 1.5em 1em;
+    transition: 300ms;
+    box-sizing: border-box;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.rightDiv {
+    color: #555;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.rightDiv_up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 0 20px; */
+    text-align: center;
+    height: 50%;
+    justify-content: flex-end;
+}
+
+.rightDiv_down {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50%;
+    text-align: center;
+    justify-content: flex-start;
+}
+
+.logoContainer {
+    width: 80%;
+}
+
+.link {
+    color: #DDD;
+}
+
+.link:hover,
+.link:focus,
+.link:active {
+    color: var(--redActive);
+}
+
+.PUNTitle {
+    font-size: 5em;
+    text-align: center;
+    color: white;
+    margin: 0;
+    text-shadow: 2px 7px 16px rgba(0, 0, 0, 0.4);
+}
+
+.description {
+    margin: 0;
+    color: var(--redTransparent);
+    padding: 0 5%;
+}
+
+@media only screen and (max-width: 800px) {
+    .generalDiv {
+        flex-direction: column;
+    }
+    .leftDiv {
+        position: relative;
+        width: 100%;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+        margin-bottom: 30px;
+        flex-direction: column-reverse;
+        padding: 0;
+    }
+    .rightDiv {
+        position: relative;
+        width: 100%;
+        padding: 0;
+    }
+    .logoContainer {
+        width: 60%;
+    }
+    .PUNTitle {
+        display: none;
+    }
+    .description {
+        padding: 0 12%;
+    }
+    .footer {
+        font-size: 0.7em;
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {}

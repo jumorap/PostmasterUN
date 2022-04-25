@@ -1,0 +1,7 @@
+:root {
+    --blueWhite: #F0F4F6;
+    --redPrimary: #f1302b;
+    --redSecondary: #FF2525;
+    --redActive: #FF2525a2;
+    --redTransparent: rgba(255, 37, 37, 0.836);
+}
