@@ -1,11 +1,7 @@
 import React from 'react'
 import Image from "next/image"
 import Navbar from "../src/components/Navbar/index"
-import Card from "../src/components/InformationCard/index"
 import styles from "../styles/Home.module.css"
-
-
-
 
 
 export default function Login() {
@@ -17,10 +13,6 @@ export default function Login() {
                         <div className={styles.pun}>PUN</div>
                     </div>
                     <Navbar/>
-                </div>
-                <div className={styles.card} >
-                    <Card/>
-                    <Card/>
                 </div>
 
             </div>
