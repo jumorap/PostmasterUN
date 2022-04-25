@@ -1,0 +1,75 @@
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 71px;
+    background: rgb(255, 146, 146);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    margin: 0;
+}
+
+.redlogo {
+    position: absolute;
+    height: 179px;
+    width: 250px;
+    left: 4%;
+    top: -70px;
+    border-radius: 56px;
+    background: #FF2525;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+
+}
+
+.pun {
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    font-size: 64px;
+    font-weight: 700;
+    display: flex;
+    left: 24%;
+    top: 45%;
+
+    color: #FFFFFF;
+
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.headtext {
+    position: absolute;
+    width: 347px;
+    height: 48px;
+    left: 112px;
+    top: 198px;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 39px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.05em;
+
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.subheader {
+    position: static;
+    width: 475px;
+    height: 29px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.05em;
+
+    color: #000000;
+}

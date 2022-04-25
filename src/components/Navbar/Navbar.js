@@ -10,6 +10,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import DropDown from '@mui/icons-material/ArrowDropDown';
 
+import styles from "./NavBar.module.css"
+
 
 const pages = ['Inicio', 'Áreas Curriculares'];
 const settings = ['Mi perfil', 'Favoritos', 'Cerrar Sesión'];
@@ -93,9 +95,9 @@ const ResponsiveAppBar = () => {
               </Box>
 
               <Tooltip title="Ver áreas">
-                <IconButton onClick={handleOpenAreaMenu} style={{fontSize: '20px', fontWeight: '600', color:'white'}}>
+                <Button onClick={handleOpenAreaMenu} style={{textTransform: 'none', fontSize: '20px', fontWeight: '600', color:'white'}}>
                   Áreas Curriculares <DropDown  shape={'square'} shapeRendering='auto' style={{color: "white"}}/>
-                </IconButton>
+                </Button>
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
@@ -156,4 +158,18 @@ const ResponsiveAppBar = () => {
 
   );
 };
-export default ResponsiveAppBar;
+
+const NavBar = () => {
+    return (
+        <div className={styles.generalDiv}>
+            <div className={styles.navbar} >
+                <div className={styles.redlogo}>
+                    <div className={styles.pun}>PUN</div>
+                </div>
+                <ResponsiveAppBar/>
+            </div>
+        </div>
+    )
+}
+
+export default NavBar;

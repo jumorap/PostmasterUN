@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Filters, InformationCardList } from "../src/components";
 import { Box, Grid } from "@mui/material";
 
+import Navbar from "../src/components/Navbar";
+
 //fake values for testing the filters
 const tagTest = [
   { name: "filtroA", selected: false },
@@ -48,6 +50,8 @@ function content() {
   
 	
   return (
+      <>
+      <Navbar />
     <Grid
       container
       spacing={3}
@@ -55,6 +59,7 @@ function content() {
         p: 3,
         width: "100%",
         height: "100%",
+        marginTop: "80px",
       }}
     >
       <Grid item xs={8}>
@@ -64,6 +69,7 @@ function content() {
         <Filters tags={tagList} onClick={selectFilteredTag} />
       </Grid>
     </Grid>
+      </>
   );
 }
 

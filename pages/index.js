@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { InformationCard, Navbar } from "../src/components";
 
+
 export default function Home() {
 	return (
 		<div>
@@ -10,8 +11,6 @@ export default function Home() {
 			</Head>
 			<Navbar/>
 			<main>
-
-				
 
 			</main>
 		</div>
