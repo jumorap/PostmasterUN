@@ -16,6 +16,7 @@ function InformationCardList(props) {
             images={info.images}
             links={info.links}
             favorite={info.favorite}
+            key={info.id}
           />
           ))}
     </Stack>

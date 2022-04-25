@@ -13,11 +13,11 @@ const tagTest = [
 ];
 
 const informationList = [
-	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false},
-	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false},
-	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false},
-	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false},
-	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false},
+	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false, key: "1"},
+	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false, key: "2"},
+	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false, key: "3"},
+	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false, key: "4"},
+	{type: "Postmaster", title : "Primer lugar a investigación con sello UNAL", description : "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.", tags: [{name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}, {name: "UNAL", favorite: false}], images: ["https://picsum.photos/500/550"], links: [{name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}, {name: "Clickable Link", url: "#basic-chip"}], favorite: false, key: "5"},
 ]
 
 /**
@@ -27,7 +27,7 @@ const informationList = [
  * @param {function} onClick - The function to call when the user clicks on a filter button
  * @return {React.Component}
  */
-function content() {
+function Content() {
 	// list with the current filters
   const [tagList, setTagList] = useState(tagTest);
 
@@ -52,25 +52,25 @@ function content() {
   return (
       <>
       <Navbar />
-    <Grid
-      container
-      spacing={3}
-      sx={{
-        p: 3,
-        width: "100%",
-        height: "100%",
-        marginTop: "80px",
-      }}
-    >
-      <Grid item xs={8}>
-        <InformationCardList informationList={informationList} />
+      <Grid
+        container
+        spacing={3}
+        sx={{
+          p: 3,
+          width: "100%",
+          height: "100%",
+          marginTop: "80px",
+        }}
+      >
+        <Grid item xs={8}>
+          <InformationCardList informationList={informationList} />
+        </Grid>
+        <Grid item xs={4}>
+          <Filters tags={tagList} onClick={selectFilteredTag} />
+        </Grid>
       </Grid>
-      <Grid item xs={4}>
-        <Filters tags={tagList} onClick={selectFilteredTag} />
-      </Grid>
-    </Grid>
       </>
   );
 }
 
-export default content;
+export default Content;
