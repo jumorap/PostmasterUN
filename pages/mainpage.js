@@ -14,7 +14,6 @@ export default function Login() {
                     </div>
                     <Navbar/>
                 </div>
-
             </div>
         </>
     );
