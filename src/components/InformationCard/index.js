@@ -1,3 +1,5 @@
 import InformationCard from './InformationCard';
+import InformationCardList from './InformationCardList';
 
-export default InformationCard;
+
+export { InformationCard, InformationCardList };
