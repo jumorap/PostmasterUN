@@ -5,43 +5,31 @@ import Image from 'next/image'
 //This component display the information card of navegacion principal
 function InformationCard(props) {
   return (
-    <Paper elevation={3} sx={{p: "1em"}}>
+    <Paper elevation={3} sx={{p: "1em", position: "relative", maxWidth :"700px"}}>
       <Stack spacing={1}>
-      <Typography variant='h2'>
-        {props.type}
-      </Typography>
-      <Typography variant='h6'>
+        {/*Type of the publication*/}
+        <Paper sx = {{width:"fit-content", height:"fit-content", backgroundColor:"primary.strongRed", p: "0.5em", position : "absolute", right: "25px", top: "-25px"}}>
+          <Typography variant='h2' sx = {{
+            fontSize: '1.5em',
+            fontWeight: 'bold',
+            color: 'white',
+          }}>
+            {props.type}
+          </Typography>
+        </Paper>
+
+      {/*Title of the publication*/}
+      <Typography variant='h4'>
         {props.title}
       </Typography>
-      <Typography variant='body1'>
+
+      {/*Description of the publication*/}
+      <Typography variant='body1' sx = {{textAlign: "justify"}}>
         {props.description}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        {props.tags.map((tag, index) => (
-          <Chip
-          key={index}
-          label={tag.name}
-          color="primary"
-          clickable
-          />
-        ))
-        }
-      </Stack>
-        <Box>
-        {
-            props.images.map(image => (
-              <Image
-                key={image}
-                src={image}
-                alt={props.title}
-                width={200}
-                height={200}
-              />
-            ))
-          }
-        </Box>
-
-        <Stack direction="row" spacing={1}>
+      
+      {/*Aditional links*/}
+      <Stack direction="row" spacing={2} justifyContent = "center">
           {props.links.map(link => (
             <Chip
               key={link.name}
@@ -52,10 +40,51 @@ function InformationCard(props) {
               clickable
               sx={{
                 borderRadius: "5px",
+                backgroundColor: "primary.lightRed",
+                color: "white",
               }}
             />
           ))}
         </Stack>
+
+        {/*Image of the publication*/}
+        <Box justifyContent="center" alignItems = "center">
+        {
+            props.images.map(image => (
+              <Image
+                key={image}
+                src={image}
+                alt={props.title}
+                width={300}
+                height={200}
+                layout="responsive"
+                maxHeight={200}
+              />
+            ))
+          }
+        </Box>
+
+        
+        {/*Tags of the publication*/}
+        <Stack direction="row" spacing={1} alignItems = "center" justifyContent={"flex-end"}>
+          <Box>
+            <Typography variant='body1' sx = {{color: "primary.gray"}}>
+              Tags:
+            </Typography>
+          </Box>
+        {props.tags.map((tag, index) => (
+          <Chip
+          key={index}
+          label={tag.name}
+          sx = {{
+            borderRadius: "5px",
+          }}
+          clickable
+          />
+        ))
+        }
+      </Stack>
+
         </Stack>
     </Paper>
   )

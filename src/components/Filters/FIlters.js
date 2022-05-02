@@ -18,6 +18,7 @@ function Filters(props) {
       sx={{
         p: 1,
         position: "sticky",
+        maxWidth: "700px",
       }}
     >
       <Typography variant="h6">Filters</Typography>
