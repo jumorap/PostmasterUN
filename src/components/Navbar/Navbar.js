@@ -82,17 +82,6 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
   );
 };
 
-const NavBar = () => {
-    return (
-        <div className={styles.generalDiv}>
-            <div className={styles.navbar} >
-                <div className={styles.redlogo}>
-                    <div className={styles.pun}>PUN</div>
-                </div>
-                <ResponsiveAppBar/>
-            </div>
-        </div>
-    )
-}
 
-export default NavBar;
+
+export default ResponsiveAppBar;
