@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import FilterButton from "./FilterButton";
+import SearchBar from "../SearchBar/SearchBar";
+
+import styles from "./Filters.module.css";
+
 
 /**
  * Section that shows the filters of the current page and allows the user to select them
@@ -10,7 +14,6 @@ import FilterButton from "./FilterButton";
  * @param {function} onClick - The function to call when the user clicks on a filter button
  * @return {React.Component}
  */
-
 function Filters(props) {
   return (
     <Paper
@@ -21,6 +24,9 @@ function Filters(props) {
         maxWidth: "700px",
       }}
     >
+        <div className={styles.searchContainer}>
+            <SearchBar/>
+        </div>
       <Typography variant="h6">Filters</Typography>
       <Typography variant="subtitle1">
         Elija las categorias que desea ver
