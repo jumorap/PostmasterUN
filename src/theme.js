@@ -10,6 +10,8 @@ const theme = createTheme({
 			lightRed: '#FF2525a2',
 			gray: "#808080",
 			color: 'white',
+			white: "#fff",
+
 		},
 		secondary: {
 			main: '#555',
