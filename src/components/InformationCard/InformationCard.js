@@ -69,7 +69,7 @@ function InformationCard(props) {
         <Stack direction="row" spacing={1} alignItems = "center" justifyContent={"flex-end"}>
           <Box>
             <Typography variant='body1' sx = {{color: "primary.gray"}}>
-              Tags:
+              Etiquetas:
             </Typography>
           </Box>
         {props.tags.map((tag, index) => (

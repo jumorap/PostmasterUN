@@ -8,7 +8,7 @@ import styles from "./SearchBar.module.css"
 const SearchBar = () => {
     return (
         <InputBase
-            placeholder="Busca Noticias, Eventos, etc..."
+            placeholder="Busca noticias, eventos, entre otros."
             inputProps={{ 'aria-label': 'search'}}
             className={styles.searchBar}
             endAdornment={<FaSearch />}

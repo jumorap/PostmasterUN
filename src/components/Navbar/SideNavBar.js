@@ -13,7 +13,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import Drawer from "@mui/material/Drawer";
 import { styled, useTheme } from "@mui/material/styles";
 
-const areas = ['Postmaster', 'DRE', 'Bienestar','Decanatura y Vicedecanatura', 'Dirección academica', 'DNINFOA', 'OTIC', 'Facultades', 'RevistaUN', 'Unimedios', 'Bibliotecas', 'Grupos estudiantiles']
+const areas = ['Postmaster', 'DRE', 'Bienestar','Decanatura y Vicedecanatura', 'Dirección académica', 'DNINFOA', 'OTIC', 'Facultades', 'RevistaUN', 'Unimedios', 'Bibliotecas', 'Grupos estudiantiles']
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",

@@ -22,14 +22,15 @@ function Filters(props) {
         p: 1,
         position: "sticky",
         maxWidth: "700px",
+        padding: '5%',
       }}
     >
         <div className={styles.searchContainer}>
             <SearchBar/>
         </div>
-      <Typography variant="h6">Filters</Typography>
+      <Typography variant="h6">Filtros</Typography>
       <Typography variant="subtitle1">
-        Elija las categorias que desea ver
+        Elija las categorías que desea ver.
       </Typography>
       <Box
         spacing={2}
