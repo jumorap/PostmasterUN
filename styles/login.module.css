@@ -1,5 +1,4 @@
 .generalDiv {
-    background-color: var(--blueWhite);
     width: 100%;
     /* mobile viewport bug fix */
     height: -webkit-fill-available;
@@ -10,7 +9,7 @@
 }
 
 .leftDiv {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("../public/assets/login_asset.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("../public/assets/back_asset.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -73,16 +72,23 @@
 }
 
 .logoContainer {
-    width: 80%;
+    width: 60%;
 }
 
 .link {
     color: #DDD;
 }
 
+.usLinks {
+    color: #000;
+}
+
 .link:hover,
 .link:focus,
-.link:active {
+.link:active,
+.usLinks:hover,
+.usLinks:focus,
+.usLinks:active {
     color: var(--redActive);
 }
 
@@ -92,12 +98,6 @@
     color: white;
     margin: 0;
     text-shadow: 2px 7px 16px rgba(0, 0, 0, 0.4);
-}
-
-.description {
-    margin: 0;
-    color: var(--redTransparent);
-    padding: 0 5%;
 }
 
 @media only screen and (max-width: 800px) {
@@ -120,13 +120,10 @@
         padding: 0;
     }
     .logoContainer {
-        width: 60%;
+        width: 70%;
     }
     .PUNTitle {
         display: none;
-    }
-    .description {
-        padding: 0 12%;
     }
     .footer {
         font-size: 0.7em;

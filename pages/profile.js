@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Button from '@mui/material/Button';
 
-import Navbar from "../src/components/Navbar";
+import { NavBar } from "../src/sections";
 import userpic from "../public/assets/user_profile.png"
 
 
@@ -20,7 +20,7 @@ export default function Profile() {
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
             </Head>
 
-            <Navbar />
+            <NavBar />
             
             <div className={styles.main}>
                 <div className={styles.title_logout}>

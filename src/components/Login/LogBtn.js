@@ -49,8 +49,8 @@ const logButton = (props) => {
             {/* if the user is logged in, show the logout button */}
             {
                 isUnalUser && user
-                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, 'Sign Out', "Sign Out", "signOut-container")
-                    : logButtons(signInWithGoogle, styles.loginBtn, <FcGoogle />, 'Sign in UNAL', "Sign In" ,"signIn-container")
+                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, 'Cerrar Sesión', "Sign Out", "signOut-container")
+                    : logButtons(signInWithGoogle, styles.loginBtn, <FcGoogle />, 'Ingresar con UNAL', "Sign In" ,"signIn-container")
             }
             {/*
                 isUnalUser && Router.pathname === '/login'
