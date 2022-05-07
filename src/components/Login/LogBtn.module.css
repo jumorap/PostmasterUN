@@ -8,4 +8,8 @@
 
 .logOutBtn {
     /**/
+    color: #FFF !important;
+    position: absolute !important;
+    right: 5% !important;
+    top: 14px !important;
 }
