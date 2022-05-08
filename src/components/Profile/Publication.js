@@ -2,6 +2,7 @@ import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Checkbox, Paper, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import Proptypes from "prop-types";
 
 export default function Publication({ title, description, date, onClick }) {
   const [elevation, setElevation] = useState(1);
@@ -28,4 +29,12 @@ export default function Publication({ title, description, date, onClick }) {
       </Stack>
     </Paper>
   );
+}
+
+
+Publication.propTypes = {
+  title: Proptypes.string,
+  description: Proptypes.string,
+  date: Proptypes.string,
+  onClick: Proptypes.func,
 }

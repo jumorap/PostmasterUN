@@ -1,4 +1,5 @@
 import UserInformation from "./userInformation";
 import PublicationList from "./publicationList";
+import SavedTags from "./SavedTags";
 
-export { UserInformation, PublicationList };
+export { UserInformation, PublicationList, SavedTags };

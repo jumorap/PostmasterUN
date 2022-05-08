@@ -16,4 +16,10 @@ const publication_t = {
     favorite: PropTypes.bool,
 }
 
-export { publication_t }
+const tags_t = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    dependency: PropTypes.string,
+}
+
+export { publication_t, tags_t }

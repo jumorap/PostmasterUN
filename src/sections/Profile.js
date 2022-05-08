@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
-import { PublicationList } from "../components";
+import { PublicationList, SavedTags } from "../components";
 
 const informationList = [
   {
@@ -102,9 +102,21 @@ const informationList = [
 
 export default function Profile() {
   const [list, setList] = useState([]);
+  const [tags, setTags] = useState([
+    { name: "Alemania", dependency: "DRE", id : "1"},
+    { name: "Argentina", dependency: "DRE", id : "2"},
+    { name: "Brasil", dependency: "DRE", id : "3"},
+    { name: "Chile", dependency: "DRE", id : "4"},
+  ]);
+
+  function handleTagDelete(tag) {
+    const newTags = tags.filter((t) => t.id !== tag.id);
+    setTags(newTags);
+  }
 
   return (
     <Box>
+      <SavedTags tags={tags} handleTagDelete = {handleTagDelete}/>
       <PublicationList list={informationList} />
     </Box>
   );

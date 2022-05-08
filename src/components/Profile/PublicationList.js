@@ -3,6 +3,8 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { InformationCard } from "../InformationCard";
 import Publication from "./Publication";
+import Proptypes from "prop-types";
+import { publication_t } from "../../types";
 
 const modalStyle = {
   position: "absolute",
@@ -66,4 +68,9 @@ export default function PublicationList({ list }) {
       </Modal>
     </>
   );
+}
+
+
+PublicationList.prototype = {
+  list: Proptypes.arrayOf(Proptypes.shape(publication_t)),
 }
