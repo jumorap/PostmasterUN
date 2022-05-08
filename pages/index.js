@@ -10,7 +10,6 @@ export default function PersistentDrawerLeft() {
     <>
     <NavBar>
       <MainContent/>
-    <Footer/>
     </NavBar>
     </>
   );

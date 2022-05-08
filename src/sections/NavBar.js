@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, useTheme } from "@mui/material/styles";
-import { Navbar, SideNavBar } from "../components";
+import { Footer, Navbar, SideNavBar } from "../components";
 
 const drawerWidth = 240;
 const navBarheight = 100;
@@ -44,8 +44,8 @@ export default function PersistentDrawerLeft({children}) {
         <SideNavBar open = {open} handleDrawerClose = {handleDrawerClose} drawerWidth = {drawerWidth}/>
         <Main open={open}>
           {children}
+        <Footer />
         </Main>
-        
       </Box>
     );
   }

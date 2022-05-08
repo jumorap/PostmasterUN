@@ -1,7 +1,8 @@
 import SavedCards from "./SavedCards";
 import Filters from "./Filters";
-import {InformationCardList} from "./InformationCard";
+import {InformationCardList, PublicationTyper} from "./InformationCard";
 import {SideNavBar, Navbar} from "./Navbar";
 import { Footer } from "./Footer";
+import { UserInformation, PublicationList } from "./Profile";
 
-export { SavedCards, Navbar, Filters, InformationCardList, SideNavBar, Footer };
+export { SavedCards, Navbar, Filters, InformationCardList, SideNavBar, Footer, UserInformation, PublicationList };

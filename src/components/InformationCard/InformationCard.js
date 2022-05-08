@@ -1,23 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Box, Chip, Container, Paper, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
+import PublicationTyper from './PublicationTyper'
+import { publication_t } from '../../types'
 //This component display the information card of navegacion principal
 function InformationCard(props) {
   return (
     <Paper elevation={3} sx={{p: "1em", position: "relative", maxWidth :"700px"}}>
       <Stack spacing={1}>
         {/*Type of the publication*/}
-        <Paper sx = {{width:"fit-content", height:"fit-content", backgroundColor:"primary.strongRed", p: "0.5em", position : "absolute", right: "25px", top: "-25px"}}>
-          <Typography variant='h2' sx = {{
-            fontSize: '1.5em',
-            fontWeight: 'bold',
-            color: 'white',
-          }}>
-            {props.type}
-          </Typography>
-        </Paper>
-
+        <PublicationTyper type={props.type}/>
       {/*Title of the publication*/}
       <Typography variant='h4'>
         {props.title}
@@ -90,20 +82,6 @@ function InformationCard(props) {
   )
 }
 
-InformationCard.propTypes = {
-    type: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        favorite: PropTypes.bool
-        })),
-    images: PropTypes.arrayOf(PropTypes.string),
-    links: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        url: PropTypes.string
-        })),
-    favorite: PropTypes.bool,
-}
+InformationCard.propTypes = publication_t
 
 export default InformationCard
