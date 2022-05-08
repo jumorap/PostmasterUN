@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from "../styles/profile.module.css"
 import Image from 'next/image'
@@ -8,8 +8,27 @@ import Button from '@mui/material/Button';
 import { NavBar } from "../src/sections";
 import userpic from "../public/assets/user_profile.png"
 
+import {db} from '../firebase/firebase.config.js' 
+import {readDoc} from '../firebase/FirestoreManager.js'
+
+import { AdminPanelSettingsTwoTone } from '@mui/icons-material';
+
+const defaultUser = {
+    UID: "123",
+    img: "",
+    joinDate: "1 de mayo de 2022, 10:00:00 UTC-5",
+    mail: "frailejon@unal.edu.co",
+    name: "Frailejon Ernesto Perez",
+    role: "admin"
+
+}
 
 export default function Profile() {
+
+    //ejemplo de lectura de un documento
+    //readDoc(collectionId,documentId)
+    const user = readDoc("users","pacuna")
+
     return (
         <div className={styles.body}>
             <Head>
@@ -44,10 +63,10 @@ export default function Profile() {
                             height='150%'
                         />
                         <div className={styles.card_3}>
-                            <div className={styles.info1}>Juliette Sofía Lizarazo Ardila</div>
-                            <div className={styles.info2}>jlizarazoa@unal.edu.co</div>
+                            <div className={styles.info1}>{defaultUser.name}</div>
+                            <div className={styles.info2}>{defaultUser.mail}</div>
                             <div>Se unió el  
-                                <a className={styles.info3}> 23 de abril de 2022</a>
+                                <a className={styles.info3}> {defaultUser.joinDate}</a>
                             </div>
                             <div>Publicaciones guardadas: 
                                 <a className={styles.info3}> 3</a>
