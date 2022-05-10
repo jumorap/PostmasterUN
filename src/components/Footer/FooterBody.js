@@ -48,7 +48,7 @@ function FooterBody() {
             <Collapse in={open[data.id]} timeout="auto" unmountOnExit>
                 {data.items.map((item) => {
                   return (
-                    <List component="div" disablePadding>
+                    <List key={""} component="div" disablePadding>
                       <ListItem sx={{ pl: 8 }}>
                         <ListItemIcon>
                           <StarBorder />
