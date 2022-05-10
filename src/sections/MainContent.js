@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { React, useState } from "react";
 import { Filters, InformationCardList } from "../components";
 
 //fake values for testing the filters
@@ -139,7 +139,7 @@ export default function MainContent() {
           <Box sx = {{position:{md: "sticky"}}}>
             <Filters tags={tagList} onClick={selectFilteredTag} />
           </Box>
-        </Grid>  
+        </Grid>
     </Grid>
   );
 }

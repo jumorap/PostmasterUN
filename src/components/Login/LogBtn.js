@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react"
 import Router from "next/router"
-import { firebaseAppAuth, providers } from "../../../firebase/firebase.config"
+import { firebaseAppAuth, providers, firebaseLogin } from "../../../firebase/firebase.config"
 import withFirebaseAuth from "react-with-firebase-auth"
 import { Button, Tooltip } from "@mui/material"
 import { FcGoogle } from "react-icons/fc"
@@ -81,8 +81,8 @@ const LogButton = (props) => {
             {/* if the user is logged in, show the logout button */}
             {
                 isUnalUser && user
-                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, 'Cerrar Sesión', "Sign Out", "signOut-container")
-                    : logButtons(signInWithGoogle, styles.loginBtn, <FcGoogle />, 'Ingresar con UNAL', "Sign In" ,"signIn-container")
+                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, '', "Sign Out", "signOut-container")
+                    : logButtons(firebaseLogin, styles.loginBtn, <FcGoogle />, 'Ingresar con UNAL', "Sign In" ,"signIn-container")
             }
             {/* when the user is logged in, show the loading component and redirect to the main page */}
             {
