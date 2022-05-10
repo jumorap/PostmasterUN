@@ -1,11 +1,8 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import { Global } from "@emotion/react";
 import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import FooterBody from "./FooterBody";
 
@@ -37,10 +34,6 @@ function Footer(props) {
     setOpen(newOpen);
   };
 
-  // This is used only for the example
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Root>
       <CssBaseline />
@@ -55,7 +48,7 @@ function Footer(props) {
       
       <Puller
         sx = {{
-          bottom: 0,
+          bottom: 8,
           right: 0,
           position: "fixed",
           zIndex: 1200,
@@ -64,13 +57,22 @@ function Footer(props) {
       />
 
       <SwipeableDrawer
-        container={container}
         anchor="bottom"
         open={open}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
+        PaperProps={{
+          sx: {
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            paddingTop: "20px",
+            paddingRight: "5px",
+            paddingLeft: "5px",
+            marginLeft:"20%",
+            marginRight:"20%"},
+        }}
         ModalProps={{
           keepMounted: true,
         }}
@@ -79,6 +81,7 @@ function Footer(props) {
           sx={{
             position: "relative",
             top: -drawerBleeding,
+            overflow: "auto",
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
             visibility: "visible",
