@@ -4,6 +4,7 @@ import { InformationCardList, PublicationTyper } from "./InformationCard";
 import { SideNavBar, Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { UserInformation, PublicationList, SavedTags } from "./Profile";
+import { EditFormular } from "./EditFormular";
 
 export {
   SavedCards,
@@ -15,4 +16,5 @@ export {
   UserInformation,
   PublicationList,
   SavedTags,
+  EditFormular
 };

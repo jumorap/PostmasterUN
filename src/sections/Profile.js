@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { PublicationList, SavedTags } from "../components";
+import { InformationCard } from "../components/InformationCard";
 
 const informationList = [
   {
@@ -103,10 +104,10 @@ const informationList = [
 export default function Profile() {
   const [list, setList] = useState([]);
   const [tags, setTags] = useState([
-    { name: "Alemania", dependency: "DRE", id : "1"},
-    { name: "Argentina", dependency: "DRE", id : "2"},
-    { name: "Brasil", dependency: "DRE", id : "3"},
-    { name: "Chile", dependency: "DRE", id : "4"},
+    { name: "Alemania", dependency: "DRE", id: "1" },
+    { name: "Argentina", dependency: "DRE", id: "2" },
+    { name: "Brasil", dependency: "DRE", id: "3" },
+    { name: "Chile", dependency: "DRE", id: "4" },
   ]);
 
   function handleTagDelete(tag) {
@@ -114,10 +115,29 @@ export default function Profile() {
     setTags(newTags);
   }
 
+  /*current publication to display when the user clicks over a saved publication*/
+  const [currPubication, setCurrPubication] = useState({
+    type: "tipo",
+    title: "",
+    description: "descripcion",
+    tags: [],
+    links: [],
+    images: [],
+    date: "",
+    id: "",
+  });
+
+  const handleOpenPublication = (index) => {
+    setCurrPubication(list[index]);
+    setOpenModal(true);
+  };
+
   return (
     <Box>
-      <SavedTags tags={tags} handleTagDelete = {handleTagDelete}/>
-      <PublicationList list={informationList} />
+      <SavedTags tags={tags} handleTagDelete={handleTagDelete} />
+      <PublicationList list={informationList} handleOpen = {handleOpenPublication}>
+        <InformationCard {...currPubication} />
+      </PublicationList>
     </Box>
   );
 }

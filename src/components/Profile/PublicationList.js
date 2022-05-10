@@ -13,27 +13,16 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
 };
 
-export default function PublicationList({ list }) {
+/**
+ * 
+ * @param {list} list lista de publicaciones 
+ * @handleOpen funcion que se ejecuta cada vez que se oprime una publicacion
+ * @returns 
+ */
+export default function PublicationList({ list, children, handleOpen }) {
   /*State to control the modal*/
   const [openModal, setOpenModal] = useState(false);
   const handleClose = () => setOpenModal(false);
-
-  /*current publication to display when the user clicks over a saved publication*/
-  const [currPubication, setCurrPubication] = useState({
-    type: "tipo",
-    title: "",
-    description: "descripcion",
-    tags: [],
-    links: [],
-    images: [],
-    date: "",
-    id: "",
-  });
-
-  const handleOpenPublication = (index) => {
-    setCurrPubication(list[index]);
-    setOpenModal(true);
-  };
 
   return (
     <>
@@ -44,7 +33,7 @@ export default function PublicationList({ list }) {
           {list.map((item, index) => {
             return (
               <Publication
-                onClick={()=>handleOpenPublication(index)}
+                onClick={()=>handleOpen(index)}
                 key={index}
                 title={item.title}
                 description={item.description}
@@ -63,7 +52,7 @@ export default function PublicationList({ list }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <InformationCard {...currPubication} />
+          {children}
         </Box>
       </Modal>
     </>
