@@ -6,8 +6,8 @@ const theme = createTheme({
 	palette: {
 		primary: {
 			main: '#232323',
-			strongRed: '#ff0000',
-			lightRed: '#FF2525a2',
+			strongRed: 'var(--redPrimary)',
+			lightRed: 'var(--redTransparent)',
 			gray: "#808080",
 			color: 'white',
 			white: "#fff",

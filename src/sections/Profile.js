@@ -1,0 +1,123 @@
+import { Box } from "@mui/material";
+import React, { useState } from "react";
+import { PublicationList, SavedTags } from "../components";
+
+const informationList = [
+  {
+    type: "Postmaster",
+    title: "Primer lugar a investigación con sello UNAL",
+    description:
+      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
+    tags: [
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+    ],
+    images: ["https://picsum.photos/500/550"],
+    links: [
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+    ],
+    favorite: false,
+    date: "2020-01-01",
+  },
+  {
+    type: "Postmaster",
+    title: "Primer lugar a investigación con sello UNAL",
+    description:
+      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
+    tags: [
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+    ],
+    images: ["https://picsum.photos/500/550"],
+    links: [
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+    ],
+    favorite: false,
+    date: "2020-01-01",
+  },
+  {
+    type: "Postmaster",
+    title: "Primer lugar a investigación con sello UNAL",
+    description:
+      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
+    tags: [
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+    ],
+    images: ["https://picsum.photos/500/550"],
+    links: [
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+    ],
+    favorite: false,
+    date: "2020-01-01",
+  },
+  {
+    type: "Postmaster",
+    title: "Primer lugar a investigación con sello UNAL",
+    description:
+      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
+    tags: [
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+    ],
+    images: ["https://picsum.photos/500/550"],
+    links: [
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+    ],
+    favorite: false,
+    date: "2020-01-01",
+  },
+  {
+    type: "Postmaster",
+    title: "Primer lugar a investigación con sello UNAL",
+    description:
+      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
+    tags: [
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+      { name: "UNAL", favorite: false },
+    ],
+    images: ["https://picsum.photos/500/550"],
+    links: [
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Clickable Link", url: "#basic-chip" },
+    ],
+    favorite: false,
+    date: "2020-01-01",
+  },
+];
+
+export default function Profile() {
+  const [list, setList] = useState([]);
+  const [tags, setTags] = useState([
+    { name: "Alemania", dependency: "DRE", id : "1"},
+    { name: "Argentina", dependency: "DRE", id : "2"},
+    { name: "Brasil", dependency: "DRE", id : "3"},
+    { name: "Chile", dependency: "DRE", id : "4"},
+  ]);
+
+  function handleTagDelete(tag) {
+    const newTags = tags.filter((t) => t.id !== tag.id);
+    setTags(newTags);
+  }
+
+  return (
+    <Box>
+      <SavedTags tags={tags} handleTagDelete = {handleTagDelete}/>
+      <PublicationList list={informationList} />
+    </Box>
+  );
+}

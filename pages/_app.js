@@ -7,6 +7,7 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import * as style from "../styles/globals.css";
+import {AuthProvider} from "../firebase/AuthProvider.config";
 
 // Client-side cache shared for the whole session
 // of the user in the browser.
@@ -19,6 +20,7 @@ export default function MyApp(props) {
 
 	return (
 		<CacheProvider value={emotionCache}>
+			<AuthProvider/>
 			<Head>
 				<meta name="viewport"
 					content="initial-scale=1, width=device-width" />

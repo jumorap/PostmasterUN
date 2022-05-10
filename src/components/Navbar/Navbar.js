@@ -2,27 +2,15 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
+import LogBtn from "../Login/LogBtn";
+import Image from "next/image";
+import Link from "next/link";
 
-const pages = ["Inicio", "Áreas Curriculares"];
-const settings = ["Mi perfil", "Favoritos", "Cerrar Sesión"];
-const areas = [
-  "Postmaster",
-  "DRE",
-  "Bienestar",
-  "Decanatura y Vicedecanatura",
-  "Dirección academica",
-  "DNINFOA",
-  "OTIC",
-  "Facultades",
-  "RevistaUN",
-  "Unimedios",
-  "Bibliotecas",
-  "Grupos estudiantiles",
-];
+import postmasterWhite from "../../../public/assets/postmaster_white.png";
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -61,27 +49,17 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4" noWrap>
-            Postmaster
-          </Typography>
-          <Typography
-            variant="h4"
-            noWrap
-            sx={{
-              backgroundColor: "primary.strongRed",
-              borderRadius: "0 1rem",
-              padding: "0 0.5rem",
-              m: "0 0.3em",
-            }}
-          >
-            UN
-          </Typography>
+          <Link href={"/"}>
+            <a>
+              <Image src={postmasterWhite} alt="logo" height={"43,25px"} width={"252px"}/>
+            </a>
+          </Link>
+          <LogBtn/>
         </Box>
       </Toolbar>
     </AppBar>
   );
 };
-
 
 
 export default ResponsiveAppBar;
