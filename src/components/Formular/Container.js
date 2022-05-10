@@ -12,7 +12,7 @@ export default function Container(props) {
   return (
     <StyledBox spacing={2}>
       <Typography variant="body2" sx={{ color: "gray" }}>
-        Tags
+        {props.name}
       </Typography>
       {props.children}
     </StyledBox>

@@ -14,17 +14,16 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
   ]);
 
   return (
-    <Container>
+    <Container name = "Tags">
       {/* Visualice and delete tags*/}
-      <ElementsBar list={tags} handleTagDelete={handleTagDelete} />
+      <ElementsBar list={tags} handleTagDelete={handleTagDelete} emptyMessage = "Porfavor añadir un Tag"/>
 
-      <Stack direction={"row"} spacing={3}>
+      <Stack direction={"column"} spacing={3}>
         {/* Add new tags */}
         <Autocomplete
           disablePortal
           id="combo-box-demo"
           options={tagOptions}
-          sx={{ width: 300 }}
           onChange={(_, value) => setCurrTag(value.label)}
           value={currTag}
           renderInput={(params) => (
@@ -33,6 +32,7 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
               label="Tags"
               value={currTag}
               onChange={(e) => setCurrTag(e.target.value)}
+                variant="filled"
             />
           )}
         />
