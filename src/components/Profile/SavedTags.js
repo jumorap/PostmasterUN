@@ -10,7 +10,7 @@ export default function SavedTags({ tags, handleTagDelete }) {
 
 
   return (
-    <Paper sx={{ p: 2 }} elevation={2}>
+    <Box elevation={2}>
       <Typography variant="h2">Tags Guardados</Typography>
       <Stack direction={"row"}>
         {tags.map((item, index) => (
@@ -22,7 +22,7 @@ export default function SavedTags({ tags, handleTagDelete }) {
           />
         ))}
       </Stack>
-    </Paper>
+    </Box>
   );
 }
 
