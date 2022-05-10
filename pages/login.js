@@ -15,13 +15,15 @@ export default function Login() {
                 <div className={styles.leftDiv}>
                     <br />
                     <span className={styles.footer}>
-                        <p/>
-                        ¿Necesitas ayuda? Contáctanos a:&nbsp;
-                            <a className={styles.link} href="mailto:postmasterun@unal.edu.co">postmasterun@unal.edu.co</a>
-                            <br />
-                        <Link href={"/legal"}>
-                            <a className={styles.link}>Términos, Condiciones y Políticas de Privacidad</a>
-                        </Link>
+                        <Typography variant="subtitle2">
+                            <p/>
+                            ¿Necesitas ayuda? Contáctanos a:&nbsp;
+                                <a className={styles.link} href="mailto:postmasterun@unal.edu.co">postmasterun@unal.edu.co</a>
+                                <br />
+                            <Link href={"/legal"}>
+                                <a className={styles.link}>Términos, Condiciones y Políticas de Privacidad</a>
+                            </Link>
+                        </Typography>
                     </span>
                 </div>
 

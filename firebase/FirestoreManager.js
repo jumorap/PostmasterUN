@@ -1,48 +1,28 @@
-import {db} from "./firebase.config.js"
+import { db } from "./firebase.config.js"
+import { collection, getDocs } from "firebase/firestore";
 
-import {getFirestore, collection, doc,
-    //create
-    addDoc, 
-    //read
-    getDoc, getDocs,
-    //delete
-    deleteDoc,
-    //uptade
-    setDoc } from "firebase/firestore"
 
-export async function readDoc (collectionId,documentId) {
+class FirestoreManager {
+    static _getUsers = collection(db, "users")
+    static _getPosts = collection(db, "posts")
+    static _getTags = collection(db, "tags")
+    static _getAgencies = collection(db, "agencies")
 
-    try {
-        const docRef = doc(db, collectionId, documentId);
-        const docSnap = await getDoc(docRef);
-        
-        if (docSnap.exists()) {
-
-          console.log("Document data:", docSnap.data());
-        } else {
-
-          console.log("No such document!");
-          
-        }
-    } catch (error) {
-        console.log("FIRESTORE ERROR!")
-        console.log(error)
-        
+    static async getUsersList() {
+        return await getDocs(this._getUsers)
     }
 
-    // doc.data() will be undefined if there is no document
-    return docSnap.data()    
+    static async getPostsList() {
+        return await getDocs(this._getPosts)
+    }
+
+    static async getTagsList() {
+        return await getDocs(this._getTags)
+    }
+
+    static async getAgenciesList() {
+        return await getDocs(this._getAgencies)
+    }
 }
 
-    
-
-export const update = ()=>{
-
-}
-
-export const deletes = ()=>{
-
-}
-
-
-
+export default FirestoreManager
