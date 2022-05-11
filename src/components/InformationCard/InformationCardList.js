@@ -5,7 +5,6 @@ import { Stack } from '@mui/material'
 
 
 function InformationCardList({informationList}) {
-  console.log(informationList)
   return (
     <Stack spacing={4} justifyContent="center" alignItems="center">
         {informationList.map(info => (

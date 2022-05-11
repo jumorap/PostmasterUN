@@ -3,7 +3,7 @@ import Filters from "./Filters";
 import { InformationCardList, PublicationTyper } from "./InformationCard";
 import { SideNavBar, Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { UserInformation, PublicationList, SavedTags } from "./Profile";
+import { SavedTags } from "./Profile";
 import { EditFormular } from "./EditFormular";
 import { Login } from "./Login"
 
@@ -14,8 +14,6 @@ export {
   InformationCardList,
   SideNavBar,
   Footer,
-  UserInformation,
-  PublicationList,
   SavedTags,
   EditFormular,
   Login,

@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app"
 import { getStorage } from "firebase/storage"
 import "firebase/compat/firestore"
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth"
-import { getFirestore, initializeFirestore } from 'firebase/firestore'
+import { getFirestore, initializeFirestore, setLogLevel } from 'firebase/firestore'
 
 
 const firebaseConfig = {
@@ -46,4 +46,4 @@ export const providers = {
 export const db = initializeFirestore(firebaseInitApp, {
     experimentalForceLongPolling: true,
 })
-export const storage = getStorage();
+export const storage = getStorage()

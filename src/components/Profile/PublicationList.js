@@ -1,7 +1,6 @@
 import { Modal, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { InformationCard } from "../InformationCard";
 import Publication from "./Publication";
 import Proptypes from "prop-types";
 import { publication_t } from "../../types";
