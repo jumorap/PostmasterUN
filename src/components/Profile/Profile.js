@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
-import { SavedTags } from "../components";
-import { InformationCard } from "../components/InformationCard";
-import PublicationList from "../components/profile/PublicationList";
+import { SavedTags } from "../index";
+import { InformationCard } from "../InformationCard";
+import PublicationList from "./PublicationList"
 
 const informationList = [
   {

@@ -14,10 +14,12 @@ const modalStyle = {
 };
 
 /**
- * 
- * @param {list} list lista de publicaciones 
+ *
+ * @param {list} list lista de publicaciones
+ * @param children children de la publicacion (imagen, titulo, etc)
+ * @param selectItem funcion para seleccionar una publicacion de la lista de publicaciones
  * @handleOpen funcion que se ejecuta cada vez que se oprime una publicacion
- * @returns 
+ * @returns
  */
 export default function PublicationList({ list, children, selectItem }) {
   /*State to control the modal*/

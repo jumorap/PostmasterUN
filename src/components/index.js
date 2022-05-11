@@ -1,6 +1,6 @@
 import SavedCards from "./SavedCards";
 import Filters from "./Filters";
-import { InformationCardList, PublicationTyper } from "./InformationCard";
+import { InformationCardList } from "./InformationCard";
 import { SideNavBar, Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { SavedTags } from "./Profile";
