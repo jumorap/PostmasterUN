@@ -23,7 +23,9 @@ const modalStyle = {
  */
 export default function PublicationList({ list, children, selectItem }) {
   /*State to control the modal*/
-  const [openModal, setOpenModal] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
+  const openModal = false
+  const setOpenModal = () => openModal = true;
   const handleClose = () => setOpenModal(false);
   const handleOpen = (index) => {
     setOpenModal(true);

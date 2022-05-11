@@ -7,7 +7,7 @@ import PublicationList from "./PublicationList"
 const informationList = [
   {
     type: "Postmaster",
-    title: "Primer lugar a investigación con sello UNAL",
+    title: "Graduación se realizará en las canchas de fútbol",
     description:
       "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
     tags: [
