@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -10,7 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import postmasterWhite from "../../../public/assets/postmaster_white.png";
-
+import UserIcon from "./UserIcon";
+import { firebaseAppAuth } from "../../../firebase/firebase.config";
+import { Stack } from "@mui/material";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -30,8 +32,43 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
+  const [isUserAuthentified, setIsUserAuthentified] = useState(false);
+  useEffect(() => {
+    firebaseAppAuth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsUserAuthentified(true);
+      } else {
+        setIsUserAuthentified(false);
+      }
+    });
+  }, []);
+
+  /* Get the image of the current user with firebase */
+  const [user, setUser] = useState({
+    src: "",
+    name: "",
+  });
+
+  useEffect(() => {
+    if (isUserAuthentified) {
+      firebaseAppAuth.onAuthStateChanged((user) => {
+        if (user) {
+          setUser({
+            src: user.photoURL,
+            name: user.displayName,
+          });
+        } else {
+          setUser({
+            src: "",
+            name: "",
+          });
+        }
+      });
+    }
+  }, [isUserAuthentified]);
+
   return (
-    <AppBar position="fixed" open={open} drawerWidth = {drawerWidth}>
+    <AppBar position="fixed" open={open} drawerWidth={drawerWidth}>
       <Toolbar>
         <IconButton
           color="inherit"
@@ -45,21 +82,29 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "space-between",
             alignItems: "center",
+            width: "100%",
           }}
         >
           <Link href={"/"}>
             <a>
-              <Image src={postmasterWhite} alt="logo" height={"43,25px"} width={"252px"}/>
+              <Image
+                src={postmasterWhite}
+                alt="logo"
+                height={"43,25px"}
+                width={"252px"}
+              />
             </a>
           </Link>
-          <LogBtn/>
+          <Stack direction={"row"} spacing = {6}>
+            <UserIcon isUserAuthentified={isUserAuthentified} user={user} />
+            <LogBtn />
+          </Stack>
         </Box>
       </Toolbar>
     </AppBar>
   );
 };
-
 
 export default ResponsiveAppBar;

@@ -77,6 +77,8 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
           </Link>
         ))}
       </List>
+      <Divider />
+      
     </Drawer>
   );
 }
