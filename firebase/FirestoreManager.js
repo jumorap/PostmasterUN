@@ -6,7 +6,7 @@ class FirestoreManager {
     static _getUsers = collection(db, "users")
     static _getPosts = collection(db, "posts")
     static _getTags = collection(db, "tags")
-    static _getAgencies = collection(db, "agencies")
+    static _getDependencies = collection(db, "dependencies")
 
     static async getUsersList() {
         return await getDocs(this._getUsers)
@@ -20,8 +20,8 @@ class FirestoreManager {
         return await getDocs(this._getTags)
     }
 
-    static async getAgenciesList() {
-        return await getDocs(this._getAgencies)
+    static async getDependenciesList() {
+        return await getDocs(this._getDependencies)
     }
 }
 

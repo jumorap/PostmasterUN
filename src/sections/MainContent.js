@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Filters, InformationCardList } from "../components";
+import FirestoreManager from "../../firebase/FirestoreManager";
 
 //fake values for testing the filters
 const tagTest = [
@@ -104,14 +105,31 @@ const informationList = [
 ];
 
 
-
-
 /**
  * Component that renders the main content of the page including the filters and the information cards
  * @returns {JSX.Element}
  */
 export default function MainContent() {
   const [tagList, setTagList] = useState(tagTest);
+  const [usersData, setUsersData] = useState(informationList);
+
+  /***
+   * Function that get the post information list
+   * @returns {Promise<void>}
+   */
+  async function getData() {
+    var data = []
+    var querySnap = await FirestoreManager.getPostsList()
+    querySnap.forEach(element => {
+      data.push(element.data())
+    })
+    setUsersData(data)
+    console.log(data)
+  }
+
+  useEffect(() => {
+    getData()
+  })
 
   /**
    * Function to handle the click event of the filter button, when the user clicks on a filter button
@@ -133,7 +151,7 @@ export default function MainContent() {
   return (
     <Grid container spacing={{xs : 6, md : 3}} direction = {{xs : "column-reverse", md : "row"}}  >
         <Grid item xs = {12} md={8}>
-          <InformationCardList informationList={informationList} />
+          <InformationCardList informationList={usersData} />
         </Grid>
         <Grid item xs = {12}  md={4} sx = {{position: "relative"}}>
           <Box sx = {{position:{md: "sticky"}}}>

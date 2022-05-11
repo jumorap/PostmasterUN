@@ -15,7 +15,6 @@ function InformationCardList(props) {
             tags={info.tags}
             images={info.images}
             links={info.links}
-            favorite={info.favorite}
             key={info.id}
           />
           ))}
