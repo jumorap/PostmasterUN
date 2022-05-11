@@ -5,6 +5,7 @@ import { SideNavBar, Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { UserInformation, PublicationList, SavedTags } from "./Profile";
 import { EditFormular } from "./EditFormular";
+import { Login } from "./Login"
 
 export {
   SavedCards,
@@ -16,5 +17,6 @@ export {
   UserInformation,
   PublicationList,
   SavedTags,
-  EditFormular
+  EditFormular,
+  Login,
 };

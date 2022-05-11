@@ -4,12 +4,12 @@ import { useRouter } from 'next/router'
 import EditionFormular from '../../src/sections/EditionFormular'
 
 export default function admin() {
-  const router = useRouter()
-  const { section } = router.query
+  /*const router = useRouter()
+  const { section } = router.query*/
 
   return (
     <NavBar>
-        <Admin section = {section}/>
+        {/*<Admin section={section}/>*/}
         <EditionFormular/>
     </NavBar>
   )

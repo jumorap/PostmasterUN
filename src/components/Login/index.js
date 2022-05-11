@@ -1,4 +1,5 @@
 import LogBtn from "./LogBtn"
+import Login from "./Login"
 
 
-export default LogBtn
+export { LogBtn, Login }
