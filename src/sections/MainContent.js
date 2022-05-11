@@ -40,15 +40,22 @@ const informationList = [
  * @returns {JSX.Element}
  */
 export default function MainContent() {
-  const [tagList, setTagList] = useState(tagTest);
-  const [usersData, setUsersData] = useState(informationList);
+  const [tagList, setTagList] = useState(tagTest)
+  const [usersData, setUsersData] = useState(informationList)
+  const [loaded, setLoaded] = useState(false)
 
+  /***
+   * Function that fetches the data from the firestore database
+   */
   useEffect(() => {
-    dataQueryArray(FirestoreManager.getPostsList()).then(
-      (data) => {
-        setUsersData(data);
-      }
-    )
+    if (!loaded) {
+      dataQueryArray(FirestoreManager.getPostsList()).then(
+          (data) => {
+            setUsersData(data);
+            setLoaded(true);
+          }
+      )
+    }
   }, [])
 
   /**
