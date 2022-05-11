@@ -3,6 +3,8 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Filters, InformationCardList } from "../components";
 import FirestoreManager from "../../firebase/FirestoreManager";
+import { dataQueryArray } from "../../firebase/dataQuery"
+
 
 //fake values for testing the filters
 const tagTest = [
@@ -12,78 +14,6 @@ const tagTest = [
 ];
 
 const informationList = [
-  {
-    type: "Postmaster",
-    title: "Primer lugar a investigación con sello UNAL",
-    description:
-      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
-    tags: [
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-    ],
-    images: ["https://picsum.photos/500/550"],
-    links: [
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-    ],
-    favorite: false,
-  },
-  {
-    type: "Postmaster",
-    title: "Primer lugar a investigación con sello UNAL",
-    description:
-      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
-    tags: [
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-    ],
-    images: ["https://picsum.photos/500/550"],
-    links: [
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-    ],
-    favorite: false,
-  },
-  {
-    type: "Postmaster",
-    title: "Primer lugar a investigación con sello UNAL",
-    description:
-      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
-    tags: [
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-    ],
-    images: ["https://picsum.photos/500/550"],
-    links: [
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-    ],
-    favorite: false,
-  },
-  {
-    type: "Postmaster",
-    title: "Primer lugar a investigación con sello UNAL",
-    description:
-      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
-    tags: [
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-    ],
-    images: ["https://picsum.photos/500/550"],
-    links: [
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-    ],
-    favorite: false,
-  },
   {
     type: "Postmaster",
     title: "Primer lugar a investigación con sello UNAL",
@@ -113,23 +43,13 @@ export default function MainContent() {
   const [tagList, setTagList] = useState(tagTest);
   const [usersData, setUsersData] = useState(informationList);
 
-  /***
-   * Function that get the post information list
-   * @returns {Promise<void>}
-   */
-  async function getData() {
-    var data = []
-    var querySnap = await FirestoreManager.getPostsList()
-    querySnap.forEach(element => {
-      data.push(element.data())
-    })
-    setUsersData(data)
-    console.log(data)
-  }
-
   useEffect(() => {
-    getData()
-  })
+    dataQueryArray(FirestoreManager.getPostsList()).then(
+      (data) => {
+        setUsersData(data);
+      }
+    )
+  }, [])
 
   /**
    * Function to handle the click event of the filter button, when the user clicks on a filter button

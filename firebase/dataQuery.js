@@ -1,4 +1,6 @@
-export default function dataQuery(listInfo) {
+import FirestoreManager from "./FirestoreManager";
+
+export default function dataQueryById(listInfo) {
     let fullData = {}
     listInfo.then((snapshot) => {
         snapshot.forEach((doc) => {
@@ -6,4 +8,13 @@ export default function dataQuery(listInfo) {
         })
     })
     return [fullData]
+}
+
+export async function dataQueryArray(listInfo) {
+    let data = []
+    const querySnap = await listInfo
+    querySnap.forEach(element => {
+        data.push(element.data())
+    })
+    return data
 }

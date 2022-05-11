@@ -6,14 +6,14 @@ import { getFirestore, initializeFirestore, setLogLevel } from 'firebase/firesto
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBjHn702pSf-nHhgeoBB88U0aXfvwQ5zVc",
-    authDomain: "postmaster-un.firebaseapp.com",
-    projectId: process.env.REACT_APP_projectId,
-    storageBucket: process.env.REACT_APP_storageBucket,
-    messagingSenderId: process.env.REACT_APP_messagingSenderId,
-    appId: process.env.REACT_APP_appId,
-    measurementId: process.env.REACT_APP_measurementId,
-    databaseURL: process.env.REACT_APP_databaseURL,
+    apiKey: process.env.NEXT_PUBLIC_APIKEY,
+    authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
+    databaseURL: process.env.NEXT_PUBLIC_DATABASEURL,
+    projectId: process.env.NEXT_PUBLIC_PROJECTID,
+    storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
+    appId: process.env.NEXT_PUBLIC_APPID,
+    measurementId: process.env.NEXT_PUBLIC_MEASUREMENTID
 }
 
 
