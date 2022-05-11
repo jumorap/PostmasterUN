@@ -120,7 +120,7 @@ export default function Profile() {
   const [currPubication, setCurrPubication] = useState({
     type: "tipo",
     title: "",
-    description: "descripcion",
+    description: "descripción",
     tags: [],
     links: [],
     images: [],

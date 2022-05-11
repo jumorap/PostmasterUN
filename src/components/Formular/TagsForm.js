@@ -19,9 +19,9 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
   }
 
   return (
-    <Container name = "Tags">
+    <Container name = "Etiquetas">
       {/* Visualice and delete tags*/}
-      <ElementsBar list={tags} handleTagDelete={handleTagDelete} emptyMessage = "Porfavor añadir un Tag"/>
+      <ElementsBar list={tags} handleTagDelete={handleTagDelete} emptyMessage = "Por favor añadir una etiqueta"/>
 
       <Stack direction={"column"} spacing={3}>
         {/* Add new tags */}
@@ -34,7 +34,7 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Tags"
+              label="Etiquetas"
               value={currTag}
               onChange={(e) => setCurrTag(e.target.value)}
                 variant="filled"
@@ -47,7 +47,7 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
           color="primary"
           onClick={handleButtonClick}
         >
-          Agregar Tag
+          Agregar etiqueta
         </Button>
       </Stack>
     </Container>
