@@ -4,10 +4,11 @@ import InformationCard from './InformationCard'
 import { Stack } from '@mui/material'
 
 
-function InformationCardList(props) {
+function InformationCardList({informationList}) {
+  console.log(informationList)
   return (
     <Stack spacing={4} justifyContent="center" alignItems="center">
-        {props.informationList.map(info => (
+        {informationList.map(info => (
           <InformationCard
             type={info.type}
             title={info.title}

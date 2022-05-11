@@ -1,13 +1,8 @@
 import styled from "@emotion/styled";
 import {
-  Autocomplete,
-  Box,
   Button,
-  Chip,
-  Paper,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import LinksForm from "./LinksForm";
@@ -39,6 +34,13 @@ export default function Formular() {
     }
   };
 
+  /**
+   * Funcion para subir el formulario a la base de datos
+   */
+  const upload = () => {
+    console.log(title, description, tags, links);
+  }
+
   console.log();
 
   return (
@@ -69,6 +71,9 @@ export default function Formular() {
         handleLinkDelete={handleLinkDelete}
         handleLinkAdd={handleLinkAdd}
       />
+      <Button color="success" variant="outlined" onClick={upload}>
+        Subir
+      </Button>
     </Stack>
   );
 }

@@ -127,15 +127,14 @@ export default function Profile() {
     id: "",
   });
 
-  const handleOpenPublication = (index) => {
-    setCurrPubication(list[index]);
-    setOpenModal(true);
+  const selectItem = (index) => {
+    setCurrPubication(informationList[index]);
   };
 
   return (
     <Box>
       <SavedTags tags={tags} handleTagDelete={handleTagDelete} />
-      <PublicationList list={informationList} handleOpen = {handleOpenPublication}>
+      <PublicationList list={informationList} selectItem = {selectItem}>
         <InformationCard {...currPubication} />
       </PublicationList>
     </Box>
