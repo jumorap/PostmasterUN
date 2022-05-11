@@ -38,9 +38,9 @@ export default function Publication({ title, description, date, onClick }) {
       >
         <Stack direction={"row"} spacing={2} justifyContent="space-between">
           <Box sx={{ cursor: "pointer" }} onClick={onClick}>
-            <Typography variant="h4">{title}</Typography>
-            <Typography variant="body2">{date}</Typography>
-            <Typography variant="body1">{description}</Typography>
+            <Typography sx={{fontSize: "1.5em", fontWeight: "bold"}} paddingLeft={2} paddingTop={1}>{title}</Typography>
+            <Typography padding={2} variant="body2">{date}</Typography>
+            <Typography paddingLeft={2} paddingBottom={1} variant="body1">{description}</Typography>
           </Box>
           <Box display={"flex"} alignItems="center">
             <Checkbox

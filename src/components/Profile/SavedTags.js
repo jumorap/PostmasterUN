@@ -10,8 +10,8 @@ export default function SavedTags({ tags, handleTagDelete }) {
 
 
   return (
-    <Box elevation={2}>
-      <Typography variant="h2">Tags Guardados</Typography>
+    <Box elevation={2} paddingLeft={4}>
+      <Typography sx={{fontSize: "2em"}} paddingBottom={1} >Etiquetas Guardadas</Typography>
       <Stack direction={"row"}>
         {tags.map((item, index) => (
           <Chip
