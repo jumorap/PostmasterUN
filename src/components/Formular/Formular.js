@@ -1,19 +1,16 @@
 import styled from "@emotion/styled";
 import {
-  Autocomplete,
-  Box,
   Button,
-  Chip,
-  Paper,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import LinksForm from "./LinksForm";
 import TagsForm from "./TagsForm";
 
 export default function Formular() {
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [links, setLinks] = React.useState([]);
 
@@ -37,14 +34,31 @@ export default function Formular() {
     }
   };
 
+  /**
+   * Funcion para subir el formulario a la base de datos
+   */
+  const upload = () => {
+    console.log(title, description, tags, links);
+  }
+
+  console.log();
+
   return (
     <Stack direction={"column"} spacing={3}>
-      <TextField id="filled-basic" label="Titulo" variant="outlined" />
+      <TextField
+        id="filled-basic"
+        label="Titulo"
+        variant="outlined"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
       <TextField
         id="outlined-multiline-flexible"
         label="Descripcion"
         multiline
         minRows={5}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
       />
 
       <TagsForm
@@ -52,7 +66,14 @@ export default function Formular() {
         handleTagAdd={handleTagAdd}
         tags={tags}
       />
-      <LinksForm links={links} handleLinkAdd = {handleLinkAdd} handleLinkDelete = {handleLinkDelete}/>
+      <LinksForm
+        links={links}
+        handleLinkDelete={handleLinkDelete}
+        handleLinkAdd={handleLinkAdd}
+      />
+      <Button color="success" variant="outlined" onClick={upload}>
+        Subir
+      </Button>
     </Stack>
   );
 }

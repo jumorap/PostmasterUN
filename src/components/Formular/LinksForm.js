@@ -8,6 +8,12 @@ export default function LinksForm({ links, handleLinkDelete, handleLinkAdd }) {
   const [currLink, setCurrLink] = React.useState("");
   const [currUrl, setCurrUrl] = React.useState("");
 
+  function handleButtonClick(){
+    handleLinkAdd(currLink, currUrl);
+    setCurrLink("");
+    setCurrUrl("");
+  }
+
 
   return (
     <Container name={"Links"}>
@@ -18,7 +24,7 @@ export default function LinksForm({ links, handleLinkDelete, handleLinkAdd }) {
       />
       <TextField id="filled-basic" label="Leyenda" variant="filled" value={currLink} onChange = {(e)=>setCurrLink(e.target.value)} />
       <TextField id="filled-basic" label="URL" variant="filled" value={currUrl} onChange = {(e)=>setCurrUrl(e.target.value)}/>
-      <Button variant="contained" color="primary" onClick={()=>handleLinkAdd(currLink)}>
+      <Button variant="contained" color="primary" onClick={handleButtonClick}>
         Agregar Link
       </Button>
     </Container>

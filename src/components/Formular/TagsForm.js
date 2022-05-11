@@ -13,6 +13,11 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
     { name: "tag3", label: "Tag 3" },
   ]);
 
+  function handleButtonClick() {
+    handleTagAdd(currTag);
+    setCurrTag("");
+  }
+
   return (
     <Container name = "Tags">
       {/* Visualice and delete tags*/}
@@ -40,7 +45,7 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleTagAdd(currTag)}
+          onClick={handleButtonClick}
         >
           Agregar Tag
         </Button>

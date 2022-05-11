@@ -3,26 +3,27 @@ import { Box, Chip, Container, Paper, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
 import PublicationTyper from './PublicationTyper'
 import { publication_t } from '../../types'
+import PropTypes from 'prop-types'
 //This component display the information card of navegacion principal
-function InformationCard(props) {
+function InformationCard({type, title, description, links, images, tags}) {
   return (
     <Paper elevation={3} sx={{p: "1em", position: "relative", maxWidth :"700px"}}>
       <Stack spacing={1}>
         {/*Type of the publication*/}
-        <PublicationTyper type={props.type}/>
+        <PublicationTyper type={type}/>
       {/*Title of the publication*/}
       <Typography variant='h4'>
-        {props.title}
+        {title}
       </Typography>
 
       {/*Description of the publication*/}
       <Typography variant='body1' sx = {{textAlign: "justify"}}>
-        {props.description}
+        {description}
       </Typography>
       
       {/*Aditional links*/}
       <Stack direction="row" spacing={2} justifyContent = "center">
-          {props.links.map(link => (
+          {links.map(link => (
             <Chip
               key={link.name}
               label={link.name}
@@ -42,11 +43,11 @@ function InformationCard(props) {
         {/*Image of the publication*/}
         <Box justifyContent="center" alignItems = "center">
         {
-            props.images.map(image => (
+            images.map(image => (
               <Image
                 key={image}
                 src={image}
-                alt={props.title}
+                alt={title}
                 width={300}
                 height={200}
                 layout="responsive"
@@ -64,7 +65,7 @@ function InformationCard(props) {
               Etiquetas:
             </Typography>
           </Box>
-        {props.tags.map((tag, index) => (
+        {tags.map((tag, index) => (
           <Chip
           key={index}
           label={tag.name}

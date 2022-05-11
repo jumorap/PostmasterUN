@@ -11,6 +11,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  margin: "20px",
 };
 
 /**
@@ -19,10 +20,14 @@ const modalStyle = {
  * @handleOpen funcion que se ejecuta cada vez que se oprime una publicacion
  * @returns 
  */
-export default function PublicationList({ list, children, handleOpen }) {
+export default function PublicationList({ list, children, selectItem }) {
   /*State to control the modal*/
   const [openModal, setOpenModal] = useState(false);
   const handleClose = () => setOpenModal(false);
+  const handleOpen = (index) => {
+    setOpenModal(true);
+    selectItem(index);
+  }
 
   return (
     <>
