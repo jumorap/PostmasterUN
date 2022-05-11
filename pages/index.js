@@ -1,6 +1,5 @@
 import MainContent from "../src/sections/MainContent";
 import { NavBar } from "../src/sections";
-import { Footer } from "../src/components";
 
 
 
