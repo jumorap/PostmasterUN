@@ -43,7 +43,5 @@ export const providers = {
 
 
 // DB firestorage
-export const db = initializeFirestore(firebaseInitApp, {
-    experimentalForceLongPolling: true,
-})
+export const db = getFirestore()
 export const storage = getStorage()

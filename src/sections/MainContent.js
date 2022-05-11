@@ -56,7 +56,7 @@ export default function MainContent() {
           }
       )
     }
-  }, [])
+  }, [loaded])
 
   /**
    * Function to handle the click event of the filter button, when the user clicks on a filter button
