@@ -1,18 +1,15 @@
-import Head from "next/head";
-import { InformationCard, Navbar } from "../src/components";
+import MainContent from "../src/sections/MainContent";
+import { NavBar } from "../src/sections";
 
 
-export default function Home() {
-	return (
-		<div>
-			<Head>
-				<title>Create Next App</title>
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-			<Navbar/>
-			<main>
 
-			</main>
-		</div>
-	);
+
+export default function PersistentDrawerLeft() {
+  return (
+    <>
+    <NavBar>
+      <MainContent/>
+    </NavBar>
+    </>
+  );
 }

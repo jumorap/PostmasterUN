@@ -1,48 +1,29 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Box, Chip, Container, Paper, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
+import PublicationTyper from './PublicationTyper'
+import { publication_t } from '../../types'
+import PropTypes from 'prop-types'
 //This component display the information card of navegacion principal
-function InformationCard(props) {
+function InformationCard({type, title, description, links, images, tags}) {
   return (
-    <Paper elevation={3} sx={{p: "1em"}}>
+    <Paper elevation={3} sx={{p: "1em", position: "relative", maxWidth :"700px"}}>
       <Stack spacing={1}>
-      <Typography variant='h2'>
-        {props.type}
+        {/*Type of the publication*/}
+        <PublicationTyper type={type}/>
+      {/*Title of the publication*/}
+      <Typography variant='h4'>
+        {title}
       </Typography>
-      <Typography variant='h6'>
-        {props.title}
-      </Typography>
-      <Typography variant='body1'>
-        {props.description}
-      </Typography>
-      <Stack direction="row" spacing={1}>
-        {props.tags.map((tag, index) => (
-          <Chip
-          key={index}
-          label={tag.name}
-          color="primary"
-          clickable
-          />
-        ))
-        }
-      </Stack>
-        <Box>
-        {
-            props.images.map(image => (
-              <Image
-                key={image}
-                src={image}
-                alt={props.title}
-                width={200}
-                height={200}
-              />
-            ))
-          }
-        </Box>
 
-        <Stack direction="row" spacing={1}>
-          {props.links.map(link => (
+      {/*Description of the publication*/}
+      <Typography variant='body1' sx = {{textAlign: "justify"}}>
+        {description}
+      </Typography>
+      
+      {/*Aditional links*/}
+      <Stack direction="row" spacing={2} justifyContent = "center">
+          {links.map(link => (
             <Chip
               key={link.name}
               label={link.name}
@@ -52,29 +33,56 @@ function InformationCard(props) {
               clickable
               sx={{
                 borderRadius: "5px",
+                backgroundColor: "primary.lightRed",
+                color: "white",
               }}
             />
           ))}
         </Stack>
+
+        {/*Image of the publication*/}
+        <Box justifyContent="center" alignItems = "center">
+        {
+            images.map(image => (
+              <Image
+                key={image}
+                src={image}
+                alt={title}
+                width={300}
+                height={200}
+                layout="responsive"
+                maxHeight={200}
+              />
+            ))
+          }
+        </Box>
+
+        
+        {/*Tags of the publication*/}
+        <Stack direction="row" spacing={1} alignItems = "center" justifyContent={"flex-end"}>
+          <Box>
+            <Typography variant='body1' sx = {{color: "primary.gray"}}>
+              Etiquetas:
+            </Typography>
+          </Box>
+        {tags.map((tag, index) => (
+          <Chip
+          key={index}
+          label={tag.name}
+          sx = {{
+            borderRadius: "5px",
+          }}
+          clickable
+          />
+        ))
+        }
+      </Stack>
+
         </Stack>
     </Paper>
   )
 }
 
-InformationCard.propTypes = {
-    type: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        favorite: PropTypes.bool
-        })),
-    images: PropTypes.arrayOf(PropTypes.string),
-    links: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        url: PropTypes.string
-        })),
-    favorite: PropTypes.bool,
-}
+InformationCard.propTypes = publication_t
 
 export default InformationCard

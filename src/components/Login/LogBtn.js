@@ -1,25 +1,42 @@
-import React from "react"
+import React, {useContext, useEffect, useState} from "react"
 import Router from "next/router"
-import { firebaseAppAuth, providers } from "../../../firebase/firebase.config"
+import { firebaseAppAuth, providers, firebaseLogin } from "../../../firebase/firebase.config"
 import withFirebaseAuth from "react-with-firebase-auth"
 import { Button, Tooltip } from "@mui/material"
 import { FcGoogle } from "react-icons/fc"
 import { FaSignOutAlt } from "react-icons/fa"
 
+import Loading from "../Loading";
 
 import styles from "./LogBtn.module.css"
 
 
 // create a login form
-const logButton = (props) => {
+const LogButton = (props) => {
     const {
         user,
         signOut,
         signInWithGoogle,
     } = props;
 
-    let isUnalUser
+
+    let isUnalUser = false
     if (user) isUnalUser = !!user.email.toString().split('@')[1].includes('unal.edu.co')
+
+    const [loggedIn, setLoggedIn] = useState(false)
+
+    /***
+     * check if the user is logged in or not and set the state accordingly to redirect the user
+     */
+    useEffect(() => {
+        firebaseAppAuth.onAuthStateChanged((user) => {
+            if (user) setLoggedIn(true)
+            else setLoggedIn(false)
+            // if isn't a user from UNAL, redirect to login page
+            if (Router.pathname !== '/login' && !isUnalUser && !user) Router.push('/login').then(r => console.log(r))
+        })
+    }, [isUnalUser])
+
 
     /***
      * @param clickUse {function} - function to sign in/out
@@ -44,19 +61,34 @@ const logButton = (props) => {
         )
     }
 
+    /***
+     * clickUse {function} - function that show the loading component and redirect to the main page
+     * @returns {JSX.Element}
+     */
+    const authConfirm = () => {
+        return(
+            <>
+                <Loading />
+                {
+                    setTimeout(() => { Router.replace('/').then(r => console.log("loading")) }, 1000)
+                }
+            </>
+        )
+    }
+
     return (
         <>
             {/* if the user is logged in, show the logout button */}
             {
                 isUnalUser && user
-                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, 'Sign Out', "Sign Out", "signOut-container")
-                    : logButtons(signInWithGoogle, styles.loginBtn, <FcGoogle />, 'Sign in UNAL', "Sign In" ,"signIn-container")
+                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, '', "Sign Out", "signOut-container")
+                    : logButtons(firebaseLogin, styles.loginBtn, <FcGoogle />, 'Ingresar con UNAL', "Sign In" ,"signIn-container")
             }
-            {/*
-                isUnalUser && Router.pathname === '/login'
-                    ? Router.push('/').then(r => Router.reload())
+            {/* when the user is logged in, show the loading component and redirect to the main page */}
+            {
+                loggedIn && isUnalUser && user && Router.pathname === '/login'
+                    ? authConfirm()
                     : ""
-                */
             }
         </>
     )
@@ -66,4 +98,4 @@ const logButton = (props) => {
 export default withFirebaseAuth({
     providers,
     firebaseAppAuth,
-})(logButton)
+})(LogButton)
