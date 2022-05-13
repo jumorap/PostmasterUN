@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import postmasterWhite from "../../../public/assets/postmaster_white.png";
+import postmasterSvg from "../../../public/assets/postmaster_svg.svg";
 import UserIcon from "./UserIcon";
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
 import { Stack } from "@mui/material";
@@ -90,7 +91,7 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
           <Link href={"/"}>
             <a>
               <Image
-                src={postmasterWhite}
+                src={postmasterSvg}
                 alt="logo"
                 height={"43,25px"}
                 width={"252px"}
