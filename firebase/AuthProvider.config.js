@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
         })
     }, [])
 
-    if (pending) return <Loading />
+    if (pending) return <Loading state={true}/>
 
     return (
         <AuthContext.Provider value={{ currentUser }}>
