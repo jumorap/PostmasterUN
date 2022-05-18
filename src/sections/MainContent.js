@@ -37,7 +37,7 @@ const informationList = [
  */
 export default function MainContent() {
   const [tagList, setTagList] = useState(tagTest)
-  const [usersData, setUsersData] = useState(informationList)
+  const [postsData, setPostsData] = useState(informationList)
   const [loaded, setLoaded] = useState(false)
 
   /***
@@ -47,7 +47,7 @@ export default function MainContent() {
     if (!loaded) {
       dataQueryArray(FirestoreManager.getPostsList()).then(
           (data) => {
-            setUsersData(data);
+            setPostsData(data);
             setLoaded(true);
           }
       )
@@ -74,7 +74,7 @@ export default function MainContent() {
   return (
     <Grid container spacing={{xs : 6, md : 3}} direction = {{xs : "column-reverse", md : "row"}}  >
         <Grid item xs = {12} md={8}>
-          <InformationCardList informationList={usersData} />
+          <InformationCardList informationList={postsData} />
         </Grid>
         <Grid item xs = {12}  md={4} sx = {{position: "relative"}}>
           <Box sx = {{position:{md: "sticky"}}}>

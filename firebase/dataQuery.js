@@ -1,11 +1,14 @@
-export default function dataQueryById(listInfo) {
-    let fullData = {}
-    listInfo.then((snapshot) => {
-        snapshot.forEach((doc) => {
-            fullData[doc.id] = doc.data();
+export async function dataQueryById(listInfo) {
+    let fullData = []
+    const querySnap = await listInfo
+    querySnap.forEach(doc => {
+        // must push the id as a key to the object and then the data
+        fullData.push({
+            id: doc.id,
+            ...doc.data()
         })
     })
-    return [fullData]
+    return fullData
 }
 
 export async function dataQueryArray(listInfo) {
