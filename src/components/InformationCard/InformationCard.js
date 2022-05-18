@@ -65,17 +65,19 @@ function InformationCard({type, title, description, links, images, tags}) {
               Etiquetas:
             </Typography>
           </Box>
-        {tags.map((tag, index) => (
-          <Chip
-          key={index}
-          label={tag.name}
-          sx = {{
-            borderRadius: "5px",
-          }}
-          clickable
-          />
-        ))
-        }
+            {
+                // tags is an array of strings that will be displayed as chips
+                tags.map(tag => (
+                    <Chip
+                        key={tag}
+                        label={tag}
+                        sx={{
+                            borderRadius: "5px",
+                        }}
+                        clickable
+                    />
+                ))
+            }
       </Stack>
 
         </Stack>

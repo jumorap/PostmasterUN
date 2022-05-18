@@ -1,5 +1,3 @@
-import FirestoreManager from "./FirestoreManager";
-
 export default function dataQueryById(listInfo) {
     let fullData = {}
     listInfo.then((snapshot) => {

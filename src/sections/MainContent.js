@@ -15,20 +15,16 @@ const tagTest = [
 
 const informationList = [
   {
-    type: "Postmaster",
-    title: "Primer lugar a investigación con sello UNAL",
+    type: "Cargando...",
+    title: "Cargando...",
     description:
-      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
+      "Cargando...",
     tags: [
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
+      "Cargando..."
     ],
     images: ["https://picsum.photos/500/550"],
     links: [
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Cargando...", url: "#" },
     ],
     favorite: false,
   },

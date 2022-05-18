@@ -4,7 +4,6 @@ import { firebaseAppAuth, providers, firebaseLogin } from "../../../firebase/fir
 import withFirebaseAuth from "react-with-firebase-auth"
 import { Button, Tooltip } from "@mui/material"
 import { FcGoogle } from "react-icons/fc"
-import { FaSignOutAlt } from "react-icons/fa"
 
 import Loading from "../Loading";
 
@@ -54,7 +53,6 @@ const LogButton = (props) => {
         })
     }, [actualPage, isUnalUser])
 
-    
     /***
      * @param clickUse {function} - function to sign in/out
      * @param classNameStyles {string} - class name to apply to the button
@@ -87,8 +85,8 @@ const LogButton = (props) => {
             <>
                 <Loading state={true}/>
                 {
-                    !alreadyLoaded
-                        ? setTimeout(() => { Router.push(`/${redirectTo}`) }, 1000)
+                    alreadyLoaded
+                        ? setTimeout(() => { Router.push(`/${redirectTo}`) }, 100)
                         : null
                 }
                 <Loading state={false}/>
@@ -101,7 +99,7 @@ const LogButton = (props) => {
             {/* if the user is logged in, show the logout button */}
             {
                 isUnalUser && user
-                    ? logButtons(signOut, styles.logOutBtn, <FaSignOutAlt />, '', "Sign Out", "signOut-container")
+                    ? <span  onClick={signOut}>Cerrar sesión</span>
                     : logButtons(firebaseLogin, styles.loginBtn, <FcGoogle />, 'Ingresar con UNAL', "Sign In" ,"signIn-container")
             }
             {/* when the user is logged in, show the loading component and redirect to the main page */}

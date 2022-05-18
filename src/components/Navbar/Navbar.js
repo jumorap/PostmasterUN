@@ -5,11 +5,9 @@ import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
-import LogBtn from "../Login/LogBtn";
 import Image from "next/image";
 import Link from "next/link";
 
-import postmasterWhite from "../../../public/assets/postmaster_white.png";
 import postmasterSvg from "../../../public/assets/postmaster_svg.svg";
 import UserIcon from "./UserIcon";
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
@@ -100,7 +98,6 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
           </Link>
           <Stack direction={"row"} spacing = {6}>
             <UserIcon isUserAuthentified={isUserAuthentified} user={user} />
-            <LogBtn />
           </Stack>
         </Box>
       </Toolbar>
