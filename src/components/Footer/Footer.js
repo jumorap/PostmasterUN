@@ -51,7 +51,7 @@ function Footer(props) {
           bottom: 8,
           right: 0,
           position: "fixed",
-          zIndex: 1200,
+          zIndex: 100,
         }} 
         onClick={toggleDrawer(true)}
       />

@@ -7,11 +7,14 @@ import MuiAppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import Link from "next/link";
+import { Stack } from "@mui/material";
+import Router from "next/router";
 
 import postmasterSvg from "../../../public/assets/postmaster_svg.svg";
 import UserIcon from "./UserIcon";
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
-import { Stack } from "@mui/material";
+import { LogBtn } from "../Login";
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -31,14 +34,11 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
-  const [isUserAuthentified, setIsUserAuthentified] = useState(false);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+
   useEffect(() => {
     firebaseAppAuth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsUserAuthentified(true);
-      } else {
-        setIsUserAuthentified(false);
-      }
+      setIsUserAuthenticated(!!user?.email.toString().split('@')[1].includes('unal.edu.co'));
     });
   }, []);
 
@@ -49,7 +49,7 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
   });
 
   useEffect(() => {
-    if (isUserAuthentified) {
+    if (isUserAuthenticated) {
       firebaseAppAuth.onAuthStateChanged((user) => {
         if (user) {
           setUser({
@@ -64,10 +64,17 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
         }
       });
     }
-  }, [isUserAuthentified]);
+  }, [isUserAuthenticated]);
+  console.log(isUserAuthenticated);
 
   return (
     <AppBar position="fixed" open={open} drawerWidth={drawerWidth}>
+      {/* to verify if the user is logged in  */}
+      <div style={{display: "none"}}>
+        <LogBtn/>
+      </div>
+      {/* end */}
+
       <Toolbar>
         <IconButton
           color="inherit"
@@ -97,7 +104,7 @@ const ResponsiveAppBar = ({ open, handleDrawerOpen, drawerWidth }) => {
             </a>
           </Link>
           <Stack direction={"row"} spacing = {6}>
-            <UserIcon isUserAuthentified={isUserAuthentified} user={user} />
+            <UserIcon isUserAuthentified={isUserAuthenticated} user={user} />
           </Stack>
         </Box>
       </Toolbar>

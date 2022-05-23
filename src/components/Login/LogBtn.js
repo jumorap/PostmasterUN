@@ -25,7 +25,6 @@ const LogButton = (props) => {
     const [loggedIn, setLoggedIn] = useState(false)
     const [actualPage, setActualPage] = useState(undefined)
     const [inLogin, setInLogin] = useState(true)
-    const [alreadyLoaded, setAlreadyLoaded] = useState(false)
 
     /***
      * set the actual page to redirect the user.
@@ -38,7 +37,6 @@ const LogButton = (props) => {
 
         if (actualPageState === '/login') setInLogin(true)
         else setInLogin(false)
-        setAlreadyLoaded(true)
     }, [actualPage, inLogin])
 
     /***
@@ -85,9 +83,7 @@ const LogButton = (props) => {
             <>
                 <Loading state={true}/>
                 {
-                    alreadyLoaded
-                        ? setTimeout(() => { Router.push(`/${redirectTo}`) }, 100)
-                        : null
+                    setTimeout(() => { Router.push(`/${redirectTo}`) }, 1000)
                 }
                 <Loading state={false}/>
             </>
@@ -99,7 +95,7 @@ const LogButton = (props) => {
             {/* if the user is logged in, show the logout button */}
             {
                 isUnalUser && user
-                    ? <span  onClick={signOut}>Cerrar sesión</span>
+                    ? <span onClick={signOut}>Cerrar sesión</span>
                     : logButtons(firebaseLogin, styles.loginBtn, <FcGoogle />, 'Ingresar con UNAL', "Sign In" ,"signIn-container")
             }
             {/* when the user is logged in, show the loading component and redirect to the main page */}

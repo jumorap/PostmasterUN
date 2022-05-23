@@ -2,23 +2,25 @@ import { Paper, Typography } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Drawer from "@mui/material/Drawer";
+import { styled } from "@mui/material/styles";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { dataQueryArray } from "../../../firebase/dataQuery";
+import FirestoreManager from "../../../firebase/FirestoreManager";
+
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import InfoIcon from "@mui/icons-material/Info";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import Drawer from "@mui/material/Drawer";
-import { styled, useTheme } from "@mui/material/styles";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import {dataQueryArray} from "../../../firebase/dataQuery";
-import FirestoreManager from "../../../firebase/FirestoreManager";
 
-const areas = [
+
+const areasFull = [
   "Postmaster",
   "DRE",
   "Bienestar",
@@ -32,6 +34,8 @@ const areas = [
   "Bibliotecas",
   "Grupos estudiantiles",
 ];
+
+const  areas = ["Cargando...", ""];
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -74,6 +78,7 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
           width: drawerWidth,
           boxSizing: "border-box",
         },
+        zIndex: "100",
       }}
       variant="persistent"
       anchor="left"
