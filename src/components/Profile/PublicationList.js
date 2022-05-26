@@ -36,7 +36,7 @@ export default function PublicationList({ list, children, selectItem }) {
     <>
       {/*List of publications*/}
       <Box>
-        <Typography variant="h2">Publicaciones Guardadas</Typography>
+        <Typography variant="h2" align="center">Publicaciones Guardadas</Typography>
         <Stack direction={"column"} spacing={2}>
           {list.map((item, index) => {
             return (

@@ -14,10 +14,6 @@ import FirestoreManager from "../../../firebase/FirestoreManager";
 
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InfoIcon from "@mui/icons-material/Info";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 
 
 const areasFull = [

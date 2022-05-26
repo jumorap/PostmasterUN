@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { SavedTags } from "../index";
+import  SavedTags  from "./SavedTags";
 import { InformationCard } from "../InformationCard";
 import PublicationList from "./PublicationList"
 
@@ -134,7 +134,11 @@ export default function Profile() {
 
   return (
     <Box>
+      <Typography variant="h1" gutterBottom align="center">
+        Mis publicaciones
+      </Typography>
       <SavedTags tags={tags} handleTagDelete={handleTagDelete} />
+      
       <PublicationList list={informationList} selectItem = {selectItem}>
         <InformationCard {...currPubication} />
       </PublicationList>

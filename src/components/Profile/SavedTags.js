@@ -10,9 +10,9 @@ export default function SavedTags({ tags, handleTagDelete }) {
 
 
   return (
-    <Box elevation={2} paddingLeft={4}>
-      <Typography sx={{fontSize: "2em"}} paddingBottom={1} >Etiquetas Guardadas</Typography>
-      <Stack direction={"row"}>
+    <Box elevation={2} sx = {{my: "10rem"}} justifyContent = "center">
+      <Typography variant={"h2"} paddingBottom={1} align = "center">Etiquetas Guardadas</Typography>
+      <Stack direction={"row"} justifyContent = "center" spacing={1}>
         {tags.map((item, index) => (
           <Chip
             label={item.name}
