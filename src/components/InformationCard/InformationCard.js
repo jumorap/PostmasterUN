@@ -93,10 +93,10 @@ function InformationCard({type, title, description, links, images, tags}) {
           </Box>
             {/* tags is an array of strings that will be displayed as chips */}
             {
-                tags.map(tag => (
+                tags.map((tag, index) => (
                     <Chip
-                        key={tag}
-                        label={tag}
+                        key={index}
+                        label={tag.name}
                         sx={{
                             borderRadius: "5px",
                         }}

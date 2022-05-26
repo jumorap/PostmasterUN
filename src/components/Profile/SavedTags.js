@@ -10,7 +10,7 @@ export default function SavedTags({ tags, handleTagDelete }) {
 
 
   return (
-    <Box elevation={2} sx = {{my: "10rem"}} justifyContent = "center">
+    <Paper elevation={2} sx = {{p: "1rem"}} justifyContent = "center">
       <Typography variant={"h2"} paddingBottom={1} align = "center">Etiquetas Guardadas</Typography>
       <Stack direction={"row"} justifyContent = "center" spacing={1}>
         {tags.map((item, index) => (
@@ -22,7 +22,7 @@ export default function SavedTags({ tags, handleTagDelete }) {
           />
         ))}
       </Stack>
-    </Box>
+    </Paper>
   );
 }
 
