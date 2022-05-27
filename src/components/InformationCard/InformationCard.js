@@ -8,6 +8,7 @@ import { dataQueryById } from "../../../firebase/dataQuery";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 
 
+
 //This component display the information card of navegacion principal
 function InformationCard({type, title, description, links, images, tags}) {
 
@@ -96,7 +97,7 @@ function InformationCard({type, title, description, links, images, tags}) {
                 tags.map((tag, index) => (
                     <Chip
                         key={index}
-                        label={tag.name}
+                        label={typeof tag === "string"? tag : tag.name}
                         sx={{
                             borderRadius: "5px",
                         }}
