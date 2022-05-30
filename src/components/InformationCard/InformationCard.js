@@ -1,16 +1,43 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Box, Chip, Container, Paper, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
 import PublicationTyper from './PublicationTyper'
 import { publication_t } from '../../types'
 import PropTypes from 'prop-types'
+import { dataQueryById } from "../../../firebase/dataQuery";
+import FirestoreManager from "../../../firebase/FirestoreManager";
+
+
+
 //This component display the information card of navegacion principal
 function InformationCard({type, title, description, links, images, tags}) {
+
+    const [dependenciesDataById, setDependenciesDataById] = useState([])
+    const [loaded, setLoaded] = useState(false)
+
+    /***
+     * Function that fetches the data from the firestore database
+     */
+    useEffect(() => {
+        if (!loaded) {
+            dataQueryById(FirestoreManager.getDependenciesList()).then(
+                (data) => {
+                    setDependenciesDataById(data);
+                    setLoaded(true);
+                })
+        }
+    }, [loaded])
+
   return (
     <Paper elevation={3} sx={{p: "1em", position: "relative", maxWidth :"700px"}}>
       <Stack spacing={1}>
-        {/*Type of the publication*/}
-        <PublicationTyper type={type}/>
+          {/*Type of the publication*/}
+          {/* From dependenciesDataById we get the name of the publication based in the id */}
+          <PublicationTyper type={
+            dependenciesDataById.map((dependency) => {
+                if (dependency.id === type) return dependency.name
+            })
+          }/>
       {/*Title of the publication*/}
       <Typography variant='h4'>
         {title}
@@ -65,17 +92,19 @@ function InformationCard({type, title, description, links, images, tags}) {
               Etiquetas:
             </Typography>
           </Box>
-        {tags.map((tag, index) => (
-          <Chip
-          key={index}
-          label={tag.name}
-          sx = {{
-            borderRadius: "5px",
-          }}
-          clickable
-          />
-        ))
-        }
+            {/* tags is an array of strings that will be displayed as chips */}
+            {
+                tags.map((tag, index) => (
+                    <Chip
+                        key={index}
+                        label={typeof tag === "string"? tag : tag.name}
+                        sx={{
+                            borderRadius: "5px",
+                        }}
+                        clickable
+                    />
+                ))
+            }
       </Stack>
 
         </Stack>

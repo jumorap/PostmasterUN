@@ -22,7 +22,9 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: 0,
+      }
     }),
   })
 );
@@ -37,12 +39,18 @@ export default function PersistentDrawerLeft({children}) {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+    //get the width of the window
+    const theme = useTheme();
+    const responsive = theme.breakpoints.up("sm");
+    console.log(responsive);
+
   
     return (
       <Box sx={{ display: "flex" }}>
         <Navbar open = {open} handleDrawerOpen = {handleDrawerOpen} drawerWidth = {drawerWidth}/>
         <SideNavBar open = {open} handleDrawerClose = {handleDrawerClose} drawerWidth = {drawerWidth}/>
-        <Main open={open}>
+        <Main open={open} responsive = {responsive}>
           {children}
         <Footer />
         </Main>

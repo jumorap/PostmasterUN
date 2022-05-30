@@ -6,6 +6,7 @@ import Menu from "@mui/material/Menu";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { Avatar, Box } from "@mui/material";
+import {LogBtn} from "../Login";
 
 function UserIcon({ isUserAuthentified, user }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -51,7 +52,9 @@ function UserIcon({ isUserAuthentified, user }) {
             <Link href="/perfil">
               <MenuItem onClick={handleClose}>{user.name.split(" ")[0]}</MenuItem>
             </Link>
-            <MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
+            <MenuItem onClick={handleClose}>
+              <LogBtn />
+            </MenuItem>
           </Menu>
         </Box>
       )}

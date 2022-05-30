@@ -21,15 +21,14 @@ function Filters(props) {
       sx={{
         p: 1,
         position: "sticky",
-        maxWidth: "700px",
-        padding: '5%',
+        paddingY: '1rem',
       }}
     >
-        <div className={styles.searchContainer}>
+      <Typography variant="h6" align = "center">Filtros</Typography>
+        {/* <div className={styles.searchContainer}>
             <SearchBar/>
-        </div>
-      <Typography variant="h6">Filtros</Typography>
-      <Typography variant="subtitle1">
+        </div> */}
+      <Typography variant="subtitle1" align="center">
         Elija las categorías que desea ver.
       </Typography>
       <Box
@@ -38,6 +37,7 @@ function Filters(props) {
           display: "flex",
           flexWrap: "wrap",
           gap: 1,
+          justifyContent: "center",
         }}
       >
         {props.tags.map((tag, index) => (

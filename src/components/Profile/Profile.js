@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { SavedTags } from "../index";
+import  SavedTags  from "./SavedTags";
 import { InformationCard } from "../InformationCard";
 import PublicationList from "./PublicationList"
 
@@ -103,7 +103,7 @@ const informationList = [
 ];
 
 export default function Profile() {
-  const [list, setList] = useState([]);
+
   const [tags, setTags] = useState([
     { name: "Alemania", dependency: "DRE", id: "1" },
     { name: "Argentina", dependency: "DRE", id: "2" },
@@ -134,10 +134,15 @@ export default function Profile() {
 
   return (
     <Box>
-      <SavedTags tags={tags} handleTagDelete={handleTagDelete} />
-      <PublicationList list={informationList} selectItem = {selectItem}>
-        <InformationCard {...currPubication} />
-      </PublicationList>
+      <Typography variant="h1" gutterBottom align="center">
+        Mis publicaciones
+      </Typography>
+      <Stack spacing={4} direction = {"column"}>
+        <SavedTags tags={tags} handleTagDelete={handleTagDelete} />
+        <PublicationList list={informationList} selectItem = {selectItem}>
+          <InformationCard {...currPubication} />
+        </PublicationList>
+      </Stack>
     </Box>
   );
 }

@@ -12,6 +12,8 @@ const SearchBar = () => {
             inputProps={{ 'aria-label': 'search'}}
             className={styles.searchBar}
             endAdornment={<FaSearch />}
+            sx={{with: "100%"}}
+            fullWidth = {true}
         />
     )
 }

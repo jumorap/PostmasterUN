@@ -11,7 +11,7 @@ const dialogStyle = {
   position: "absolute"
 }
 
-export default function Publication({ title, description, date, onClick }) {
+export default function Publication({ title, description, date, onClick, isEditable = false }) {
   const [elevation, setElevation] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -47,9 +47,13 @@ export default function Publication({ title, description, date, onClick }) {
               icon={<FavoriteBorder />}
               checkedIcon={<Favorite color="primary.strongRed" />}
             />
-            <IconButton aria-label="edit">
-              <EditOutlinedIcon onClick={()=>{handleClickOpen()}}/>
-            </IconButton>
+            {
+              isEditable && (
+                <IconButton aria-label="edit">
+                  <EditOutlinedIcon onClick={()=>{handleClickOpen()}}/>
+                </IconButton>
+              )
+            }
           </Box>
         </Stack>
       </Paper>

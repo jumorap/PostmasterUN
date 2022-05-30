@@ -1,4 +1,4 @@
-import { Modal, Stack, Typography } from "@mui/material";
+import { Modal, Paper, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Publication from "./Publication";
@@ -23,9 +23,8 @@ const modalStyle = {
  */
 export default function PublicationList({ list, children, selectItem }) {
   /*State to control the modal*/
-  // const [openModal, setOpenModal] = useState(false);
-  const openModal = false
-  const setOpenModal = () => openModal = true;
+  const [openModal, setOpenModal] = useState(false);
+
   const handleClose = () => setOpenModal(false);
   const handleOpen = (index) => {
     setOpenModal(true);
@@ -33,10 +32,10 @@ export default function PublicationList({ list, children, selectItem }) {
   }
 
   return (
-    <>
+    <Paper elevation={2} sx = {{px:2, py: 1}}>
       {/*List of publications*/}
       <Box>
-        <Typography variant="h2">Publicaciones Guardadas</Typography>
+        <Typography variant="h2" align="center">Publicaciones Guardadas</Typography>
         <Stack direction={"column"} spacing={2}>
           {list.map((item, index) => {
             return (
@@ -63,7 +62,7 @@ export default function PublicationList({ list, children, selectItem }) {
           {children}
         </Box>
       </Modal>
-    </>
+    </Paper>
   );
 }
 
