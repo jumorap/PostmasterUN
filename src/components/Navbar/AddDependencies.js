@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Avatar, Box, Button, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { Checkbox, Paper, Stack, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { TextField } from "@mui/material";
+import { addDependency } from "../../../firebase/dataUpdate";
 
 const dialogStyle = {
   position: "absolute"
@@ -11,9 +12,10 @@ const dialogStyle = {
 export default function AddDependencies({ isUserAuthentified, user }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [elevation, setElevation] = useState(1);
+  const [input, setInput] = useState('');
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpenDialog = () => {
     setOpen(true);
   }
 
@@ -23,12 +25,12 @@ export default function AddDependencies({ isUserAuthentified, user }) {
 
   const handleSubmit = () => {
     setOpen(false);
-    alert('Dependencia agregada con éxito');
+    addDependency(input)
   }
 
   return (
     <>
-        <ListItem button onClick={()=>{handleClickOpen()}}>
+        <ListItem button onClick={()=>{handleClickOpenDialog()}}>
           <ListItemText primary={"Agregar"} sx={{paddingLeft: '55px'}}/>
           <ListItemIcon >
             <AddIcon />
@@ -44,7 +46,7 @@ export default function AddDependencies({ isUserAuthentified, user }) {
                             id="filled-basic" 
                             label="Nombre" 
                             variant="outlined"
-                            defaultValue="Holi"
+                            onChange={e => setInput(e.target.value)}
                             fullwidht
                         />
 

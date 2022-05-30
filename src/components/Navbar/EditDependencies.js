@@ -40,7 +40,6 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
                             id="filled-basic" 
                             label="Nombre" 
                             variant="outlined"
-                            defaultValue="Holi"
                             fullwidht
                         />
 
