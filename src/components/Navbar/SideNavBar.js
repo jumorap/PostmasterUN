@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Button, ListItemSecondaryAction, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -11,9 +11,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { dataQueryArray } from "../../../firebase/dataQuery";
 import FirestoreManager from "../../../firebase/FirestoreManager";
-
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import AddDependencies from './AddDependencies';
+import EditDependencies from "./EditDependencies";
 
 const areasFull = [
   "Postmaster",
@@ -104,9 +105,13 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
               >
                 <ListItemIcon>{/*añadir despues*/}</ListItemIcon>
                 <ListItemText primary={text} />
+                <ListItemSecondaryAction>
+                  <EditDependencies/>
+                </ListItemSecondaryAction>
               </ListItem>
             </Link>
           ))}
+          <AddDependencies/>
         </List>
         <Divider />
     </Drawer>
