@@ -1,5 +1,6 @@
 import { async } from "@firebase/util"
-import { collection, doc, addDoc, updateDoc} from "firebase/firestore"
+import {collection, query, where, getDocs} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { dataQueryArray } from "./dataQuery";
 import { db, firebaseAppAuth } from "./firebase.config"
 import FirestoreManager from "./FirestoreManager";
@@ -16,15 +17,32 @@ export async function addDependency(itemName){
                 name: itemName
             })
             .then(() => {    
-                alert('Dependencia agregada con éxito.')
+                alert('Dependencia agregada con éxito.');
             })
             .catch((error) => {
-                alert('Hubo un error, inténtalo de nuevo.')
-                console.log(error)    
+                alert('Hubo un error, inténtalo de nuevo.');
+                console.log(error);
             });
         }
       });
+
 }
 
-export async function editDependency(itemName){
+export async function editDependency(itemName, newName){
+    const q = query(collection(db, "dependencies"), where("name", "==", itemName));
+    const querySnapshot = await getDocs(q);
+    var docID = "";
+    querySnapshot.forEach((doc) =>{
+        docID = doc.id
+    })
+    const depRef = doc(db, "dependencies", docID);
+
+    await updateDoc(depRef, {name: newName})
+    .then(() => {    
+        alert('Dependencia modificada con éxito.');
+    })
+    .catch((error) => {
+        alert('Hubo un error, inténtalo de nuevo.');
+        console.log(error);
+    });
 }

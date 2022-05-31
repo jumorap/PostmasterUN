@@ -106,7 +106,7 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
                 <ListItemIcon>{/*añadir despues*/}</ListItemIcon>
                 <ListItemText primary={text} />
                 <ListItemSecondaryAction>
-                  <EditDependencies/>
+                  <EditDependencies dependencyName={text}/>
                 </ListItemSecondaryAction>
               </ListItem>
             </Link>

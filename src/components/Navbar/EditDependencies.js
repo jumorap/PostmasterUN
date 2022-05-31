@@ -3,6 +3,7 @@ import { Avatar, Box, Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { Checkbox, Paper, Stack, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { TextField } from "@mui/material";
+import { editDependency } from "../../../firebase/dataUpdate";
 
 const dialogStyle = {
     position: "absolute"
@@ -12,6 +13,7 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [elevation, setElevation] = useState(1);
   const [open, setOpen] = useState(false);
+  const [input, setInput] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,7 +25,7 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
 
   const handleSubmit = () => {
     setOpen(false);
-    alert('Dependencia modificada con éxito');
+    editDependency(dependencyName, input)
   }
   return (
     <>
@@ -40,6 +42,8 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
                             id="filled-basic" 
                             label="Nombre" 
                             variant="outlined"
+                            defaultValue={dependencyName}
+                            onChange={e => setInput(e.target.value)}
                             fullwidht
                         />
 
