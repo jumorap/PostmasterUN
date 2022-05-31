@@ -1,8 +1,19 @@
-import { Box, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Stack, Typography, Fab} from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+
+import React, { useState, useEffect } from "react";
 import  SavedTags  from "./SavedTags";
 import { InformationCard } from "../InformationCard";
-import PublicationList from "./PublicationList"
+import PublicationList from "./PublicationList";
+import CreatePublication from "./CreatePublication";
+
+import { firebaseAppAuth} from "../../../firebase/firebase.config"
+import {getUser} from "../../../firebase/userManager"
+
+
+
+
 
 const informationList = [
   {
@@ -103,6 +114,7 @@ const informationList = [
 ];
 
 export default function Profile() {
+  
 
   const [tags, setTags] = useState([
     { name: "Alemania", dependency: "DRE", id: "1" },
@@ -132,6 +144,33 @@ export default function Profile() {
     setCurrPubication(informationList[index]);
   };
 
+  const [isAdmin,setIsAdmin] = useState(false)
+  const [showCreatePublication,setShowCreatePublication] = useState(false)
+
+
+ 
+//Verify if user is admin to show createNews component
+  useEffect(() => {
+    firebaseAppAuth.onAuthStateChanged((u) => {
+      const user = getUser(u.uid)
+
+      user.then(res => {
+        //verify if user field rol is admin
+        const rol = res.data().rol[0]
+        if(rol == "admin"){
+          setIsAdmin(true)
+        }
+      })
+    })
+}, [])
+
+console.log(isAdmin)
+
+
+
+// const display flex y none
+// if is admin entonces display flex, else none
+
   return (
     <Box>
       <Typography variant="h1" gutterBottom align="center">
@@ -143,6 +182,30 @@ export default function Profile() {
           <InformationCard {...currPubication} />
         </PublicationList>
       </Stack>
+
+      <Box sx={{
+          display: !isAdmin && 'none',
+          position: "fixed",
+          justifyContent: "flex-end",
+          bottom: 40,
+          right: 40
+        }}>
+      
+      <Fab variant="extended"
+         onClick={() => {
+          setShowCreatePublication(true)
+        }}
+      >
+        <NewspaperIcon sx={{ mr: 1 }} />
+        Publicar
+      </Fab>
+      </Box>
+     
+        <CreatePublication show={showCreatePublication}/>
     </Box>
   );
 }
+
+
+
+
