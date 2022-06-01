@@ -18,6 +18,7 @@ import FirestoreManager from "../../../firebase/FirestoreManager";
 import { DependencyContext } from "../contextProviders";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import FavoriteButton from "./FavoriteButton";
+import DeleteButton from "./DeleteButton";
 
 //This component display the information card of navegacion principal
 function InformationCard({ type, title, description, links, images, tags, postID }) {
@@ -89,6 +90,7 @@ function InformationCard({ type, title, description, links, images, tags, postID
         >
           {/* Heart Icon for addind favorite publications */}
           <FavoriteButton postId={postID}/>
+          <DeleteButton postId={postID}/>
           <Box>
             <Typography variant="body1" sx={{ color: "primary.gray" }}>
               Etiquetas:

@@ -9,6 +9,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  deleteDoc,
 } from "firebase/firestore";
 
 class FirestoreManager {
@@ -17,6 +18,12 @@ class FirestoreManager {
   static _getTags = collection(db, "tags");
   static _getDependencies = collection(db, "dependencies");
 
+  
+  static async deletePost(postID) {
+    const postRef = doc(db, "posts", postID);
+    await deleteDoc(postRef);
+  }
+  
   static async _getFavoritePostsIDs(userID) {
     const userRef = doc(db, "users", `${userID}`);
     const userSnap = await getDoc(userRef);
