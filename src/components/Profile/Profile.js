@@ -1,8 +1,10 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import  SavedTags  from "./SavedTags";
 import { InformationCard } from "../InformationCard";
 import PublicationList from "./PublicationList"
+import FirestoreManager from "../../../firebase/FirestoreManager";
+import { AuthContext } from "../../../firebase/AuthProvider.config";
 
 const informationList = [
   {
@@ -110,6 +112,16 @@ export default function Profile() {
     { name: "Brasil", dependency: "DRE", id: "3" },
     { name: "Chile", dependency: "DRE", id: "4" },
   ]);
+  const [savedPublications, setSavedPublications] = useState(informationList);
+  const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    FirestoreManager.getFavoritePosts(currentUser.uid).then(posts => {
+      console.log(posts);
+      setSavedPublications(posts);
+    })
+  }, [])
+  
 
   function handleTagDelete(tag) {
     const newTags = tags.filter((t) => t.id !== tag.id);
@@ -129,7 +141,7 @@ export default function Profile() {
   });
 
   const selectItem = (index) => {
-    setCurrPubication(informationList[index]);
+    setCurrPubication(savedPublications[index]);
   };
 
   return (
@@ -139,7 +151,7 @@ export default function Profile() {
       </Typography>
       <Stack spacing={4} direction = {"column"}>
         <SavedTags tags={tags} handleTagDelete={handleTagDelete} />
-        <PublicationList list={informationList} selectItem = {selectItem}>
+        <PublicationList list={savedPublications} selectItem = {selectItem}>
           <InformationCard {...currPubication} />
         </PublicationList>
       </Stack>

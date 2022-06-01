@@ -17,6 +17,24 @@ class FirestoreManager {
   static _getTags = collection(db, "tags");
   static _getDependencies = collection(db, "dependencies");
 
+  static async _getFavoritePostsIDs(userID) {
+    const userRef = doc(db, "users", `${userID}`);
+    const userSnap = await getDoc(userRef);
+    const data = userSnap.data();
+    return data.savedPosts;
+  }
+
+  static async getFavoritePosts(userID) {
+    const posts = [];
+    const postIDs = await this._getFavoritePostsIDs(userID);
+    for (let i = 0; i < postIDs.length; i++) {
+      const post = await getDoc(doc(db, "posts", postIDs[i]));
+
+      posts.push(post.data());
+    }
+    return posts;
+  }
+
   static async addFavorite(postID, userID) {
     const userRef = doc(db, "users", userID);
     await updateDoc(userRef, {
