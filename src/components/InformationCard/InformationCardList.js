@@ -16,6 +16,7 @@ function InformationCardList({informationList}) {
             images={info.images}
             links={info.links}
             key={info.id}
+            postID = {info.id}
           />
           ))}
     </Stack>

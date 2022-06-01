@@ -15,7 +15,7 @@ export async function dataQueryArray(listInfo) {
     let data = []
     const querySnap = await listInfo
     querySnap.forEach(element => {
-        data.push(element.data())
+        data.push({...element.data(), id : element.id})
     })
     return data
 }

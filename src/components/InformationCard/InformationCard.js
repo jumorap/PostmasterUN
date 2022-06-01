@@ -1,5 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Chip, Container, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  Chip,
+  Container,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import PublicationTyper from "./PublicationTyper";
 import { publication_t } from "../../types";
@@ -7,10 +16,13 @@ import PropTypes from "prop-types";
 import { dataQueryById } from "../../../firebase/dataQuery";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import { DependencyContext } from "../contextProviders";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import FavoriteButton from "./FavoriteButton";
 
 //This component display the information card of navegacion principal
-function InformationCard({ type, title, description, links, images, tags }) {
-  const [dependenciesDataById, setDependenciesDataById] = useContext(DependencyContext);
+function InformationCard({ type, title, description, links, images, tags, postID }) {
+  const [dependenciesDataById, setDependenciesDataById] =
+    useContext(DependencyContext);
 
   return (
     <Paper
@@ -25,6 +37,7 @@ function InformationCard({ type, title, description, links, images, tags }) {
             if (dependency.id === type) return dependency.name;
           })}
         />
+
         {/*Title of the publication*/}
         <Typography variant="h4">{title}</Typography>
 
@@ -72,24 +85,26 @@ function InformationCard({ type, title, description, links, images, tags }) {
           direction="row"
           spacing={1}
           alignItems="center"
-          justifyContent={"flex-end"}
+          justifyContent={"space-between"}
         >
+          {/* Heart Icon for addind favorite publications */}
+          <FavoriteButton postId={postID}/>
           <Box>
             <Typography variant="body1" sx={{ color: "primary.gray" }}>
               Etiquetas:
             </Typography>
+            {tags.map((tag, index) => (
+              <Chip
+                key={index}
+                label={typeof tag === "string" ? tag : tag.name}
+                sx={{
+                  borderRadius: "5px",
+                }}
+                clickable
+              />
+            ))}
           </Box>
           {/* tags is an array of strings that will be displayed as chips */}
-          {tags.map((tag, index) => (
-            <Chip
-              key={index}
-              label={typeof tag === "string" ? tag : tag.name}
-              sx={{
-                borderRadius: "5px",
-              }}
-              clickable
-            />
-          ))}
         </Stack>
       </Stack>
     </Paper>

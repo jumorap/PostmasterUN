@@ -49,8 +49,8 @@ function getIDdependency(dependencies, dependency) {
 export default function MainContent({dependency}) {
   const [tagList, setTagList] = useState(tagTest)
   const [postsData, setPostsData] = useState(informationList)
-  const [loaded, setLoaded] = useState(false)
   const [dependencies, setDependencys] = useContext(DependencyContext)
+
 
 
   /***
@@ -62,7 +62,6 @@ export default function MainContent({dependency}) {
       dataQueryArray(FirestoreManager.getPostsList(currDependencyId)).then(
           (data) => {
             setPostsData(data);
-            setLoaded(true);
           }
       )
   }, [dependency])
