@@ -247,6 +247,8 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.16.7"
 
+<<<<<<< HEAD
+=======
 "@babel/plugin-syntax-logical-assignment-operators@^7.8.3":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-logical-assignment-operators/-/plugin-syntax-logical-assignment-operators-7.10.4.tgz#ca91ef46303530448b906652bac2e9fe9941f699"
@@ -303,6 +305,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.17.12"
 
+>>>>>>> 2bdf6c46a32da6ab6f041a769b55ee5acdf45cc7
 "@babel/runtime-corejs3@^7.10.2":
   version "7.17.9"
   resolved "https://registry.npmjs.org/@babel/runtime-corejs3/-/runtime-corejs3-7.17.9.tgz"
