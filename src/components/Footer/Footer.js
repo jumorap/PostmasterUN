@@ -51,7 +51,7 @@ function Footer(props) {
           bottom: 8,
           right: 0,
           position: "fixed",
-          zIndex: 1200,
+          zIndex: 100,
         }} 
         onClick={toggleDrawer(true)}
       />
@@ -70,8 +70,8 @@ function Footer(props) {
             paddingTop: "20px",
             paddingRight: "5px",
             paddingLeft: "5px",
-            marginLeft:"20%",
-            marginRight:"20%"},
+            marginLeft: {sm: 0, md:"20%"},
+            marginRight:{sm: 0, md:"20%"}},
         }}
         ModalProps={{
           keepMounted: true,

@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
 					<link
 						rel="stylesheet"
 						href=
-"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+"https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
 					/>
 {/* Inject MUI styles first to match with the prepend: true configuration. */}
 					{this.props.emotionStyleTags}

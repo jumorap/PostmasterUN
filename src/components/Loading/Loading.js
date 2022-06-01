@@ -8,13 +8,14 @@ export default function Loading(state) {
 
     return (
         <>
-            {state
-                ? (
-                    <center className={styles.loadingContainer}>
-                        <LoadingIcons.ThreeDots className={styles.loading}/>
-                    </center>
-                )
-                : null
+            {
+                state
+                    ? (
+                        <center className={styles.loadingContainer}>
+                            <LoadingIcons.ThreeDots className={styles.loading}/>
+                        </center>
+                    )
+                    : null
             }
         </>
     )

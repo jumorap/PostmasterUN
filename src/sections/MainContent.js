@@ -15,20 +15,16 @@ const tagTest = [
 
 const informationList = [
   {
-    type: "Postmaster",
-    title: "Primer lugar a investigación con sello UNAL",
+    type: "Cargando...",
+    title: "Cargando...",
     description:
-      "Esta es una pieza perteneciente a la campaña Orgullo UNAL, es de fondo azul con textos en blanco, tiene una fotografía donde se puede apreciar un procedimiento quirúrgico de apendicitis llevado a cabo por un equipo de cirujanos.",
+      "Cargando...",
     tags: [
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
-      { name: "UNAL", favorite: false },
+      "Cargando..."
     ],
     images: ["https://picsum.photos/500/550"],
     links: [
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
-      { name: "Clickable Link", url: "#basic-chip" },
+      { name: "Cargando...", url: "#" },
     ],
     favorite: false,
   },
@@ -41,7 +37,7 @@ const informationList = [
  */
 export default function MainContent() {
   const [tagList, setTagList] = useState(tagTest)
-  const [usersData, setUsersData] = useState(informationList)
+  const [postsData, setPostsData] = useState(informationList)
   const [loaded, setLoaded] = useState(false)
 
   /***
@@ -51,7 +47,7 @@ export default function MainContent() {
     if (!loaded) {
       dataQueryArray(FirestoreManager.getPostsList()).then(
           (data) => {
-            setUsersData(data);
+            setPostsData(data);
             setLoaded(true);
           }
       )
@@ -78,7 +74,7 @@ export default function MainContent() {
   return (
     <Grid container spacing={{xs : 6, md : 3}} direction = {{xs : "column-reverse", md : "row"}}  >
         <Grid item xs = {12} md={8}>
-          <InformationCardList informationList={usersData} />
+          <InformationCardList informationList={postsData} />
         </Grid>
         <Grid item xs = {12}  md={4} sx = {{position: "relative"}}>
           <Box sx = {{position:{md: "sticky"}}}>
