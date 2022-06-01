@@ -5,6 +5,7 @@ import { SideNavBar, Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { SavedTags } from "./Profile";
 import { Login } from "./Login"
+import { DependencyProvider, DependencyContext } from "./contextProviders";
 
 export {
   SavedCards,
@@ -15,4 +16,6 @@ export {
   Footer,
   SavedTags,
   Login,
+  DependencyProvider,
+  DependencyContext
 };

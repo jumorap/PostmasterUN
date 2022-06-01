@@ -14,7 +14,7 @@ export default function PersistentDrawerLeft() {
       >
         {dependency}
       </Typography>
-      <MainContent />
+      <MainContent dependency={dependency}/>
     </NavBar>
   );
 }
