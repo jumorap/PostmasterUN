@@ -4,8 +4,8 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../firebase/AuthProvider.config";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 
-export default function FavoriteButton({ postId }) {
-  const [checked, setChecked] = React.useState(false);
+export default function FavoriteButton({ postId, defaultChecked = false }) {
+  const [checked, setChecked] = React.useState(defaultChecked);
   const [openSnak, setOpenMessage] = React.useState(false);
   const [isAdded, setIsAdded] = React.useState(true);
 

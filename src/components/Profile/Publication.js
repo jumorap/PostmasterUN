@@ -7,13 +7,14 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Proptypes from "prop-types";
 import { Timestamp } from "firebase/firestore";
+import FavoriteButton from "../InformationCard/FavoriteButton";
 
 const dialogStyle = {
   position: "absolute"
 }
 
 
-export default function Publication({ title, description, date, onClick, isEditable = false }) {
+export default function Publication({ title, description, date, onClick, isEditable = false, postId }) {
   const [elevation, setElevation] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -45,10 +46,7 @@ export default function Publication({ title, description, date, onClick, isEdita
             <Typography paddingLeft={2} paddingBottom={1} variant="body1">{description}</Typography>
           </Box>
           <Box display={"flex"} alignItems="center">
-            <Checkbox
-              icon={<FavoriteBorder />}
-              checkedIcon={<Favorite color="primary.strongRed" />}
-            />
+            <FavoriteButton postId={postId} defaultChecked = {true}/>
             {
               isEditable && (
                 <IconButton aria-label="edit">

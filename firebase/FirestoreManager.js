@@ -30,7 +30,7 @@ class FirestoreManager {
     for (let i = 0; i < postIDs.length; i++) {
       const post = await getDoc(doc(db, "posts", postIDs[i]));
 
-      posts.push(post.data());
+      posts.push({...post.data(), id : postIDs[i]});
     }
     return posts;
   }
