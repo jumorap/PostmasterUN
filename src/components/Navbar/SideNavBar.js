@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Button, ListItemSecondaryAction, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -9,11 +9,16 @@ import Drawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { dataQueryArray } from "../../../firebase/dataQuery";
+import { dataQueryArray, mapDependencies } from "../../../firebase/dataQuery";
 import FirestoreManager from "../../../firebase/FirestoreManager";
+import { firebaseAppAuth} from "../../../firebase/firebase.config"
+import { getUser } from "../../../firebase/userManager";
 
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+
+import AddDependencies from './AddDependencies';
+import EditDependencies from "./EditDependencies";
 
 const areasFull = [
   "Postmaster",
@@ -48,18 +53,36 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
   const [dependenciesData, setDependenciesData] = useState(areas);
   const [loaded, setLoaded] = useState(false);
 
+  const [isAdmin,setIsAdmin] = useState(false);
+
   /***
    * Function that fetches the data from the firestore database
    */
-  useEffect(() => {
-    if (!loaded) {
+   useEffect(() => {
+    if (!loaded) { //To re-render when created or edited, just take the code inside the if outside.
       dataQueryArray(FirestoreManager.getDependenciesList()).then((data) => {
         const dataArray = data.map((item) => item.name);
         setDependenciesData(dataArray);
         setLoaded(true);
       });
     }
+    
   }, [loaded]);
+
+  //Verify if user is admin to show edit and create component
+  useEffect(() => {
+    firebaseAppAuth.onAuthStateChanged((u) => {
+      const user = getUser(u.uid)
+
+      user.then(res => {
+        //verify if user field rol is admin
+        const rol = res.data().rol[0]
+        if(rol == "admin"){
+          setIsAdmin(true)
+        }
+      })
+    })
+  }, [])
 
   return (
     <Drawer
@@ -104,9 +127,13 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
               >
                 <ListItemIcon>{/*añadir despues*/}</ListItemIcon>
                 <ListItemText primary={text} />
+                <ListItemSecondaryAction sx={{display: !isAdmin && "none"}}>
+                  <EditDependencies dependencyName={text} setLoaded={setLoaded}/>
+                </ListItemSecondaryAction>
               </ListItem>
             </Link>
           ))}
+          <AddDependencies setLoaded={setLoaded} disp={isAdmin}/>
         </List>
         <Divider />
     </Drawer>
