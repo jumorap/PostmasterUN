@@ -48,18 +48,20 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
 
   const [dependenciesData, setDependenciesData] = useState(areas);
   const [loaded, setLoaded] = useState(false);
-  const [rerender, setRerender] = useState(0);
 
   /***
    * Function that fetches the data from the firestore database
    */
   useEffect(() => {
-    dataQueryArray(FirestoreManager.getDependenciesList()).then((data) => {
-      const dataArray = data.map((item) => item.name);
-      setDependenciesData(dataArray);
-      setLoaded(true);
-      console.log(loaded)
-    });
+    if (!loaded){
+      dataQueryArray(FirestoreManager.getDependenciesList()).then((data) => {
+        const dataArray = data.map((item) => item.name);
+        setDependenciesData(dataArray);
+        setLoaded(true);
+        console.log(loaded)
+      });
+    }
+    
   }, [loaded]);
 
   return (
@@ -105,7 +107,7 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
               >
                 <ListItemIcon>{/*añadir despues*/}</ListItemIcon>
                 <ListItemText primary={text} />
-                <ListItemSecondaryAction>
+                <ListItemSecondaryAction sx={{display: "none"}}>
                   <EditDependencies dependencyName={text} setLoaded={setLoaded}/>
                 </ListItemSecondaryAction>
               </ListItem>
