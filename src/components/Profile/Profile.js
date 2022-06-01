@@ -1,19 +1,12 @@
-import { Box, Stack, Typography, Fab, Paper, Avatar, Divider} from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-
-import React, { useState, useEffect } from "react";
+import { Box, Stack, Typography, Paper, Avatar, Divider } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import  SavedTags  from "./SavedTags";
 import { InformationCard } from "../InformationCard";
-import PublicationList from "./PublicationList";
-import CreatePublication from "./CreatePublication";
+import PublicationList from "./PublicationList"
 
-import { firebaseAppAuth } from "../../../firebase/firebase.config"
-import {getUser} from "../../../firebase/userManager"
+import defaultUserImage from "../../../public/assets/user_profile.png";
 
-
-
-
+import { firebaseAppAuth } from "../../../firebase/firebase.config";
 
 const informationList = [
   {
@@ -114,7 +107,6 @@ const informationList = [
 ];
 
 export default function Profile() {
-  
 
   const [tags, setTags] = useState([
     { name: "Alemania", dependency: "DRE", id: "1" },
@@ -144,68 +136,46 @@ export default function Profile() {
     setCurrPubication(informationList[index]);
   };
 
-  /*Firebase methods */
+  /*Firebase methods*/
 
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-  const [isAdmin,setIsAdmin] = useState(false)
-  const [showCreatePublication,setShowCreatePublication] = useState(false)
 
-
- 
-//Verify if user is admin to show createNews component
   useEffect(() => {
-    firebaseAppAuth.onAuthStateChanged((u) => {
-      setIsUserAuthenticated(!!u?.email.toString().split('@')[1].includes('unal.edu.co'));
-      const user = getUser(u.uid)
-
-      user.then(res => {
-        //verify if user field rol is admin
-        const rol = res.data().rol[0]
-        if(rol == "admin"){
-          setIsAdmin(true)
-        }
-      })
-    })
-}, [])
-
-console.log('isAdmin=', isAdmin)
-
-// Get User Information
-const [user, setUser] = useState({
-  src: "",
-  name: "",
-  email: "",
-  favPost: 1
-});
-
-useEffect(() => {
-  if (isUserAuthenticated) {
     firebaseAppAuth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser({
-          src: user.photoURL,
-          name: user.displayName,
-          email: user.email,
-          favPost: 5
-        });
-      } else {
-        setUser({
-          src: "",
-          name: "",
-          email: "",
-          favPost: 0
-        });
-      }
+      setIsUserAuthenticated(!!user?.email.toString().split('@')[1].includes('unal.edu.co'));
     });
-  }
-}, [isUserAuthenticated]);
+  }, []);
 
-console.log(isUserAuthenticated);
+  /* Get the image of the current user with firebase */
+  const [user, setUser] = useState({
+    src: "",
+    name: "",
+    email: "",
+    favPost: 0
+  });
 
-
-
-// const display flex y none
-// if is admin entonces display flex, else none
+  useEffect(() => {
+    if (isUserAuthenticated) {
+      firebaseAppAuth.onAuthStateChanged((user) => {
+        if (user) {
+          setUser({
+            src: user.photoURL,
+            name: user.displayName,
+            email: user.email,
+            favPost: 5
+          });
+        } else {
+          setUser({
+            src: "",
+            name: "",
+            email: "",
+            favPost: 0
+          });
+        }
+      });
+    }
+  }, [isUserAuthenticated]);
+  console.log(isUserAuthenticated);
 
   return (
     <Box sx={{paddingLeft: 10, paddingRight: 10}}>
@@ -213,7 +183,7 @@ console.log(isUserAuthenticated);
       <Typography style={{fontWeight: 500}} variant="h4" gutterBottom >
         Información del Usuario
       </Typography>
-
+      
       <Divider />
 
       <Stack marginBottom={5} marginTop={2}>
@@ -247,12 +217,8 @@ console.log(isUserAuthenticated);
         <PublicationList list={informationList} selectItem = {selectItem}>
           <InformationCard {...currPubication} />
         </PublicationList>
+        
       </Stack>
-        <CreatePublication disp={isAdmin}/>
-      </Box>
+    </Box>
   );
 }
-
-
-
-
