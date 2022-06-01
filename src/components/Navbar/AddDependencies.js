@@ -9,7 +9,7 @@ const dialogStyle = {
   position: "absolute"
 }
 
-export default function AddDependencies({ isUserAuthentified, user, setLoaded}) {
+export default function AddDependencies({ isUserAuthentified, user, setLoaded, disp}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [elevation, setElevation] = useState(1);
   const [input, setInput] = useState('');
@@ -26,12 +26,12 @@ export default function AddDependencies({ isUserAuthentified, user, setLoaded}) 
   const handleSubmit = () => {
     setOpen(false);
     addDependency(input);
-    setLoaded(false);
+    setLoaded(true);
   }
 
   return (
     <>
-        <ListItem button onClick={()=>{handleClickOpenDialog()}} sx={{background: 'rgba(0, 0, 0, 0.1);'}}>
+        <ListItem button onClick={()=>{handleClickOpenDialog()}} sx={{background: 'rgba(0, 0, 0, 0.1);', display: !disp && "none"}}>
           <ListItemText primary={"Agregar dependencia"} sx={{paddingLeft: '55px', paddingRight: '120px'}}/>
           <ListItemIcon >
             <AddIcon />

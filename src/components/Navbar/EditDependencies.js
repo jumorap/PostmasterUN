@@ -26,7 +26,7 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
   const handleSubmit = () => {
     setOpen(false);
     editDependency(dependencyName, input)
-    setLoaded(false);
+    setLoaded(true);
   }
   return (
     <>
