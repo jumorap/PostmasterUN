@@ -1,5 +1,5 @@
 import { db } from "./firebase.config.js"
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where  } from "firebase/firestore";
 
 
 class FirestoreManager {
@@ -12,8 +12,12 @@ class FirestoreManager {
         return await getDocs(this._getUsers)
     }
 
-    static async getPostsList() {
-        return await getDocs(this._getPosts)
+    static async getPostsList(dependencyID) {
+        let docs = this._getPosts
+        if (dependencyID) {
+            docs = query(this._getPosts, where("type", "==", dependencyID))
+        } 
+        return await getDocs(docs)
     }
 
     static async getTagsList() {

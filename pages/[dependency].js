@@ -6,6 +6,7 @@ import { Typography } from "@mui/material";
 export default function PersistentDrawerLeft() {
   const router = useRouter();
   const { dependency } = router.query;
+  
   return (
     <NavBar>
       <Typography
