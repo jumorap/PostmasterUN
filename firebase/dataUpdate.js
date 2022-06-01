@@ -48,13 +48,22 @@ export async function editDependency(itemName, newName){
 }
 
 export async function addPost(dependency, title, description, tags, links){
-    
+    const q = query(collection(db, "dependencies"), where("name", "==", dependency));
+    const querySnapshot = await getDocs(q);
+    var docID = "";
+    querySnapshot.forEach((doc) =>{
+        docID = doc.id
+    })
+
+    const arr = tags.split(/[ ,]+/);
     await addDoc(collection(db, "posts"), {
-        dependency: dependency,
+        date: "1 de Junio de 2022",
+        type: docID,
         title: title,
+        images: ["https://picsum.photos/500/550"],
         description: description,
-        tags: tags,
-        links: links
+        tags: arr,
+        links: [{name: links, url: links}]
     })
     .then(() => {    
         alert('Publicación agregada con éxito.');

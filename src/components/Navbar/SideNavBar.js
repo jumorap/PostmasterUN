@@ -51,30 +51,24 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
   const { dependency } = router.query;
 
   const [dependenciesData, setDependenciesData] = useState(areas);
-  const [loaded, setLoaded] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
   const [isAdmin,setIsAdmin] = useState(false);
 
   /***
    * Function that fetches the data from the firestore database
    */
-  useEffect(() => {
-    const mapDependencies = async () => {
+   useEffect(() => {
+    if (!loaded) { //To re-render when created or edited, just take the code inside the if outside.
       dataQueryArray(FirestoreManager.getDependenciesList()).then((data) => {
         const dataArray = data.map((item) => item.name);
         setDependenciesData(dataArray);
-        console.log("render")
+        setLoaded(true);
       });
-    };
-
-    if (loaded){
-      mapDependencies();
     }
-    return ()=>{
-      setLoaded(false);
-    }   
+    
   }, [loaded]);
-  
+
   //Verify if user is admin to show edit and create component
   useEffect(() => {
     firebaseAppAuth.onAuthStateChanged((u) => {

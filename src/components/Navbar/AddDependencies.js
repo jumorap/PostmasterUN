@@ -26,7 +26,7 @@ export default function AddDependencies({ isUserAuthentified, user, setLoaded, d
   const handleSubmit = () => {
     setOpen(false);
     addDependency(input);
-    setLoaded(true);
+    setLoaded(false);
   }
 
   return (

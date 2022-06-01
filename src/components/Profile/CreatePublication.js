@@ -89,9 +89,9 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
             </Box>
             <Dialog sx={dialogStyle} open={open} onClose={handleClose} fullWidth>
                 <DialogTitle>Crear publicación</DialogTitle>
-                <DialogContent width="90%">
+                <DialogContent width="80%">
                 <DialogContentText>
-                    <Stack direction={"column"} spacing={3}>
+                    <Stack direction={"column"} spacing={3} >
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Dependencia</InputLabel>
                             <Select
@@ -126,7 +126,6 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
                             id="filled-basic" 
                             label="Etiquetas" 
                             variant="outlined"
-                            fullwidht
                             onChange={e => setTags(e.target.value)}
                         />
                         <TextField
@@ -134,7 +133,6 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
                             id="filled-basic" 
                             label="Enlaces de interés" 
                             variant="outlined"
-                            fullwidht
                             onChange={e => setLinks(e.target.value)}
                         />
                     </Stack>
