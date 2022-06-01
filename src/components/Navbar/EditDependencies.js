@@ -9,7 +9,7 @@ const dialogStyle = {
     position: "absolute"
   }
 
-export default function EditDependencies({ isUserAuthentified, user, dependencyName}) {
+export default function EditDependencies({ isUserAuthentified, user, dependencyName, setLoaded}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [elevation, setElevation] = useState(1);
   const [open, setOpen] = useState(false);
@@ -26,6 +26,7 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
   const handleSubmit = () => {
     setOpen(false);
     editDependency(dependencyName, input)
+    setLoaded(false);
   }
   return (
     <>
@@ -58,3 +59,4 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
     </>
   );
 }
+

@@ -1,6 +1,6 @@
 import { async } from "@firebase/util"
 import {collection, query, where, getDocs} from "firebase/firestore";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, addDoc } from "firebase/firestore";
 import { dataQueryArray } from "./dataQuery";
 import { db, firebaseAppAuth } from "./firebase.config"
 import FirestoreManager from "./FirestoreManager";
