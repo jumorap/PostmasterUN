@@ -248,27 +248,8 @@ console.log(isUserAuthenticated);
           <InformationCard {...currPubication} />
         </PublicationList>
       </Stack>
-
-      <Box sx={{
-          display: !isAdmin && 'none',
-          position: "fixed",
-          justifyContent: "flex-end",
-          bottom: 40,
-          right: 40
-        }}>
-      
-      <Fab variant="extended"
-         onClick={() => {
-          setShowCreatePublication(true)
-        }}
-      >
-        <NewspaperIcon sx={{ mr: 1 }} />
-        Publicar
-      </Fab>
+        <CreatePublication disp={isAdmin}/>
       </Box>
-     
-        <CreatePublication show={showCreatePublication}/>
-    </Box>
   );
 }
 

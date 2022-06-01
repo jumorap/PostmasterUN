@@ -46,3 +46,22 @@ export async function editDependency(itemName, newName){
         console.log(error);
     });
 }
+
+export async function addPost(dependency, title, description, tags, links){
+    
+    await addDoc(collection(db, "posts"), {
+        dependency: dependency,
+        title: title,
+        description: description,
+        tags: tags,
+        links: links
+    })
+    .then(() => {    
+        alert('Publicación agregada con éxito.');
+    })
+    .catch((error) => {
+        alert('Hubo un error, inténtalo de nuevo.');
+        console.log(error);
+    });
+
+}
