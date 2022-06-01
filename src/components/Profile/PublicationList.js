@@ -31,6 +31,8 @@ export default function PublicationList({ list, children, selectItem }) {
     selectItem(index);
   }
 
+  console.log(list);
+
   return (
     <Paper elevation={2} sx = {{px:2, py: 1}}>
       {/*List of publications*/}
@@ -45,6 +47,7 @@ export default function PublicationList({ list, children, selectItem }) {
                 title={item.title}
                 description={item.description}
                 date={item.date}
+                postId={item.id}
               />
             );
           })}

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { Filters, InformationCardList } from "../components";
+import { DependencyContext, Filters, InformationCardList } from "../components";
 import FirestoreManager from "../../firebase/FirestoreManager";
 import { dataQueryArray } from "../../firebase/dataQuery"
 
@@ -30,29 +30,41 @@ const informationList = [
   },
 ];
 
+function getIDdependency(dependencies, dependency) {
+  let id = null;
+  dependencies.forEach(element => {
+    if (element.name === dependency) {
+      id = element.id;
+    }
+  });
+  return id;
+}
+
+
 
 /**
  * Component that renders the main content of the page including the filters and the information cards
  * @returns {JSX.Element}
  */
-export default function MainContent() {
+export default function MainContent({dependency}) {
   const [tagList, setTagList] = useState(tagTest)
   const [postsData, setPostsData] = useState(informationList)
-  const [loaded, setLoaded] = useState(false)
+  const [dependencies, setDependencys] = useContext(DependencyContext)
+
+
 
   /***
    * Function that fetches the data from the firestore database
    */
   useEffect(() => {
-    if (!loaded) {
-      dataQueryArray(FirestoreManager.getPostsList()).then(
+      const currDependencyId = getIDdependency(dependencies, dependency);
+      console.log(currDependencyId);
+      dataQueryArray(FirestoreManager.getPostsList(currDependencyId)).then(
           (data) => {
             setPostsData(data);
-            setLoaded(true);
           }
       )
-    }
-  }, [loaded])
+  }, [dependency])
 
   /**
    * Function to handle the click event of the filter button, when the user clicks on a filter button

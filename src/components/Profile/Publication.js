@@ -6,12 +6,15 @@ import { Checkbox, Paper, Stack, Typography, IconButton, Dialog, DialogTitle, Di
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Proptypes from "prop-types";
+import { Timestamp } from "firebase/firestore";
+import FavoriteButton from "../InformationCard/FavoriteButton";
 
 const dialogStyle = {
   position: "absolute"
 }
 
-export default function Publication({ title, description, date, onClick, isEditable = false }) {
+
+export default function Publication({ title, description, date, onClick, isEditable = false, postId }) {
   const [elevation, setElevation] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -39,14 +42,11 @@ export default function Publication({ title, description, date, onClick, isEdita
         <Stack direction={"row"} spacing={2} justifyContent="space-between">
           <Box sx={{ cursor: "pointer" }} onClick={onClick}>
             <Typography sx={{fontSize: "1.5em", fontWeight: "bold"}} paddingLeft={2} paddingTop={1}>{title}</Typography>
-            <Typography padding={2} variant="body2">{date}</Typography>
+            {/* <Typography padding={2} variant="body2">{"fecha pendiente Date"}</Typography> */}
             <Typography paddingLeft={2} paddingBottom={1} variant="body1">{description}</Typography>
           </Box>
           <Box display={"flex"} alignItems="center">
-            <Checkbox
-              icon={<FavoriteBorder />}
-              checkedIcon={<Favorite color="primary.strongRed" />}
-            />
+            <FavoriteButton postId={postId} defaultChecked = {true}/>
             {
               isEditable && (
                 <IconButton aria-label="edit">
