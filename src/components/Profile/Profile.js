@@ -212,14 +212,12 @@ export default function Profile() {
         </Stack>
 
         <Typography variant="h4" gutterBottom color='#FF2525'>
-          Mis publicaciones
+          Mis favoritos
         </Typography>
 
         <Divider  color='#FFC8C8'/>
 
         <Stack spacing={4} direction = {"column"} sx = {{py: 2}}>
-
-          <SavedTags tags={tags} handleTagDelete={handleTagDelete} />
 
           <PublicationList list={informationList} selectItem = {selectItem}>
             <InformationCard {...currPubication} />
