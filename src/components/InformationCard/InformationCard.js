@@ -22,8 +22,8 @@ import DeleteButton from "./DeleteButton";
 
 //This component display the information card of navegacion principal
 function InformationCard({ type, title, description, links, images, tags, postID }) {
-  const [dependenciesDataById, setDependenciesDataById] =
-    useContext(DependencyContext);
+  const [dependenciesDataById, setDependenciesDataById] = useContext(DependencyContext);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   return (
     <Paper
@@ -44,7 +44,36 @@ function InformationCard({ type, title, description, links, images, tags, postID
 
         {/*Description of the publication*/}
         <Typography variant="body1" sx={{ textAlign: "justify" }}>
-          {description}
+            {/* Limit the description to 200 characters with a button to show less or more */}
+            {description.length > 200
+                ? (
+                    showFullDescription
+                    ? description
+                    : description.substring(0, 200) + "... "
+                )
+                : description
+            }
+            {description.length > 200
+                ? (
+                    <Typography
+                    variant={"subtitle1"}
+                    onClick={() => setShowFullDescription(!showFullDescription)}
+                    sx={{
+                        cursor: "pointer",
+                        color: "#8f8f8f",
+                        textDecoration: "underline",
+                        width: "fit-content",
+                        display: "inline-block",
+                        fontStyle: "italic",
+                        fontWeight: "bold",
+                    }}
+                    >
+                        {showFullDescription ? "Ocultar" : "Ver más"}
+                    </Typography>
+                )
+                : null
+            }
+
         </Typography>
 
         {/*Aditional links*/}
