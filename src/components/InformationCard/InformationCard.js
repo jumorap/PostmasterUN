@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
-  Checkbox,
   Chip,
-  Container,
-  IconButton,
   Paper,
   Stack,
   Typography,
@@ -12,11 +9,7 @@ import {
 import Image from "next/image";
 import PublicationTyper from "./PublicationTyper";
 import { publication_t } from "../../types";
-import PropTypes from "prop-types";
-import { dataQueryById } from "../../../firebase/dataQuery";
-import FirestoreManager from "../../../firebase/FirestoreManager";
 import { DependencyContext } from "../contextProviders";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import FavoriteButton from "./FavoriteButton";
 import DeleteButton from "./DeleteButton";
 
@@ -28,7 +21,7 @@ function InformationCard({ type, title, description, links, images, tags, postID
   return (
     <Paper
       elevation={3}
-      sx={{ p: "1em", position: "relative", maxWidth: "700px" }}
+      sx={{ p: "1em", position: "relative", maxWidth: "700px"}}
     >
       <Stack spacing={1}>
         {/*Type of the publication*/}
@@ -48,8 +41,8 @@ function InformationCard({ type, title, description, links, images, tags, postID
             {description.length > 200
                 ? (
                     showFullDescription
-                    ? description
-                    : description.substring(0, 200) + "... "
+                        ? description
+                        : description.substring(0, 200) + "... "
                 )
                 : description
             }
