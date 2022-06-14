@@ -19,6 +19,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import AddDependencies from './AddDependencies';
 import EditDependencies from "./EditDependencies";
+import CreatePublication from "../Profile/CreatePublication";
 
 const areasFull = [
   "Postmaster",
@@ -136,6 +137,9 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
           <AddDependencies setLoaded={setLoaded} disp={isAdmin}/>
         </List>
         <Divider />
+
+        {/* Show create publication component if user is admin */}
+        <CreatePublication disp={isAdmin}/>
     </Drawer>
   );
 }
