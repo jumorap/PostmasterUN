@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import  SavedTags  from "./SavedTags";
 import { InformationCard } from "../InformationCard";
 import PublicationList from "./PublicationList";
+import {getUser} from "../../../firebase/userManager"
+import SetAdminPermission from "./setAdminPermission";
+import CreatePublication from "./CreatePublication";
 
 import { firebaseAppAuth } from "../../../firebase/firebase.config"
 
@@ -138,13 +141,21 @@ export default function Profile() {
 
   /*Firebase methods */
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState("user");
 
 
   // Check if user is admin to show createNews component
   useEffect(() => {
+    //check auth
     firebaseAppAuth.onAuthStateChanged((u) => {
       setIsUserAuthenticated(!!u?.email.toString().split('@')[1].includes('unal.edu.co'));
     })
+    //check role to change UI according to
+
+
+
+
+
   }, [])
 
   // Get User Information
@@ -152,6 +163,7 @@ export default function Profile() {
     src: "",
     name: "",
     email: "",
+    role: "",
     favPost: 1
   });
 
@@ -159,17 +171,43 @@ export default function Profile() {
     if (isUserAuthenticated) {
       firebaseAppAuth.onAuthStateChanged((user) => {
         if (user) {
+          //if user is auth, then find role
+          const dbUser = getUser(user.uid)
+          dbUser.then(res => {
+            //verify if user field rol is admin or root
+            //TODO: create feature for colab
+            const rol = res.data().rol[0]
+            switch (rol) {
+              case "user":
+                setUserRole("user")
+                break;
+              case "root":
+                setUserRole("root")
+                break;
+              case "admin":
+                setUserRole("admin")
+                break;
+              case "colab":
+                setUserRole("colab")
+                break;
+              default:
+                setUserRole("user")
+                console.log("user doesn't have an specific role")
+            }
+          })
           setUser({
             src: user.photoURL,
             name: user.displayName,
             email: user.email,
-            favPost: 5
+            role: userRole,
+            favPost: 5 //read by database
           });
         } else {
           setUser({
             src: "",
             name: "",
             email: "",
+            role: "",
             favPost: 0
           });
         }
@@ -178,6 +216,7 @@ export default function Profile() {
   }, [isUserAuthenticated]);
 
   console.log(isUserAuthenticated);
+  console.log(userRole)
 
 
 
@@ -210,6 +249,37 @@ export default function Profile() {
             </Stack>
           </Paper>
         </Stack>
+
+        {/* begin */}
+
+        {/* if role is root */}
+        
+
+        
+
+        <Stack marginBottom={5} marginTop={2} sx={{
+            display: !(userRole == "root") && "none"
+            }} >
+
+          <Typography style={{fontWeight: 500}} variant="h6" gutterBottom >
+            
+            Configuración de permisos de usuario
+          </Typography>
+          
+
+          <SetAdminPermission disp={userRole == "root" && "root" || userRole == "admin" && "admin"}/>
+
+        </Stack>
+
+
+
+
+          {/* Show create publication component if user is admin */}
+          <CreatePublication disp={userRole == "root" || userRole == "admin" || userRole == "colab"}/>
+
+          
+
+        {/* end */}
 
         <Typography variant="h4" gutterBottom color='#FF2525'>
           Mis favoritos
