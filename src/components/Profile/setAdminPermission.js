@@ -9,6 +9,10 @@ import { dataQueryArray } from "../../../firebase/dataQuery";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import {getUserByEmail} from "../../../firebase/userManager";
 
+//Firebase
+import { db } from "../../../firebase/firebase.config"
+import { collection, doc, getDoc, query, where, getDocs } from "firebase/firestore";
+
 
 //This component set admin and colabs permissions
 
@@ -26,12 +30,17 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     const [open, setOpen] = useState(false);
     const [loaded, setLoaded] = useState(true);
 
-    const [name, setName] = useState('');
+    
     const [email, setEmail] = useState('');
-    const [role, setRole] = useState('');
+    const [findedUser, setFindedUser] = useState();
+    const [displayUserInfo, setDisplayUserInfo] = useState(false);
+
+    const [assignBtnLabel, setAssignBtnLabel] = useState("")
+    const [assignBtnColor, setAssignBtnColor] = useState("error")
 
     let title = ""
     let authorizedRole = false
+
 
     if (disp == "root") {
         title = "Asignar permisos de administrador"
@@ -44,6 +53,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
         title = ""
         authorizedRole = false
     }
+
 
     const handleClickOpen = () => {
     setOpen(true);
@@ -59,23 +69,39 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     }
 
     const handleSearchUser = () => {
-
-        // toFix
-
-        const dbUser = getUserByEmail(email)
-
-        console.log("serched")
-        console.log(dbUser)
-
-        dbUser.then(res => {
-            //está retornando undefined
-            console.log(res)
-        
-        })
-
+        // toFix, utilizar getUserByEmail(email) de userManager.js
+        // const dbUser = getUserByEmail(email)
+        getUserByEmail(email)
     }
 
-    //useEffect(() =>{,[]})
+    //this function should be in Firestore/userManager.js, not here
+    async function getUserByEmail(email){
+        const docRef = collection(db, "users")
+        const q = query(docRef, where("email", "==", email ));
+      
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          setFindedUser(doc.data()) 
+        });
+      }
+
+      //Find user
+      useEffect(() => {
+        console.log(findedUser)
+        //refresh user UI
+        if(findedUser){
+            setDisplayUserInfo(true)
+            
+            if(findedUser.rol[0] == "admin"){
+               
+                setAssignBtnLabel("Quitar Permisos De Administración")
+                setAssignBtnColor("error")
+            }else {
+                setAssignBtnLabel("Asignar Como Administrador")
+                setAssignBtnColor("success")
+            }
+        }
+      }, [findedUser])
 
     return(
         <>
@@ -119,13 +145,40 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                         />
                     </Stack>
 
-
-
                         <Button variant="contained" color="error" onClick={handleSearchUser}>Buscar</Button>
 
 
+                    <Stack  direction={"column"} marginBottom={2}
+                            sx={{ display: !displayUserInfo && 'none'}}>
 
-                        
+
+                        <Typography variant="h5">
+                             Información de usuario
+                        </Typography>
+
+                        <Typography variant="subtitle1">
+                             
+                             Nombre: { displayUserInfo && findedUser.nombre}
+                        </Typography>
+
+                        <Typography variant="subtitle1">
+                             Correo Institucional: { displayUserInfo && findedUser.email}
+                        </Typography>
+
+                        <Typography variant="subtitle1">
+                             Tipo de usuario: { displayUserInfo && findedUser.rol[0]}
+                        </Typography>
+
+                        <Typography variant="h6">
+                             Permisos de administrador
+                        </Typography>
+
+
+
+                    </Stack>
+                        <Button sx={{ display: !displayUserInfo && 'none'}} variant="contained" color={assignBtnColor} onClick={handleSearchUser}>{assignBtnLabel}</Button>
+
+
                             
 
 

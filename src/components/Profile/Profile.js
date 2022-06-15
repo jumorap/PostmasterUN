@@ -258,7 +258,7 @@ export default function Profile() {
         
 
         <Stack marginBottom={5} marginTop={2} sx={{
-            display: !(userRole == "root") && "none"
+            display: !(userRole == "root" || userRole == "admin") && "none"
             }} >
 
           <Typography style={{fontWeight: 500}} variant="h6" gutterBottom >
@@ -274,7 +274,7 @@ export default function Profile() {
 
 
 
-          {/* Show create publication component if user is admin */}
+          {/* Show create publication component if user is root or admin */}
           <CreatePublication disp={userRole == "root" || userRole == "admin" || userRole == "colab"}/>
 
           
