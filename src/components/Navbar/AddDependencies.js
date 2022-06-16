@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Avatar, Box, Button, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import React, { useState } from "react";
+import { Button, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import { Checkbox, Paper, Stack, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import { Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { TextField } from "@mui/material";
 import { addDependency } from "../../../firebase/dataUpdate";
 
@@ -10,8 +10,6 @@ const dialogStyle = {
 }
 
 export default function AddDependencies({ isUserAuthentified, user, setLoaded, disp}) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [elevation, setElevation] = useState(1);
   const [input, setInput] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -31,8 +29,9 @@ export default function AddDependencies({ isUserAuthentified, user, setLoaded, d
 
   return (
     <>
-        <ListItem button onClick={()=>{handleClickOpenDialog()}} sx={{background: 'rgba(0, 0, 0, 0.1);', display: !disp && "none"}}>
-          <ListItemText primary={"Agregar dependencia"} sx={{paddingLeft: '55px', paddingRight: '120px'}}/>
+        <hr/>
+        <ListItem button onClick={()=>{handleClickOpenDialog()}} sx={{display: !disp && "none"}}>
+          <ListItemText primary={"Agregar dependencia"} sx={{paddingLeft: '30px', paddingRight: '120px'}}/>
           <ListItemIcon >
             <AddIcon />
           </ListItemIcon>
