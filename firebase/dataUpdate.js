@@ -1,12 +1,11 @@
-import { async } from "@firebase/util"
-import {collection, query, where, getDocs} from "firebase/firestore";
+import {collection, query, where, getDocs, deleteDoc} from "firebase/firestore";
 import { doc, updateDoc, addDoc } from "firebase/firestore";
 import { dataQueryArray } from "./dataQuery";
-import { db, firebaseAppAuth } from "./firebase.config"
+import { db } from "./firebase.config"
 import FirestoreManager from "./FirestoreManager";
 
+
 export async function addDependency(itemName){
-    
     dataQueryArray(FirestoreManager.getDependenciesList()).then((data) => {
         const dataArray = data.map((item) => item.name);
         if ( dataArray.indexOf(itemName)!== -1){
@@ -38,13 +37,18 @@ export async function editDependency(itemName, newName){
     const depRef = doc(db, "dependencies", docID);
 
     await updateDoc(depRef, {name: newName})
-    .then(() => {    
-        alert('Dependencia modificada con éxito.');
+}
+
+export async function deleteDependency(itemName){
+    const q = query(collection(db, "dependencies"), where("name", "==", itemName));
+    const querySnapshot = await getDocs(q);
+    var docID = "";
+    querySnapshot.forEach((doc) =>{
+        docID = doc.id
     })
-    .catch((error) => {
-        alert('Hubo un error, inténtalo de nuevo.');
-        console.log(error);
-    });
+    const depRef = doc(db, "dependencies", docID);
+
+    await deleteDoc(depRef)
 }
 
 export async function addPost(dependency, title, description, tags, links){
