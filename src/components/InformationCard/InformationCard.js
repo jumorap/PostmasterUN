@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
-  Checkbox,
   Chip,
-  Container,
-  IconButton,
   Paper,
   Stack,
   Typography,
@@ -12,24 +9,23 @@ import {
 import Image from "next/image";
 import PublicationTyper from "./PublicationTyper";
 import { publication_t } from "../../types";
-import PropTypes from "prop-types";
-import { dataQueryById } from "../../../firebase/dataQuery";
-import FirestoreManager from "../../../firebase/FirestoreManager";
 import { DependencyContext } from "../contextProviders";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import FavoriteButton from "./FavoriteButton";
 import DeleteButton from "./DeleteButton";
 
 //This component display the information card of navegacion principal
 function InformationCard({ type, title, description, links, images, tags, postID }) {
-  const [dependenciesDataById, setDependenciesDataById] =
-    useContext(DependencyContext);
+  const [dependenciesDataById, setDependenciesDataById] = useContext(DependencyContext);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   return (
     <Paper
       elevation={3}
-      sx={{ p: "1em", position: "relative", maxWidth: "700px" }}
+      sx={{ p: "1em", position: "relative", maxWidth: "700px"}}
     >
+      {/* Delete button that must be showed to admin roles */}
+      <DeleteButton postId={postID} />
+
       <Stack spacing={1}>
         {/*Type of the publication*/}
         {/* From dependenciesDataById we get the name of the publication based in the id */}
@@ -44,7 +40,34 @@ function InformationCard({ type, title, description, links, images, tags, postID
 
         {/*Description of the publication*/}
         <Typography variant="body1" sx={{ textAlign: "justify" }}>
-          {description}
+            {/* Limit the description to 200 characters with a button to show less or more */}
+            {description.length > 200
+                ? (
+                    <>
+                        {showFullDescription
+                            ? description
+                            : description.substring(0, 200) + "... "
+                        }
+                        <Typography
+                        variant={"subtitle1"}
+                        onClick={() => setShowFullDescription(!showFullDescription)}
+                        sx={{
+                            cursor: "pointer",
+                            color: "#8f8f8f",
+                            textDecoration: "underline",
+                            width: "fit-content",
+                            display: "inline-block",
+                            fontStyle: "italic",
+                            fontWeight: "bold",
+                        }}
+                        >
+                            {showFullDescription ? "Ocultar" : "Ver más"}
+                        </Typography>
+                    </>
+                )
+                : description
+            }
+
         </Typography>
 
         {/*Aditional links*/}
@@ -90,7 +113,6 @@ function InformationCard({ type, title, description, links, images, tags, postID
         >
           {/* Heart Icon for addind favorite publications */}
           <FavoriteButton postId={postID}/>
-          <DeleteButton postId={postID}/>
           <Box>
             <Typography variant="body1" sx={{ color: "primary.gray" }}>
               Etiquetas:

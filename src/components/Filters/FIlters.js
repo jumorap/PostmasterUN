@@ -20,11 +20,11 @@ function Filters(props) {
       elevation={3}
       sx={{
         p: 1,
-        position: "sticky",
+        position: "fixed",
         paddingY: '1rem',
       }}
     >
-      <Typography variant="h6" align = "center">Filtros</Typography>
+      <Typography variant="h6" align="center">Filtros</Typography>
         {/* <div className={styles.searchContainer}>
             <SearchBar/>
         </div> */}

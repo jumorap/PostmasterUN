@@ -6,7 +6,7 @@ import { Stack } from '@mui/material'
 
 function InformationCardList({informationList}) {
   return (
-    <Stack spacing={4} justifyContent="center" alignItems="center">
+    <Stack spacing={8} justifyContent="center" alignItems="center">
         {informationList.map(info => (
           <InformationCard
             type={info.type}

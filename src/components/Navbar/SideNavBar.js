@@ -19,6 +19,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import AddDependencies from './AddDependencies';
 import EditDependencies from "./EditDependencies";
+import DeleteDependencies from "./DeleteDependencies";
+import CreatePublication from "../Profile/CreatePublication";
 
 const areasFull = [
   "Postmaster",
@@ -77,7 +79,7 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
       user.then(res => {
         //verify if user field rol is admin
         const rol = res.data().rol[0]
-        if(rol == "admin"){
+        if(rol === "admin"){
           setIsAdmin(true)
         }
       })
@@ -121,14 +123,15 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
                 button
                 key={text}
                 sx={{
-                  backgroundColor:
-                    text === dependency ? "rgba(0, 0, 0, 0.1);" : "transparent",
+                    backgroundColor:
+                        text === dependency ? "rgba(0, 0, 0, 0.1);" : "transparent",
+                    paddingLeft: "45px",
                 }}
               >
-                <ListItemIcon>{/*añadir despues*/}</ListItemIcon>
                 <ListItemText primary={text} />
                 <ListItemSecondaryAction sx={{display: !isAdmin && "none"}}>
-                  <EditDependencies dependencyName={text} setLoaded={setLoaded}/>
+                    <EditDependencies dependencyName={text} setLoaded={setLoaded}/>
+                    <DeleteDependencies dependencyName={text} setLoaded={setLoaded}/>
                 </ListItemSecondaryAction>
               </ListItem>
             </Link>
@@ -136,6 +139,9 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
           <AddDependencies setLoaded={setLoaded} disp={isAdmin}/>
         </List>
         <Divider />
+
+        {/* Show create publication component if user is admin */}
+        <CreatePublication disp={isAdmin}/>
     </Drawer>
   );
 }
