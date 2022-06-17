@@ -8,6 +8,7 @@ import { FcGoogle } from "react-icons/fc"
 import Loading from "../Loading";
 
 import styles from "./LogBtn.module.css"
+import { createUser } from "../../../firebase/userManager";
 
 
 // create a login form
@@ -48,8 +49,11 @@ const LogButton = (props) => {
             else setLoggedIn(false)
             // if isn't a user from UNAL, redirect to login page
             if (actualPage !== '/login' && !isUnalUser && !user) authConfirm("login")
+            // if is a new user, create a new user in the database
+            if (user) createUser(user)
         })
     }, [actualPage, isUnalUser])
+
 
     /***
      * @param clickUse {function} - function to sign in/out
