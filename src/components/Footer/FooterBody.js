@@ -36,8 +36,8 @@ function FooterBody() {
         return (
           <>
             <ListItemButton onClick={() => handleClick(data.id)}>
-            <Link href={data.url}>
-              <ListItemIcon>
+            <Link href={data.url} rel="noopener" target="_blank">
+              <ListItemIcon sx={{color: "primary.lightRed", "&:hover": {color:"gray"}}}>
                 <LinkIcon/>
               </ListItemIcon>
             </Link>
