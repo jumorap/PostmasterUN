@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import Proptypes from "prop-types";
 import { Timestamp } from "firebase/firestore";
 import FavoriteButton from "../InformationCard/FavoriteButton";
+import CollapsableText from "../InformationCard/CollapsableText";
 
 const dialogStyle = {
   position: "absolute"
@@ -43,7 +44,9 @@ export default function Publication({ title, description, date, onClick, isEdita
           <Box sx={{ cursor: "pointer" }} onClick={onClick}>
             <Typography sx={{fontSize: "1.5em", fontWeight: "bold"}} paddingLeft={2} paddingTop={1}>{title}</Typography>
             {/* <Typography padding={2} variant="body2">{"fecha pendiente Date"}</Typography> */}
-            <Typography paddingLeft={2} paddingBottom={1} variant="body1">{description}</Typography>
+            <Typography paddingLeft={2} paddingBottom={1} variant="body1">
+              <CollapsableText description={description} limit={200} expandable = {false}/>
+            </Typography>
           </Box>
           <Box display={"flex"} alignItems="center">
             <FavoriteButton postId={postId} defaultChecked = {true}/>
