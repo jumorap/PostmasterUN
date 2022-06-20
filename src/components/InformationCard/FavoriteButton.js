@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../firebase/AuthProvider.config";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 
-export default function FavoriteButton({ postId, defaultChecked = false }) {
+export default function FavoriteButton({ postId, defaultChecked = false, handleUncheck = () => { } }) {
   const [checked, setChecked] = React.useState(defaultChecked);
   const [openSnak, setOpenMessage] = React.useState(false);
   const [isAdded, setIsAdded] = React.useState(true);
@@ -23,6 +23,7 @@ export default function FavoriteButton({ postId, defaultChecked = false }) {
       setIsAdded(false);
       //remove the post from the favorites of the user and update the firestore database
       FirestoreManager.removeFavorite(postId, currentUser.uid);
+      handleUncheck();
     } else {
       //the heart is not checked
       setOpenMessage(true);

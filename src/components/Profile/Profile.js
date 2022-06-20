@@ -7,8 +7,6 @@ import FirestoreManager from "../../../firebase/FirestoreManager";
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
 import { AuthContext } from "../../../firebase/AuthProvider.config";
 
-
-
 export default function Profile() {
   const [tags, setTags] = useState([
     { name: "Alemania", dependency: "DRE", id: "1" },
@@ -22,10 +20,16 @@ export default function Profile() {
 
   useEffect(() => {
     FirestoreManager.getFavoritePosts(currentUser.uid).then((posts) => {
-      console.log(posts);
       setSavedPublications(posts);
     });
   }, []);
+
+  function handleDeleteFavorite(postId) {
+    const newSavedPublications = savedPublications.filter((post) => {
+      return post.id !== postId;
+    });
+    setSavedPublications(newSavedPublications);
+  }
 
   function handleTagDelete(tag) {
     const newTags = tags.filter((t) => t.id !== tag.id);
@@ -135,7 +139,11 @@ export default function Profile() {
       <Divider color="#FFC8C8" />
 
       <Stack spacing={4} direction={"column"} sx={{ py: 2 }}>
-        <PublicationList list={savedPublications} selectItem={selectItem}>
+        <PublicationList
+          list={savedPublications}
+          selectItem={selectItem}
+          handleUncheck={handleDeleteFavorite}
+        >
           <InformationCard {...currPubication} />
         </PublicationList>
       </Stack>

@@ -21,7 +21,7 @@ const modalStyle = {
  * @handleOpen funcion que se ejecuta cada vez que se oprime una publicacion
  * @returns
  */
-export default function PublicationList({ list, children, selectItem }) {
+export default function PublicationList({ list, children, selectItem, handleUncheck = () => {} }) {
   /*State to control the modal*/
   const [openModal, setOpenModal] = useState(false);
 
@@ -31,13 +31,16 @@ export default function PublicationList({ list, children, selectItem }) {
     selectItem(index);
   }
 
-  console.log(list);
-
   return (
-    <Paper elevation={2} sx = {{px:2, py: 1}}>
+    <Paper elevation={0} sx = {{px:2, py: 1}}>
       {/*List of publications*/}
       <Box>
-        <Typography variant="h2" align="center">Publicaciones Guardadas</Typography>
+      {list.length == 0 ? (
+        <Typography variant="h6" gutterBottom color = "seconday">
+          No tienes ninguna publicación guardada
+        </Typography>
+      ) : ""}
+        
         <Stack direction={"column"} spacing={2}>
           {list.map((item, index) => {
             return (
@@ -48,6 +51,7 @@ export default function PublicationList({ list, children, selectItem }) {
                 description={item.description}
                 date={item.date}
                 postId={item.id}
+                handleUncheck={()=>handleUncheck(item.id)}
               />
             );
           })}

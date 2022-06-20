@@ -28,7 +28,8 @@ class FirestoreManager {
     const userRef = doc(db, "users", `${userID}`);
     const userSnap = await getDoc(userRef);
     const data = userSnap.data();
-    return data.savedPosts;
+    const savedPosts = data.savedPosts || [];
+    return savedPosts;
   }
 
   static async getFavoritePosts(userID) {

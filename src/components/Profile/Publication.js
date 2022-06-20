@@ -15,7 +15,7 @@ const dialogStyle = {
 }
 
 
-export default function Publication({ title, description, date, onClick, isEditable = false, postId }) {
+export default function Publication({ title, description, date, onClick, isEditable = false, postId, handleUncheck = () => {} }) {
   const [elevation, setElevation] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -49,7 +49,7 @@ export default function Publication({ title, description, date, onClick, isEdita
             </Typography>
           </Box>
           <Box display={"flex"} alignItems="center">
-            <FavoriteButton postId={postId} defaultChecked = {true}/>
+            <FavoriteButton postId={postId} defaultChecked = {true} handleUncheck = {handleUncheck}/>
             {
               isEditable && (
                 <IconButton aria-label="edit">
