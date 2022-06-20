@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import {db, firebaseAppAuth} from "./firebase.config.js"
+import React from "react";
+import { db } from "./firebase.config.js"
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import FirestoreManager from "./FirestoreManager";
-import {dataQueryArray, dataQueryById} from "./dataQuery";
+import { dataQueryById } from "./dataQuery";
 
 //Read one user from database
 
@@ -15,6 +15,15 @@ export async function getUser(userID){
     } else {
       return null
     }
+}
+
+/**
+ * Function that rectifies the data of the user -> if is a UNAL user, it will return true, if not, it will return false
+ * @param user - user data
+ * @returns {boolean} - true if is a UNAL user, false if not
+ */
+export function getUserUnalAuth(user) {
+    return !!user.email.toString().split('@')[1].includes('unal.edu.co')
 }
 
 /**
@@ -34,10 +43,11 @@ export async function createUser(user) {
     // Check if the userID is already in the usersListIds
     // If it is false, the userID is used to create a new user state with "estudiante" as role
     // With this, the date of the creation is stored in the database
-    if (!usersListIds.includes(user.uid)) {
-        console.log("Creating user")
+    if (!usersListIds.includes(user.uid) && getUserUnalAuth(user)) {
         const userGen = doc(db, "users", user.uid);
         setDoc(userGen, {
+            nombre: user.displayName,
+            email: user.email,
             rol: ["estudiante"],
             creationDate: new Date(),
         })
