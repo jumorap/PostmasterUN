@@ -28,6 +28,7 @@ function existDependency(dependencies, dependency) {
   return exist;
 }
 
+
 export default function usePosts(dependency) {
   //list of the dependencies in the database
   const [dependencies, setDependencys] = useContext(DependencyContext);
@@ -37,6 +38,9 @@ export default function usePosts(dependency) {
 
   // value that shows if the dependency exists in the database
   const [dependencyExists, setDependencyExists] = useState(true);
+
+  // id of the dependency
+  const [dependency_id, setDependency_id] = useState(null)
 
   /***
    * Return the post every time the dependency changes
@@ -50,7 +54,9 @@ export default function usePosts(dependency) {
         setPostsData(data);
       }
     );
+
+    setDependency_id(currDependencyId);
   }, [dependency]);
 
-  return [postsData, dependencyExists];
+  return {postsData, dependencyExists, dependency_id};
 }

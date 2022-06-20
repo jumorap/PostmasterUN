@@ -2,42 +2,32 @@ import React, { useContext, useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { DependencyContext, Filters, InformationCardList } from "../components";
-import FirestoreManager from "../../firebase/FirestoreManager";
-import { dataQueryArray } from "../../firebase/dataQuery";
 import usePosts from "../components/Posts/usePosts";
 import PageNotFound from "../components/Posts/PageNotFound";
-
-//fake values for testing the filters
-const tagTest = [
-  { name: "filtroA", selected: false },
-  { name: "filtroB", selected: false },
-  { name: "filtroC", selected: false },
-];
+import useFilters from "../components/Filters/useFilters";
+import FirestoreManager from "../../firebase/FirestoreManager";
 
 /**
  * Component that renders the main content of the page including the filters and the information cards
+ * @param {String} dependency - The dependency of the current page
  * @returns {JSX.Element}
  */
 export default function MainContent({ dependency }) {
-  const [tagList, setTagList] = useState(tagTest);
-  const [postsList, dependencyExists] = usePosts(dependency);
+  const {postsData, dependencyExists, dependency_id} = usePosts(dependency);
+  const [FiltersComponent, selectedTags, setTagList] = useFilters([
+    "dependency",
+    "filtro 2",
+    "filtro 3",
+  ]);
 
-  /**
-   * Function to handle the click event of the filter button, when the user clicks on a filter button
-   * @param {number} index - The index of the filter button that was clicked on the list tagList
-   */
-  function selectFilteredTag(index) {
-    const newTagList = tagList.map((tag, i) => {
-      if (i === index) {
-        return {
-          ...tag,
-          selected: !tag.selected,
-        };
-      }
-      return tag;
-    });
-    setTagList(newTagList);
-  }
+  //fethc the filters of the dependency
+  useEffect(() => {
+    if (dependencyExists) {
+      FirestoreManager.getTags(dependency_id).then((tags) => {
+        setTagList(tags);
+      });
+    }
+  }, [dependencyExists]);
 
   // the url doesn't exist in the database
   if (!dependencyExists) {
@@ -58,14 +48,22 @@ export default function MainContent({ dependency }) {
         direction={{ xs: "column", md: "row" }}
       >
         {/* Publications */}
-        <Grid item xs={12}  md={8} order = {{xs: 2, md: 1}}>
-          <InformationCardList informationList={postsList} />
+        <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
+          <InformationCardList informationList={postsData} />
         </Grid>
         {/* filters  */}
-        <Grid item xs={12} md={4} sx={{position: {xs: "inherit" ,md:"sticky"}, top : 64,  height: "fit-content"}} order = {{xs: 1, md: 2}}>
-          <Box>
-            <Filters tags={tagList} onClick={selectFilteredTag} />
-          </Box>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          sx={{
+            position: { xs: "inherit", md: "sticky" },
+            top: 64,
+            height: "fit-content",
+          }}
+          order={{ xs: 1, md: 2 }}
+        >
+          {FiltersComponent}
         </Grid>
       </Grid>
     </>
