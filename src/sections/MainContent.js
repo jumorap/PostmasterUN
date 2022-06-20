@@ -55,13 +55,15 @@ export default function MainContent({ dependency }) {
       <Grid
         container
         spacing={{ xs: 6, md: 3 }}
-        direction={{ xs: "column-reverse", md: "row" }}
+        direction={{ xs: "column", md: "row" }}
       >
-        <Grid item xs={12} md={8}>
+        {/* Publications */}
+        <Grid item xs={12}  md={8} order = {{xs: 2, md: 1}}>
           <InformationCardList informationList={postsList} />
         </Grid>
-        <Grid item xs={12} md={4} sx={{ position: "relative" }}>
-          <Box sx={{ position: { md: "sticky" } }}>
+        {/* filters  */}
+        <Grid item xs={12} md={4} sx={{position: {xs: "inherit" ,md:"sticky"}, top : 64,  height: "fit-content"}} order = {{xs: 1, md: 2}}>
+          <Box>
             <Filters tags={tagList} onClick={selectFilteredTag} />
           </Box>
         </Grid>
