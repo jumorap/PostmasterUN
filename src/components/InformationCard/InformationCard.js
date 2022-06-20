@@ -23,6 +23,9 @@ function InformationCard({ type, title, description, links, images, tags, postID
       elevation={3}
       sx={{ p: "1em", position: "relative", maxWidth: "700px"}}
     >
+      {/* Delete button that must be showed to admin roles */}
+      <DeleteButton postId={postID} />
+
       <Stack spacing={1}>
         {/*Type of the publication*/}
         {/* From dependenciesDataById we get the name of the publication based in the id */}
@@ -40,31 +43,29 @@ function InformationCard({ type, title, description, links, images, tags, postID
             {/* Limit the description to 200 characters with a button to show less or more */}
             {description.length > 200
                 ? (
-                    showFullDescription
-                        ? description
-                        : description.substring(0, 200) + "... "
+                    <>
+                        {showFullDescription
+                            ? description
+                            : description.substring(0, 200) + "... "
+                        }
+                        <Typography
+                        variant={"subtitle1"}
+                        onClick={() => setShowFullDescription(!showFullDescription)}
+                        sx={{
+                            cursor: "pointer",
+                            color: "#8f8f8f",
+                            textDecoration: "underline",
+                            width: "fit-content",
+                            display: "inline-block",
+                            fontStyle: "italic",
+                            fontWeight: "bold",
+                        }}
+                        >
+                            {showFullDescription ? "Ocultar" : "Ver más"}
+                        </Typography>
+                    </>
                 )
                 : description
-            }
-            {description.length > 200
-                ? (
-                    <Typography
-                    variant={"subtitle1"}
-                    onClick={() => setShowFullDescription(!showFullDescription)}
-                    sx={{
-                        cursor: "pointer",
-                        color: "#8f8f8f",
-                        textDecoration: "underline",
-                        width: "fit-content",
-                        display: "inline-block",
-                        fontStyle: "italic",
-                        fontWeight: "bold",
-                    }}
-                    >
-                        {showFullDescription ? "Ocultar" : "Ver más"}
-                    </Typography>
-                )
-                : null
             }
 
         </Typography>
@@ -112,7 +113,6 @@ function InformationCard({ type, title, description, links, images, tags, postID
         >
           {/* Heart Icon for addind favorite publications */}
           <FavoriteButton postId={postID}/>
-          <DeleteButton postId={postID}/>
           <Box>
             <Typography variant="body1" sx={{ color: "primary.gray" }}>
               Etiquetas:
