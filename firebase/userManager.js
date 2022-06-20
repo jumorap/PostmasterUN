@@ -6,7 +6,7 @@ import { collection, doc, getDoc, setDoc, query, where, getDocs } from "firebase
 
 //Read one user from database
 
-export async function getUser(userID){
+export async function getUser(userID) {
     const docRef = doc(db, "users", userID)
     const user = await getDoc(docRef)
 
@@ -17,7 +17,7 @@ export async function getUser(userID){
     }
 }
 
-export async function getUserByEmail(email){
+export async function getUserByEmail(email) {
   const docRef = collection(db, "users")
   const q = query(docRef, where("email", "==", email ));
 
@@ -30,8 +30,6 @@ export async function getUserByEmail(email){
     return doc.data()
   });
 }
-
-
 
 /**
  * Function that rectifies the data of the user -> if is a UNAL user, it will return true, if not, it will return false

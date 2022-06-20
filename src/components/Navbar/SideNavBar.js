@@ -80,7 +80,7 @@ export default function SideNavBar({ open, handleDrawerClose, drawerWidth }) {
         //verify if user field rol is admin or root
         //TODO: create feature for colab
         const rol = res.data().rol[0]
-        if(rol == "admin" || rol == "root"){
+        if(rol === "admin" || rol === "root"){
           setIsAdmin(true)
         }
       })
