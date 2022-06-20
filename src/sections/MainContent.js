@@ -13,12 +13,9 @@ import FirestoreManager from "../../firebase/FirestoreManager";
  * @returns {JSX.Element}
  */
 export default function MainContent({ dependency }) {
-  const {postsData, dependencyExists, dependency_id} = usePosts(dependency);
-  const [FiltersComponent, selectedTags, setTagList] = useFilters([
-    "dependency",
-    "filtro 2",
-    "filtro 3",
-  ]);
+  const { postsData, dependencyExists, dependency_id, filterPosts} = usePosts(dependency);
+  console.log(dependency_id);
+  const [FiltersComponent, selectedTags, setTagList] = useFilters([]);
 
   //fethc the filters of the dependency
   useEffect(() => {
@@ -27,9 +24,19 @@ export default function MainContent({ dependency }) {
         setTagList(tags);
       });
     }
-  }, [dependencyExists]);
+  }, [dependency_id]);
 
-  // the url doesn't exist in the database
+  //useEffect to filter the posts by the selected tags
+  useEffect(() => {
+    if (dependencyExists && selectedTags.length > 0) {
+      console.log(selectedTags);
+      filterPosts(selectedTags);
+    }
+  }
+  , [selectedTags]);
+
+
+  //if the dependency doesn't exist, render the page not found
   if (!dependencyExists) {
     return <PageNotFound />;
   }

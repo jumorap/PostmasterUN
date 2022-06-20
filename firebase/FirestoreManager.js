@@ -78,10 +78,7 @@ class FirestoreManager {
 
   static async getTags(dependency_id) {
     const tags = [];
-    const q = query(
-      this._getTags,
-      where("dependency_id", "==", dependency_id)
-    );
+    const q = query(this._getTags, where("dependency_id", "==", dependency_id));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
       tags.push(doc.data());
@@ -89,7 +86,22 @@ class FirestoreManager {
     return tags;
   }
 
+  static async filterPosts(tagList, dependency_id) {
+    const posts = [];
 
+    const q = query(
+      this._getPosts,
+      where("type", "==", dependency_id),
+      where("tags", "array-contains-any", tagList)
+    );
+    
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      posts.push(doc.data());
+    });
+    return posts;
+  }
 }
 
 export default FirestoreManager;

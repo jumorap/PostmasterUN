@@ -42,6 +42,12 @@ export default function usePosts(dependency) {
   // id of the dependency
   const [dependency_id, setDependency_id] = useState(null)
 
+  function filterPosts(tagList) {
+    FirestoreManager.filterPosts(tagList, dependency_id ).then((posts) => {
+      setPostsData(posts);
+    });
+  }
+
   /***
    * Return the post every time the dependency changes
    */
@@ -58,5 +64,5 @@ export default function usePosts(dependency) {
     setDependency_id(currDependencyId);
   }, [dependency]);
 
-  return {postsData, dependencyExists, dependency_id};
+  return {postsData, dependencyExists, dependency_id, filterPosts};
 }
