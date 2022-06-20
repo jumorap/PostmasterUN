@@ -14,7 +14,7 @@ function getIDdependency(dependencies, dependency) {
 }
 
 function existDependency(dependencies, dependency) {
-    console.log(dependency);
+  console.log(dependency);
   if (dependency === undefined) {
     return true;
   }
@@ -28,7 +28,6 @@ function existDependency(dependencies, dependency) {
   return exist;
 }
 
-
 export default function usePosts(dependency) {
   //list of the dependencies in the database
   const [dependencies, setDependencys] = useContext(DependencyContext);
@@ -40,12 +39,20 @@ export default function usePosts(dependency) {
   const [dependencyExists, setDependencyExists] = useState(true);
 
   // id of the dependency
-  const [dependency_id, setDependency_id] = useState(null)
+  const [dependency_id, setDependency_id] = useState(null);
 
   function filterPosts(tagList) {
-    FirestoreManager.filterPosts(tagList, dependency_id ).then((posts) => {
-      setPostsData(posts);
-    });
+    if (tagList.length > 0) {
+      FirestoreManager.filterPosts(tagList, dependency_id).then((posts) => {
+        setPostsData(posts);
+      });
+    }else{
+      dataQueryArray(FirestoreManager.getPostsList(dependency_id)).then(
+        (data) => {
+          setPostsData(data);
+        }
+      );
+    }
   }
 
   /***
@@ -64,5 +71,5 @@ export default function usePosts(dependency) {
     setDependency_id(currDependencyId);
   }, [dependency]);
 
-  return {postsData, dependencyExists, dependency_id, filterPosts};
+  return { postsData, dependencyExists, dependency_id, filterPosts };
 }

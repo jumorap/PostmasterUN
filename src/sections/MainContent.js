@@ -28,7 +28,7 @@ export default function MainContent({ dependency }) {
 
   //useEffect to filter the posts by the selected tags
   useEffect(() => {
-    if (dependencyExists && selectedTags.length > 0) {
+    if (dependencyExists) {
       console.log(selectedTags);
       filterPosts(selectedTags);
     }
