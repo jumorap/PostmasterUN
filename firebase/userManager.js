@@ -61,6 +61,7 @@ export async function createUser(user) {
         setDoc(userGen, {
             nombre: user.displayName,
             email: user.email,
+            id: user.uid,
             rol: ["estudiante"],
             creationDate: new Date(),
         })
