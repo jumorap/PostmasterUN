@@ -1,3 +1,4 @@
+import React from "react";
 import { db } from "./firebase.config.js"
 import FirestoreManager from "./FirestoreManager";
 import { dataQueryById } from "./dataQuery";
@@ -29,6 +30,8 @@ export async function getUserByEmail(email){
     return doc.data()
   });
 }
+
+
 
 /**
  * Function that rectifies the data of the user -> if is a UNAL user, it will return true, if not, it will return false

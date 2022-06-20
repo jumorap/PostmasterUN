@@ -1,4 +1,5 @@
-import { Box, Stack, Divider, Typography, Fab, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
+import { Box, FormGroup, Alert, FormControlLabel, Stack, Divider, Typography, Fab, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
+import Checkbox from '@mui/material/Checkbox';
 import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { TextField } from "@mui/material";
@@ -11,7 +12,8 @@ import {getUserByEmail} from "../../../firebase/userManager";
 
 //Firebase
 import { db } from "../../../firebase/firebase.config"
-import { collection, doc, getDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, query, where, getDocs, updateDoc } from "firebase/firestore";
+
 
 
 //This component set admin and colabs permissions
@@ -29,14 +31,27 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     const [elevation, setElevation] = useState(1);
     const [open, setOpen] = useState(false);
     const [loaded, setLoaded] = useState(true);
+    
 
     
     const [email, setEmail] = useState('');
-    const [findedUser, setFindedUser] = useState();
+    const [findedUser, setFindedUser] = useState({rol: ["estudiante"]});
     const [displayUserInfo, setDisplayUserInfo] = useState(false);
 
-    const [assignBtnLabel, setAssignBtnLabel] = useState("")
-    const [assignBtnColor, setAssignBtnColor] = useState("error")
+    const [selectedDeps,setSelectedDeps] = useState([]);
+
+    const [checkedDep,setCheckedDep] = useState(false)
+    const [show, setShow] = useState(false);
+
+    
+
+
+    var mySelectedDeps = []
+
+    const [dependenciesData, setDependenciesData] = useState(areas);
+
+    // const [assignLabel, setAssignLabel] = useState("")
+    // const [assignBtnColor, setAssignBtnColor] = useState("error")
 
     let title = ""
     let authorizedRole = false
@@ -56,6 +71,8 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
 
 
     const handleClickOpen = () => {
+    
+    setDisplayUserInfo(false)
     setOpen(true);
     }
 
@@ -64,8 +81,28 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     }
 
     const handleSubmit = () => {
+        
+        if(findedUser.rol[0] !== "admin"){
+            setUserRole("admin")
+        }
+        setUserDeps(selectedDeps)
+
+        setDisplayUserInfo(false)
+        setShow(true)
         setOpen(false);
-        //aceptar y cerrar, asignar rol nuevo
+        
+    }
+
+    const handleSetStudent = () => {
+        if(findedUser.rol[0] == "admin"){
+            setUserRole("estudiante")
+        }
+        setSelectedDeps([])
+        setUserDeps([])
+
+        setDisplayUserInfo(false)
+        setShow(true)
+        setOpen(false);
     }
 
     const handleSearchUser = () => {
@@ -73,6 +110,44 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
         // const dbUser = getUserByEmail(email)
         getUserByEmail(email)
     }
+
+    const handleCheckboxChange = (dep) => {
+            //event.target.checked  boolean
+            let checked = event.target.checked
+            let temp = [...selectedDeps]
+
+            if(checked == true){
+
+                if(!temp.includes(dep)){
+                    temp.push(dep)
+                }
+
+                setSelectedDeps(temp)
+                handleCheckedDep(dep)
+            }else{
+                
+                if(temp.includes(dep)){
+                    //quitarla
+                   const index = temp.findIndex(e => e == dep )
+
+                   temp.splice(index,1)
+                }
+                setSelectedDeps(temp)
+                handleCheckedDep(dep)
+            }
+
+        
+    }
+
+    const handleCheckedDep = (dep)=>{
+        if(selectedDeps.includes(dep)){
+
+            return true
+        }else{
+            return false
+        }
+    }
+
 
     //this function should be in Firestore/userManager.js, not here
     async function getUserByEmail(email){
@@ -85,24 +160,72 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
         });
       }
 
+      //this function should be in Firestore/userManager.js, not here
+      async function setUserDeps(deps){
+        const userRef = doc(db, "users", findedUser.id);
+        
+        await updateDoc(userRef, {
+          dependenciasAdmin: deps
+        });
+
+      }
+
+      async function setUserRole(rol){
+        const userRef = doc(db, "users", findedUser.id);
+
+        await updateDoc(userRef, {
+          rol: [rol]
+        });
+      }
+
+
+
+
+      //list dependencies
+      useEffect(() => {
+        
+        const mapDependencies = async () => {
+            dataQueryArray(FirestoreManager.getDependenciesList()).then((data) => {
+            const dataArray = data.map((item) => item.name);
+            setDependenciesData(dataArray);
+            });
+        };
+    
+        if (loaded){
+            mapDependencies();
+            
+        }
+        return ()=>{
+            setLoaded(false);
+        }   
+        }, [loaded]);
+
+      
       //Find user
       useEffect(() => {
-        console.log(findedUser)
+       
+
         //refresh user UI
         if(findedUser){
             setDisplayUserInfo(true)
+            mySelectedDeps = []
             
             if(findedUser.rol[0] == "admin"){
-               
-                setAssignBtnLabel("Quitar Permisos De Administración")
-                setAssignBtnColor("error")
-            }else {
-                setAssignBtnLabel("Asignar Como Administrador")
-                setAssignBtnColor("success")
+                //filtrar dependencias asigandas
+                for (let i = 0; i < dependenciesData.length; i++) {
+                    for (let j = 0; j < findedUser.dependenciasAdmin.length; j++) {
+                        if(dependenciesData[i] == findedUser.dependenciasAdmin[j]){
+                                mySelectedDeps.push(dependenciesData[i])
+                        }
+                        
+                    }
+                }
             }
+            setSelectedDeps(mySelectedDeps)
         }
-      }, [findedUser])
+    }, [findedUser])
 
+    console.log(selectedDeps)
     return(
         <>
             <Box sx={{ display: !authorizedRole && 'none'}}>
@@ -120,6 +243,11 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                     <AccountCircleIcon sx={{ mr: 1 }} />
                     {title}
                 </Button>
+
+                <Alert  onClose={() => {setShow(false)}} sx={{ display: !show && 'none', width: "100%" }}
+                severity="success">  Cambios guardados correctamente
+                </Alert>
+
             </Box>
 
 
@@ -170,24 +298,43 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                         </Typography>
 
                         <Typography variant="h6">
-                             Permisos de administrador
+                             Permisos de administración:
                         </Typography>
 
+                        <Typography sx={{ display: findedUser.rol[0] == "admin" && 'none'}}  variant="subtitle2">
+                             Atención: Al guardar los cambios este usuario se convertirá en rol administrador.
+                        </Typography>
 
+                        <Typography variant="subtitle2">
+                             Seleccione las dependencias que administra este usuario:
+                        </Typography>
 
+                        <Typography  variant="subtitle1">
+                             
+                            <FormGroup >
+                                {
+
+                                dependenciesData.map((dep,index) => (                     
+                                        <FormControlLabel
+                                            control={ <Checkbox /> }
+                                            color="success"
+                                            label={dep}
+                                            checked={ handleCheckedDep(dep) }
+                                            onChange={() => handleCheckboxChange(dep)}
+                                            
+                                            
+                                        />
+                                ))}
+
+                                
+                            </FormGroup>
+                        </Typography>
+
+                        <Button sx={{ display: findedUser.rol[0] !== "admin" && 'none'}} variant="outlined" color="error" onClick={handleSetStudent}>Remover Permisos y Designar como Estudiante</Button>
                     </Stack>
-                        <Button sx={{ display: !displayUserInfo && 'none'}} variant="contained" color={assignBtnColor} onClick={handleSearchUser}>{assignBtnLabel}</Button>
 
 
-                            
-
-
-
-
-
-                   
-
-
+                        {/* <Button sx={{ display: !displayUserInfo && 'none'}} variant="contained" color={assignBtnColor} onClick={handleSearchUser}>{assignBtnLabel}</Button> */}
 
 
                 </DialogContentText>
@@ -195,9 +342,14 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                 <DialogActions>
 
                 <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
-                <Button variant="contained" onClick={handleSubmit} color="error">Guardar cambios</Button>
+                <Button variant="contained" onClick={handleSubmit} color="success">Guardar cambios</Button>
                 </DialogActions>
             </Dialog>
         
+
+
+            
+           
+      
         </>
         )}
