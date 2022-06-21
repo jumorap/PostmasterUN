@@ -8,6 +8,7 @@ import SetAdminPermission from "./setAdminPermission";
 import CreatePublication from "./CreatePublication";
 
 import { firebaseAppAuth } from "../../../firebase/firebase.config"
+import { fontWeight } from "@mui/system";
 
 
 const informationList = [
@@ -141,7 +142,7 @@ export default function Profile() {
 
   /*Firebase methods */
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState("Estudiante");
 
 
   // Check if user is admin to show createNews component
@@ -173,10 +174,12 @@ export default function Profile() {
         if (user) {
           //if user is auth, then find role
           const dbUser = getUser(user.uid)
+          setUserRole("user2")
           dbUser.then(res => {
             //verify if user field rol is admin or root
             //TODO: create feature for colab
             const rol = res.data().rol[0]
+            console.log("rol:", rol)
             switch (rol) {
               case "user":
                 setUserRole("user")
@@ -190,8 +193,10 @@ export default function Profile() {
               case "colab":
                 setUserRole("colab")
                 break;
+              case "estudiante":
+                setUserRole("Estudiante")
               default:
-                setUserRole("user")
+                setUserRole("user3")
                 console.log("user doesn't have an specific role")
             }
           })
@@ -224,31 +229,7 @@ export default function Profile() {
   // if is admin -> display flex, else none
 
   return (
-      <Box sx={{paddingLeft: 10, paddingRight: 10}}>
-
-        <Typography style={{fontWeight: 500}} variant="h4" gutterBottom >
-          Información del Usuario
-        </Typography>
-
-        <Divider />
-
-        <Stack marginBottom={5} marginTop={2}>
-          <Paper elevation={4} sx = {{px:2, py: 2}}>
-            <Stack direction={'row'} alignItems={'center'} spacing={5} >
-              {/*Foto de perfil*/}
-              <Avatar sx={{ width: 150, height: 150 }} src={user.src} />
-
-              <Stack direction={'column'}>
-                <Typography style={{fontWeight: 600}} variant="h6">{user.name}</Typography>
-                <Typography variant="body2" color='#E51F1F' gutterBottom>{user.email}</Typography>
-                <Typography variant="body2">Estudiante</Typography>
-                <Typography variant="body2">Se unió el 23 de abril del 2022</Typography>
-                <Typography variant="body2">Publicaciones guardadas: {user.favPost}</Typography>
-              </Stack>
-
-            </Stack>
-          </Paper>
-        </Stack>
+      <Box sx={{paddingLeft: 2, paddingRight: 2}}>
 
         {/* begin */}
 
@@ -280,18 +261,53 @@ export default function Profile() {
           
 
         {/* end */}
+        
+        <Stack direction={'row'}>
+          <Stack marginRight={2}>
+            {/*First column */}
 
-        <Typography variant="h4" gutterBottom color='#FF2525'>
-          Mis favoritos
-        </Typography>
+            {/*<Divider />*/}
 
-        <Divider  color='#FFC8C8'/>
+            <Stack marginBottom={5} marginTop={1}>
+              <Paper elevation={4} sx = {{px:2, py: 2}}>
+                <Stack direction={'column'} alignItems={'center'} spacing={2} >
+                  {/*Foto de perfil*/}
+                  <Avatar sx={{ width: 200, height: 200 }} src={user.src} />
 
-        <Stack spacing={4} direction = {"column"} sx = {{py: 2}}>
+                  <Stack direction={'column'}>
+                    <Typography style={{fontWeight: 600}} variant="h6" align="center">{user.name}</Typography>
+                    <Typography variant="body2" color='#E51F1F' gutterBottom>{user.email}</Typography>
+                    <Typography variant="body2">{user.role}</Typography>
+                    <Typography variant="body2">Se unió el 23 de abril del 2022</Typography>
+                    <Typography variant="body2">Publicaciones guardadas: {user.favPost}</Typography>
+                  </Stack>
 
-          <PublicationList list={informationList} selectItem = {selectItem}>
-            <InformationCard {...currPubication} />
-          </PublicationList>
+                </Stack>
+              </Paper>
+            </Stack>
+
+          </Stack>
+
+          <Divider orientation={"vertical"} flexItem />
+          
+          <Stack marginLeft={2}>
+            {/*Second column */}
+
+            {/* <Divider  color='#FFC8C8'/> */}
+            <Paper elevation={4} sx = {{backgroundColor: '#fc3333'}}>
+              <Typography style={{color: 'white'}}variant="h4" gutterBottom align="center" sx={{paddingTop: 1}}>Publicaciones Guardadas</Typography>
+            </Paper>
+            
+
+            <Stack spacing={4} direction = {"column"} sx = {{py: 1}}>
+
+              <PublicationList list={informationList} selectItem = {selectItem}>
+                <InformationCard {...currPubication} />
+              </PublicationList>
+            </Stack>
+            
+          </Stack>
+
         </Stack>
 
       </Box>

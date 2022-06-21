@@ -1,4 +1,4 @@
-import { Modal, Paper, Stack, Typography } from "@mui/material";
+import { Modal, Paper, Stack, Typography, Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Publication from "./Publication";
@@ -10,7 +10,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  margin: "20px",
+  margin: "20px"
 };
 
 /**
@@ -36,8 +36,9 @@ export default function PublicationList({ list, children, selectItem }) {
   return (
     <Paper elevation={2} sx = {{px:2, py: 1}}>
       {/*List of publications*/}
-      <Box>
-        <Typography variant="h2" align="center">Publicaciones Guardadas</Typography>
+
+      <Divider />
+      <Box sx={{py: 2}}>
         <Stack direction={"column"} spacing={2}>
           {list.map((item, index) => {
             return (
