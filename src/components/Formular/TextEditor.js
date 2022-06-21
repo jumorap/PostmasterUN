@@ -10,12 +10,11 @@ export default class TextEditor extends React.Component {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = (editorState) => props.setEditorState(editorState)
     this.handleKeyCommand = this._handleKeyCommand.bind(this);
     this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
     this.toggleBlockType = this._toggleBlockType.bind(this);
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
-    console.log(props)
   }
 
   _handleKeyCommand(command, editorState) {
@@ -31,10 +30,10 @@ export default class TextEditor extends React.Component {
     if (e.keyCode === 9 /* TAB */) {
       const newEditorState = RichUtils.onTab(
         e,
-        this.state.editorState,
+        this.props.editorState,
         4 /* maxDepth */
       );
-      if (newEditorState !== this.state.editorState) {
+      if (newEditorState !== this.props.editorState) {
         this.onChange(newEditorState);
       }
       return;
@@ -42,15 +41,15 @@ export default class TextEditor extends React.Component {
     return getDefaultKeyBinding(e);
   }
   _toggleBlockType(blockType) {
-    this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
+    this.onChange(RichUtils.toggleBlockType(this.props.editorState, blockType));
   }
   _toggleInlineStyle(inlineStyle) {
     this.onChange(
-      RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
+      RichUtils.toggleInlineStyle(this.props.editorState, inlineStyle)
     );
   }
   render() {
-    const { editorState } = this.state;
+    const  editorState  = this.props.editorState;
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
     let className = styles.RichEditorEditor;
