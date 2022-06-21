@@ -1,18 +1,20 @@
 import styled from "@emotion/styled";
-import {
-  Button,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import React from "react";
 import LinksForm from "./LinksForm";
 import TagsForm from "./TagsForm";
+import { Editor, EditorState } from "draft-js";
+import "draft-js/dist/Draft.css";
+import TextEditor from "./TextEditor";
 
 export default function Formular() {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [links, setLinks] = React.useState([]);
+  const [editorState, setEditorState] = React.useState(() =>
+    EditorState.createEmpty()
+  );
 
   const handleTagDelete = (tag) => {
     setTags(tags.filter((item) => item.name !== tag.name));
@@ -39,7 +41,7 @@ export default function Formular() {
    */
   const upload = () => {
     console.log(title, description, tags, links);
-  }
+  };
 
   console.log();
 
@@ -60,6 +62,7 @@ export default function Formular() {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
+      <TextEditor state = {"1"}/>
 
       <TagsForm
         handleTagDelete={handleTagDelete}
