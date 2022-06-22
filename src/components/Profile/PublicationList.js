@@ -18,10 +18,11 @@ const modalStyle = {
  * @param {list} list lista de publicaciones
  * @param children children de la publicacion (imagen, titulo, etc)
  * @param selectItem funcion para seleccionar una publicacion de la lista de publicaciones
+ * @param handleUncheck
  * @handleOpen funcion que se ejecuta cada vez que se oprime una publicacion
  * @returns
  */
-export default function PublicationList({ list, children, selectItem }) {
+export default function PublicationList({ list, children, selectItem, handleUncheck = () => {} }) {
   /*State to control the modal*/
   const [openModal, setOpenModal] = useState(false);
 

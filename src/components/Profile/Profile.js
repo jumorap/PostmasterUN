@@ -1,6 +1,5 @@
 import { Box, Stack, Typography, Paper, Avatar, Divider } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
-import SavedTags from "./SavedTags";
 import { InformationCard } from "../InformationCard";
 import PublicationList from "./PublicationList";
 import {getUser} from "../../../firebase/userManager"
@@ -8,8 +7,8 @@ import SetAdminPermission from "./setAdminPermission";
 import CreatePublication from "./CreatePublication";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
-import { fontWeight } from "@mui/system";
 import { AuthContext } from "../../../firebase/AuthProvider.config";
+
 
 export default function Profile() {
   const [tags, setTags] = useState([
@@ -85,7 +84,6 @@ export default function Profile() {
         if (user) {
           //if user is auth, then find role
           const dbUser = getUser(user.uid)
-          setUserRole("user2")
           dbUser.then(res => {
             //verify if user field rol is admin or root
             //TODO: create feature for colab
@@ -107,7 +105,6 @@ export default function Profile() {
               case "estudiante":
                 setUserRole("Estudiante")
               default:
-                setUserRole("user3")
                 console.log("user doesn't have an specific role")
             }
           })
@@ -138,20 +135,9 @@ export default function Profile() {
     <Box sx={{ paddingLeft: 2, paddingRight: 2 }}>
 
 
-      <Stack marginBottom={5} marginTop={2} sx={{
-        display: !(userRole === "root" || userRole === "admin") && "none"
-      }} >
-
-        <Typography style={{fontWeight: 500}} variant="h6" gutterBottom >
-          Configuración de permisos de usuario
-        </Typography>
-
-        <SetAdminPermission disp={userRole === "root" && "root" || userRole === "admin" && "admin"}/>
-
-      </Stack>
 
       {/* Show create publication component if user is root or admin */}
-      <CreatePublication disp={userRole === "root" || userRole === "admin" || userRole == "colab"}/>
+      <CreatePublication disp={userRole === "root" || userRole === "admin" || userRole === "colab"}/>
 
       <Stack direction={'row'}>
         <Stack marginRight={2}>
@@ -169,41 +155,48 @@ export default function Profile() {
                   <Typography variant="body2">{user.role}</Typography>
                   <Typography variant="body2">Se unió el 23 de abril del 2022</Typography>
                   <Typography variant="body2">Publicaciones guardadas: {user.favPost}</Typography>
+
+
+                  <Stack marginBottom={5} marginTop={2} sx={{
+                    display: !(userRole === "root" || userRole === "admin") && "none"
+                  }} >
+
+                    <Typography style={{fontWeight: 500}} variant="h6" gutterBottom >
+                      Configuración de permisos de usuario
+                    </Typography>
+
+                    <SetAdminPermission disp={userRole === "root" && "root" || userRole === "admin" && "admin"}/>
+
+                  </Stack>
                 </Stack>
               </Stack>
             </Paper>
           </Stack>
         </Stack>
 
-          <Divider orientation={"vertical"} flexItem />
+        <Divider orientation={"vertical"} flexItem />
 
-          <Stack marginLeft={2}>
-            {/*Second column */}
+        <Stack marginLeft={2}>
+          {/*Second column */}
 
-        <Typography variant="h4" gutterBottom color='#FF2525'>
-          Mis favoritos
-        </Typography>
-      <Typography variant="h4" gutterBottom color="#FF2525">
-        Mis favoritos
-      </Typography>
-            {/* <Divider  color='#FFC8C8'/> */}
-            <Paper elevation={4} sx = {{backgroundColor: '#fc3333'}}>
-              <Typography style={{color: 'white'}} variant="h4" gutterBottom align="center" sx={{paddingTop: 1}}>Publicaciones Guardadas</Typography>
-            </Paper>
+          {/* <Divider  color='#FFC8C8'/> */}
+          <Paper elevation={4} sx = {{backgroundColor: '#fc3333'}}>
+            <Typography style={{color: 'white'}} variant="h4" gutterBottom align="center" sx={{paddingTop: 1}}>Publicaciones Guardadas</Typography>
+          </Paper>
 
 
-      <Divider color="#FFC8C8" />
-            <Stack spacing={4} direction = {"column"} sx = {{py: 1}}>
+          <Divider color="#FFC8C8" />
 
-              <PublicationList list={informationList} selectItem = {selectItem}>
-                <InformationCard {...currPubication} />
-              </PublicationList>
-            </Stack>
-
+          <Stack spacing={4} direction = {"column"} sx = {{py: 1}}>
+            <PublicationList list={savedPublications} selectItem = {selectItem}>
+              <InformationCard {...currPubication} />
+            </PublicationList>
           </Stack>
 
         </Stack>
 
-      </Box>
+      </Stack>
+
+    </Box>
   )
 }
