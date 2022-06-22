@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Container from "./Container";
 import ElementsBar from "./ElementsBar";
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import FirestoreManager from "../../../firebase/FirestoreManager";
 
 function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
-  const [currTag, setCurrTag] = React.useState("");
+  const [currTag, setCurrTag] = React.useState({name:"", id : null});
 
-  const [tagOptions, setTagOptions] = React.useState([
-    { name: "tag1", label: "Tag 1" },
-    { name: "tag2", label: "Tag 2" },
-    { name: "tag3", label: "Tag 3" },
-  ]);
+  const [tagOptions, setTagOptions] = React.useState([]);
+
+  useEffect(() => {
+    async function setTags(){
+      const tags = await FirestoreManager.getTagsList()
+      setTagOptions(tags)
+    }
+    setTags()
+  }, [])
+  
 
   function handleButtonClick() {
-    handleTagAdd(currTag);
-    setCurrTag("");
+    handleTagAdd(currTag.name);
+    setCurrTag({name:""});
   }
 
   return (
@@ -29,14 +35,15 @@ function TagsForm({ tags, handleTagDelete, handleTagAdd }) {
           disablePortal
           id="combo-box-demo"
           options={tagOptions}
-          onChange={(_, value) => setCurrTag(value.label)}
+          onChange={(_, value) => setCurrTag(value)}
           value={currTag}
+          getOptionLabel={(v)=>v.name}
           renderInput={(params) => (
             <TextField
               {...params}
               label="Etiquetas"
               value={currTag}
-              onChange={(e) => setCurrTag(e.target.value)}
+              onChange={(e) => setCurrTag({...currTag ,name: e.target.value})}
                 variant="filled"
             />
           )}

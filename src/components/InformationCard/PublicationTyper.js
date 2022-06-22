@@ -12,7 +12,7 @@ function PublicationTyper(props) {
         p: "0.5em",
         position: "absolute",
         right: "25px",
-        top: "-25px",
+        top: "5px",
       }}
     >
       <Typography

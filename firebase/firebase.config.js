@@ -44,4 +44,4 @@ export const providers = {
 
 // DB firestorage
 export const db = getFirestore()
-export const storage = getStorage()
+export const storage = getStorage(firebaseInitApp)

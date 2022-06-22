@@ -1,27 +1,38 @@
 import React, { useContext, useState } from "react";
-import {
-  Box,
-  Chip,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import PublicationTyper from "./PublicationTyper";
 import { publication_t } from "../../types";
 import { DependencyContext } from "../contextProviders";
 import FavoriteButton from "./FavoriteButton";
 import DeleteButton from "./DeleteButton";
+import CollapsableText from "./CollapsableText";
+import ReadOnlyEditor from "./ReadOnlyEditor";
 
 //This component display the information card of navegacion principal
-function InformationCard({ type, title, description, links, images, tags, postID }) {
-  const [dependenciesDataById, setDependenciesDataById] = useContext(DependencyContext);
-  const [showFullDescription, setShowFullDescription] = useState(false);
+function InformationCard({
+  type,
+  title,
+  description,
+  links,
+  images,
+  tags,
+  postID,
+}) {
+  const [dependenciesDataById, setDependenciesDataById] =
+    useContext(DependencyContext);
 
   return (
     <Paper
       elevation={3}
-      sx={{ p: "1em", position: "relative", maxWidth: "700px"}}
+      sx={{
+        p: "1em",
+        position: "relative",
+        maxWidth: "800px",
+        minWidth: "350px",
+        width: "700px",
+        overflow: "auto"
+      }}
     >
       {/* Delete button that must be showed to admin roles */}
       <DeleteButton postId={postID} />
@@ -39,36 +50,7 @@ function InformationCard({ type, title, description, links, images, tags, postID
         <Typography variant="h4">{title}</Typography>
 
         {/*Description of the publication*/}
-        <Typography variant="body1" sx={{ textAlign: "justify" }}>
-            {/* Limit the description to 200 characters with a button to show less or more */}
-            {description.length > 200
-                ? (
-                    <>
-                        {showFullDescription
-                            ? description
-                            : description.substring(0, 200) + "... "
-                        }
-                        <Typography
-                        variant={"subtitle1"}
-                        onClick={() => setShowFullDescription(!showFullDescription)}
-                        sx={{
-                            cursor: "pointer",
-                            color: "#8f8f8f",
-                            textDecoration: "underline",
-                            width: "fit-content",
-                            display: "inline-block",
-                            fontStyle: "italic",
-                            fontWeight: "bold",
-                        }}
-                        >
-                            {showFullDescription ? "Ocultar" : "Ver más"}
-                        </Typography>
-                    </>
-                )
-                : description
-            }
-
-        </Typography>
+        <ReadOnlyEditor storedState={description} />
 
         {/*Aditional links*/}
         <Stack direction="row" spacing={2} justifyContent="center">
@@ -112,21 +94,23 @@ function InformationCard({ type, title, description, links, images, tags, postID
           justifyContent={"space-between"}
         >
           {/* Heart Icon for addind favorite publications */}
-          <FavoriteButton postId={postID}/>
+          <FavoriteButton postId={postID} />
           <Box>
             <Typography variant="body1" sx={{ color: "primary.gray" }}>
               Etiquetas:
             </Typography>
-            {tags.map((tag, index) => (
-              <Chip
-                key={index}
-                label={typeof tag === "string" ? tag : tag.name}
-                sx={{
-                  borderRadius: "5px",
-                }}
-                clickable
-              />
-            ))}
+            <Stack direction={"row"} spacing = {1}>
+              {tags.map((tag, index) => (
+                <Chip
+                  key={index}
+                  label={typeof tag === "string" ? tag : tag.name}
+                  sx={{
+                    borderRadius: "5px",
+                  }}
+                  clickable
+                />
+              ))}
+            </Stack>
           </Box>
           {/* tags is an array of strings that will be displayed as chips */}
         </Stack>

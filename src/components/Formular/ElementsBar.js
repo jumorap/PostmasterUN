@@ -11,7 +11,7 @@ function ElementsBar({list, handleTagDelete, emptyMessage}) {
               list === undefined || list.length === 0  ? emptyMessage: ""
           }
           {list.map((item, index) => (
-             <Chip label={item.name} key={index} onDelete={() => handleTagDelete(item)}/> 
+             <Chip label={item.name} key={index} onDelete={() => handleTagDelete(item, index)}/> 
           ))}
       </Stack>
     </Paper>

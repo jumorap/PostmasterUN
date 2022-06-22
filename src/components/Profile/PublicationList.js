@@ -1,4 +1,4 @@
-import { Modal, Paper, Stack, Typography } from "@mui/material";
+import { Modal, Paper, Stack, Typography, Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Publication from "./Publication";
@@ -9,8 +9,10 @@ const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(-50%, -52.5%)",
   margin: "20px",
+  overflow: "auto",
+  maxHeight: "95%"
 };
 
 /**
@@ -18,10 +20,11 @@ const modalStyle = {
  * @param {list} list lista de publicaciones
  * @param children children de la publicacion (imagen, titulo, etc)
  * @param selectItem funcion para seleccionar una publicacion de la lista de publicaciones
+ * @param handleUncheck
  * @handleOpen funcion que se ejecuta cada vez que se oprime una publicacion
  * @returns
  */
-export default function PublicationList({ list, children, selectItem }) {
+export default function PublicationList({ list, children, selectItem, handleUncheck = () => {} }) {
   /*State to control the modal*/
   const [openModal, setOpenModal] = useState(false);
 
@@ -31,13 +34,18 @@ export default function PublicationList({ list, children, selectItem }) {
     selectItem(index);
   }
 
-  console.log(list);
-
   return (
-    <Paper elevation={2} sx = {{px:2, py: 1}}>
+    <Paper elevation={0} sx = {{px:2, py: 1}}>
       {/*List of publications*/}
-      <Box>
-        <Typography variant="h2" align="center">Publicaciones Guardadas</Typography>
+
+      <Divider />
+      <Box sx={{py: 2}}>
+      {list.length === 0 ? (
+        <Typography variant="h6" gutterBottom color = "seconday">
+          No tienes ninguna publicación guardada
+        </Typography>
+      ) : ""}
+        
         <Stack direction={"column"} spacing={2}>
           {list.map((item, index) => {
             return (
@@ -45,9 +53,10 @@ export default function PublicationList({ list, children, selectItem }) {
                 onClick={()=>handleOpen(index)}
                 key={index}
                 title={item.title}
-                description={item.description}
+                description={""} //item.description
                 date={item.date}
                 postId={item.id}
+                handleUncheck={()=>handleUncheck(item.id)}
               />
             );
           })}

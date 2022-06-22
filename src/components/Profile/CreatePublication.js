@@ -8,9 +8,14 @@ import { Paper} from '@mui/material'
 import { dataQueryArray } from "../../../firebase/dataQuery";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import { addPost } from "../../../firebase/dataUpdate";
+import { Admin } from "../../sections"
+
+import { firebaseAppAuth } from "../../../firebase/firebase.config";
+import {getUser} from "../../../firebase/userManager";
 
 const dialogStyle = {
-    position: "absolute"
+    position: "abslute",
+    padding: "5px"
   }
 
 // import {setPublication} from "../../../firebase/userManager"
@@ -43,6 +48,13 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
     const [tags, setTags] = useState('');
     const [links, setLinks] = useState('');
 
+      // Get User Information
+        const [userDeps, setUserDeps] = useState([["Dependencias no disponibles"]]);
+        const [userRole, setUserRole] = useState("root");
+
+     /*Firebase methods */
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+
     const handleClickOpen = () => {
     setOpen(true);
     }
@@ -72,6 +84,34 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
     }   
     }, [loaded]);
 
+
+    useEffect(() => {
+        firebaseAppAuth.onAuthStateChanged((user) => {
+            if (user) {
+                //if user is auth, then find role
+                const dbUser = getUser(user.uid)
+                dbUser.then(res => {
+                    //verify if user field rol is admin or root
+                    //TODO: create feature for colab
+
+                    const myUser = res.data()
+
+                    const role = myUser.rol[0]
+                    if(role === "admin" || role === "colab"){
+                        const deps = myUser.dependenciasAdmin
+                        setUserDeps(deps)
+                    }
+                    setUserRole(role)
+                })
+
+            }
+        })
+    }, []);
+
+    function close() {
+        setOpen(false)
+    }
+
     return(
         <>
             <Box sx={{
@@ -88,60 +128,7 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
                 </Fab>
             </Box>
             <Dialog sx={dialogStyle} open={open} onClose={handleClose} fullWidth>
-                <DialogTitle>Crear publicación</DialogTitle>
-                <DialogContent width="80%">
-                <DialogContentText>
-                    <Stack direction={"column"} spacing={3} >
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Dependencia</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="Dependencia"
-                                onChange={e => setDependency(e.target.value)}
-                            >   
-                                {dependenciesData.map((text, index) => (
-                                    <MenuItem key={text} value={text}>{text}</MenuItem>
-                                ))}
-                                
-                            </Select>
-                        </FormControl>
-                        <TextField
-                            margin="dense" 
-                            id="filled-basic" 
-                            label="Título" 
-                            variant="outlined"
-                            fullwidht
-                            onChange={e => setTitle(e.target.value)}
-                        />
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Descripción"
-                            multiline
-                            minRows={5}
-                            onChange={e => setDescripcion(e.target.value)}
-                        />
-                        <TextField
-                            margin="dense" 
-                            id="filled-basic" 
-                            label="Etiquetas" 
-                            variant="outlined"
-                            onChange={e => setTags(e.target.value)}
-                        />
-                        <TextField
-                            margin="dense" 
-                            id="filled-basic" 
-                            label="Enlaces de interés" 
-                            variant="outlined"
-                            onChange={e => setLinks(e.target.value)}
-                        />
-                    </Stack>
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
-                <Button variant="contained" onClick={handleSubmit} color="error">Guardar cambios</Button>
-                </DialogActions>
+                <Admin close={close} />
             </Dialog>
         
         </>
