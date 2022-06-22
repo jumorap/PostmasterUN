@@ -316,8 +316,7 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
                              
                             <FormGroup >
                                 {
-
-                                dependenciesData.map((dep,index) => (                     
+                                    dependenciesData.map((dep,index) => (
                                         <FormControlLabel
                                             key={index}
                                             control={ <Checkbox /> }
