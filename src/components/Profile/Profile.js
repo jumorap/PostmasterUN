@@ -6,6 +6,7 @@ import PublicationList from "./PublicationList";
 import {getUser} from "../../../firebase/userManager"
 import SetAdminPermission from "./setAdminPermission";
 import CreatePublication from "./CreatePublication";
+import SetColabPermission from "./setColabPermission";
 
 import { firebaseAppAuth } from "../../../firebase/firebase.config"
 
@@ -143,7 +144,6 @@ export default function Profile() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState("user");
 
-
   // Check if user is admin to show createNews component
   useEffect(() => {
     //check auth
@@ -151,15 +151,11 @@ export default function Profile() {
       setIsUserAuthenticated(!!u?.email.toString().split('@')[1].includes('unal.edu.co'));
     })
     //check role to change UI according to
-
-
-
-
-
   }, [])
 
   // Get User Information
   const [user, setUser] = useState({
+    uid: "",
     src: "",
     name: "",
     email: "",
@@ -196,6 +192,7 @@ export default function Profile() {
             }
           })
           setUser({
+            uid: user.uid,
             src: user.photoURL,
             name: user.displayName,
             email: user.email,
@@ -204,6 +201,7 @@ export default function Profile() {
           });
         } else {
           setUser({
+            uid: "",
             src: "",
             name: "",
             email: "",
@@ -253,9 +251,6 @@ export default function Profile() {
         {/* begin */}
 
         {/* if role is root */}
-        
-
-        
 
         <Stack marginBottom={5} marginTop={2} sx={{
             display: !(userRole == "root" || userRole == "admin") && "none"
@@ -267,20 +262,15 @@ export default function Profile() {
           </Typography>
           
 
-          <SetAdminPermission disp={userRole == "root" && "root" || userRole == "admin" && "admin"}/>
-
+          <SetAdminPermission disp={userRole == "root" && "root"}/>
+          <SetColabPermission disp={userRole == "admin" && "admin"} id={"eEzMWTCdegPNCcAnMhsLjP0PSNZ2"}/>
         </Stack>
-
-
-
 
           {/* Show create publication component if user is root or admin */}
           <CreatePublication disp={userRole == "root" || userRole == "admin" || userRole == "colab"}/>
-
-          
-
+  
         {/* end */}
-
+        
         <Typography variant="h4" gutterBottom color='#FF2525'>
           Mis favoritos
         </Typography>
