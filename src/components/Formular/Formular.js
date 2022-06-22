@@ -19,6 +19,8 @@ export default function Formular() {
     EditorState.createEmpty()
   );
 
+  console.log(editorState)
+
   const handleTagDelete = (tag) => {
     setTags(tags.filter((item) => item.name !== tag.name));
   };
@@ -43,10 +45,11 @@ export default function Formular() {
    * Funcion para subir el formulario a la base de datos
    */
   const upload = () => {
+    console.log(editorState)
     const description = JSON.stringify(
       convertToRaw(editorState.getCurrentContent())
     );
-    FirestoreManager.addPost(title, tags, links, description, "0");
+    //FirestoreManager.addPost(title, tags, links, description, "0", fileList);
   };
 
   return (
@@ -77,7 +80,7 @@ export default function Formular() {
       <Container name="Imagenes">
         <DropZone const fileList={fileList} setfileList={setfileList} />
       </Container>
-      <Button color="success" variant="outlined" onClick={upload}>
+      <Button color="error" variant="contained" onClick={upload}>
         Subir
       </Button>
     </Stack>

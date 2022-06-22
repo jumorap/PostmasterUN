@@ -8,6 +8,7 @@ import CreatePublication from "./CreatePublication";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
 import { AuthContext } from "../../../firebase/AuthProvider.config";
+import SetColabPermission from "./setColabPermission";
 
 
 export default function Profile() {
@@ -63,14 +64,14 @@ export default function Profile() {
   useEffect(() => {
     //check auth
     firebaseAppAuth.onAuthStateChanged((u) => {
-      setIsUserAuthenticated(
-        !!u?.email.toString().split("@")[1].includes("unal.edu.co")
+      setIsUserAuthenticated(!!u?.email.toString().split("@")[1].includes("unal.edu.co")
       );
     });
   }, []);
 
   // Get User Information
   const [user, setUser] = useState({
+    uid: "",
     src: "",
     name: "",
     email: "",
@@ -109,6 +110,7 @@ export default function Profile() {
             }
           })
           setUser({
+            uid: user.uid,
             src: user.photoURL,
             name: user.displayName,
             email: user.email,
@@ -117,6 +119,7 @@ export default function Profile() {
           });
         } else {
           setUser({
+            uid: "",
             src: "",
             name: "",
             email: "",
@@ -166,6 +169,7 @@ export default function Profile() {
                     </Typography>
 
                     <SetAdminPermission disp={userRole === "root" && "root" || userRole === "admin" && "admin"}/>
+                    <SetColabPermission disp={userRole === "admin" && "admin"} id={"eEzMWTCdegPNCcAnMhsLjP0PSNZ2"}/>
 
                   </Stack>
                 </Stack>

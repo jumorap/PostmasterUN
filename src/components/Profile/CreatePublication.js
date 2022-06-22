@@ -9,6 +9,9 @@ import { dataQueryArray } from "../../../firebase/dataQuery";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import { addPost } from "../../../firebase/dataUpdate";
 
+import { firebaseAppAuth } from "../../../firebase/firebase.config";
+import {getUser} from "../../../firebase/userManager";
+
 const dialogStyle = {
     position: "absolute"
   }
@@ -43,6 +46,13 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
     const [tags, setTags] = useState('');
     const [links, setLinks] = useState('');
 
+      // Get User Information
+        const [userDeps, setUserDeps] = useState([["Dependencias no disponibles"]]);
+        const [userRole, setUserRole] = useState("root");
+
+     /*Firebase methods */
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+
     const handleClickOpen = () => {
     setOpen(true);
     }
@@ -72,6 +82,30 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
     }   
     }, [loaded]);
 
+
+    useEffect(() => {
+        firebaseAppAuth.onAuthStateChanged((user) => {
+            if (user) {
+                //if user is auth, then find role
+                const dbUser = getUser(user.uid)
+                dbUser.then(res => {
+                    //verify if user field rol is admin or root
+                    //TODO: create feature for colab
+
+                    const myUser = res.data()
+
+                    const role = myUser.rol[0]
+                    if(role === "admin" || role === "colab"){
+                        const deps = myUser.dependenciasAdmin
+                        setUserDeps(deps)
+                    }
+                    setUserRole(role)
+                })
+
+            }
+        })
+    }, []);
+
     return(
         <>
             <Box sx={{
@@ -99,10 +133,19 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
                                 id="demo-simple-select"
                                 label="Dependencia"
                                 onChange={e => setDependency(e.target.value)}
-                            >   
-                                {dependenciesData.map((text, index) => (
-                                    <MenuItem key={text} value={text}>{text}</MenuItem>
-                                ))}
+                            >  
+
+
+                                {
+                                (userRole == "admin" || userRole == "colab")
+                                    ? userDeps.map((text, index) => (
+                                        <MenuItem key={text} value={text}>{text}</MenuItem>
+                                      ))
+                                    : dependenciesData.map((text, index) => (
+                                        <MenuItem key={text} value={text}>{text}</MenuItem>
+                                      ))
+                                
+                                }
                                 
                             </Select>
                         </FormControl>

@@ -13,6 +13,7 @@ import { DependencyContext } from "../contextProviders";
 import FavoriteButton from "./FavoriteButton";
 import DeleteButton from "./DeleteButton";
 import CollapsableText from "./CollapsableText";
+import ReadOnlyEditor from "./ReadOnlyEditor";
 
 //This component display the information card of navegacion principal
 function InformationCard({ type, title, description, links, images, tags, postID }) {
@@ -39,11 +40,7 @@ function InformationCard({ type, title, description, links, images, tags, postID
         <Typography variant="h4">{title}</Typography>
 
         {/*Description of the publication*/}
-        <Typography variant="body1" sx={{ textAlign: "justify" }}>
-            {/* Limit the description to 200 characters with a button to show less or more */}
-           <CollapsableText description = {description}  />
-
-        </Typography>
+        <ReadOnlyEditor storedState={description}/>
 
         {/*Aditional links*/}
         <Stack direction="row" spacing={2} justifyContent="center">
