@@ -12,7 +12,7 @@ import {getUserByEmail} from "../../../firebase/userManager";
 
 //Firebase
 import { db } from "../../../firebase/firebase.config"
-import { collection, doc, getDoc, query, where, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, query, where, getDocs, updateDoc, arrayUnion } from "firebase/firestore";
 
 
 
@@ -57,7 +57,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     let authorizedRole = false
 
 
-    if (disp == "root") {
+    if (disp === "root") {
         title = "Asignar permisos de administrador"
         authorizedRole = true
 
@@ -91,7 +91,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     }
 
     const handleSetStudent = () => {
-        if(findedUser.rol[0] == "admin"){
+        if(findedUser.rol[0] === "admin"){
             setUserRole("estudiante")
         }
         setSelectedDeps([])
@@ -113,7 +113,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
             let checked = event.target.checked
             let temp = [...selectedDeps]
 
-            if(checked == true){
+            if(checked === true){
 
                 if(!temp.includes(dep)){
                     temp.push(dep)
@@ -125,7 +125,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                 
                 if(temp.includes(dep)){
                     //quitarla
-                   const index = temp.findIndex(e => e == dep )
+                   const index = temp.findIndex(e => e === dep )
 
                    temp.splice(index,1)
                 }
@@ -210,11 +210,11 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
             setDisplayUserInfo(true)
             mySelectedDeps = []
             
-            if(findedUser.rol[0] == "admin"){
+            if(findedUser.rol[0] === "admin"){
                 //filtrar dependencias asigandas
                 for (let i = 0; i < dependenciesData.length; i++) {
                     for (let j = 0; j < findedUser.dependenciasAdmin.length; j++) {
-                        if(dependenciesData[i] == findedUser.dependenciasAdmin[j]){
+                        if(dependenciesData[i] === findedUser.dependenciasAdmin[j]){
                                 mySelectedDeps.push(dependenciesData[i])
                         }
                         
@@ -301,7 +301,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                              Permisos de administración:
                         </Typography>
 
-                        <Typography sx={{ display: findedUser.rol[0] == "admin" && 'none'}}  variant="subtitle2">
+                        <Typography sx={{ display: findedUser.rol[0] === "admin" && 'none'}}  variant="subtitle2">
                              Atención: Al guardar los cambios este usuario se convertirá en rol administrador.
                         </Typography>
 

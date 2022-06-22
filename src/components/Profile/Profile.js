@@ -1,6 +1,5 @@
-import { Box, Stack, Typography, Paper, Avatar, Divider} from "@mui/material";
-import React, { useState, useEffect } from "react";
-import  SavedTags  from "./SavedTags";
+import { Box, Stack, Typography, Paper, Avatar, Divider } from "@mui/material";
+import React, { useState, useEffect, useContext } from "react";
 import { InformationCard } from "../InformationCard";
 import PublicationList from "./PublicationList";
 import {getUser} from "../../../firebase/userManager"
