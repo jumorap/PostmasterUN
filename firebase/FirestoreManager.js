@@ -10,6 +10,7 @@ import {
   arrayUnion,
   arrayRemove,
   deleteDoc,
+  addDoc,
 } from "firebase/firestore";
 
 class FirestoreManager {
@@ -102,6 +103,15 @@ class FirestoreManager {
     });
     return posts;
   }
+
+
+  static async addPost(title, tags, links, description, dependency_id){
+    const procesed_tags = tags.map((t)=>t.name)
+    const newPost = {title, tags: procesed_tags, links, description, type: dependency_id}
+    //const docRef = await addDoc(this._getPosts, newPost)
+    console.log(newPost)
+  }
+
 }
 
 export default FirestoreManager;

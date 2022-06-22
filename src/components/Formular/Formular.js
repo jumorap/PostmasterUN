@@ -6,15 +6,18 @@ import TagsForm from "./TagsForm";
 import { Editor, EditorState, convertToRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
 import TextEditor from "./TextEditor";
+import FirestoreManager from "../../../firebase/FirestoreManager";
+import DropZone from "./DropZone";
+import Container from "./Container";
 
 export default function Formular() {
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [links, setLinks] = React.useState([]);
+  const [fileList, setfileList] = React.useState([]);
   const [editorState, setEditorState] = React.useState(() =>
     EditorState.createEmpty()
   );
-
 
   const handleTagDelete = (tag) => {
     setTags(tags.filter((item) => item.name !== tag.name));
@@ -26,7 +29,7 @@ export default function Formular() {
     }
   };
 
-  const handleLinkDelete = (link) => {
+  const handleLinkDelete = (link, index) => {
     setLinks(links.filter((item) => item.url !== link.url));
   };
 
@@ -40,10 +43,11 @@ export default function Formular() {
    * Funcion para subir el formulario a la base de datos
    */
   const upload = () => {
-    const description = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    console.log(title, tags, links, description);
+    const description = JSON.stringify(
+      convertToRaw(editorState.getCurrentContent())
+    );
+    FirestoreManager.addPost(title, tags, links, description, "0");
   };
-
 
   return (
     <Stack direction={"column"} spacing={3}>
@@ -55,7 +59,9 @@ export default function Formular() {
         onChange={(e) => setTitle(e.target.value)}
       />
 
-      <TextEditor editorState={editorState} setEditorState={setEditorState} />
+      <Container name="descripcion">
+        <TextEditor editorState={editorState} setEditorState={setEditorState} />
+      </Container>
 
       <TagsForm
         handleTagDelete={handleTagDelete}
@@ -67,6 +73,10 @@ export default function Formular() {
         handleLinkDelete={handleLinkDelete}
         handleLinkAdd={handleLinkAdd}
       />
+
+      <Container name="Imagenes">
+        <DropZone const fileList={fileList} setfileList={setfileList} />
+      </Container>
       <Button color="success" variant="outlined" onClick={upload}>
         Subir
       </Button>
