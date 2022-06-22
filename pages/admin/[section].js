@@ -10,7 +10,7 @@ export default function admin() {
   return (
     <NavBar>
         {/*<Admin section={section}/>*/}
-        <EditionFormular/>
+        <Admin/>
     </NavBar>
   )
 }

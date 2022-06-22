@@ -9,12 +9,6 @@ export default function PersistentDrawerLeft() {
   
   return (
     <NavBar>
-      <Typography
-        sx={{ fontSize: "3rem", fontWeight: 500, marginBottom: "3.5rem" }}
-        variant="h2"
-      >
-        {dependency}
-      </Typography>
       <MainContent dependency={dependency}/>
     </NavBar>
   );

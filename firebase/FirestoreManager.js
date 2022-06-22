@@ -18,17 +18,17 @@ class FirestoreManager {
   static _getTags = collection(db, "tags");
   static _getDependencies = collection(db, "dependencies");
 
-  
   static async deletePost(postID) {
     const postRef = doc(db, "posts", postID);
     await deleteDoc(postRef);
   }
-  
+
   static async _getFavoritePostsIDs(userID) {
     const userRef = doc(db, "users", `${userID}`);
     const userSnap = await getDoc(userRef);
     const data = userSnap.data();
-    return data.savedPosts;
+    const savedPosts = data.savedPosts || [];
+    return savedPosts;
   }
 
   static async getFavoritePosts(userID) {
@@ -37,7 +37,7 @@ class FirestoreManager {
     for (let i = 0; i < postIDs.length; i++) {
       const post = await getDoc(doc(db, "posts", postIDs[i]));
 
-      posts.push({...post.data(), id : postIDs[i]});
+      posts.push({ ...post.data(), id: postIDs[i] });
     }
     return posts;
   }
@@ -74,6 +74,33 @@ class FirestoreManager {
 
   static async getDependenciesList() {
     return await getDocs(this._getDependencies);
+  }
+
+  static async getTags(dependency_id) {
+    const tags = [];
+    const q = query(this._getTags, where("dependency_id", "==", dependency_id));
+    const docs = await getDocs(q);
+    docs.forEach((doc) => {
+      tags.push(doc.data());
+    });
+    return tags;
+  }
+
+  static async filterPosts(tagList, dependency_id) {
+    const posts = [];
+
+    const q = query(
+      this._getPosts,
+      where("type", "==", dependency_id),
+      where("tags", "array-contains-any", tagList)
+    );
+    
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      posts.push(doc.data());
+    });
+    return posts;
   }
 }
 
