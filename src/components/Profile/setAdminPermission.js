@@ -313,20 +313,16 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                              
                             <FormGroup >
                                 {
-
-                                dependenciesData.map((dep,index) => (                     
+                                    dependenciesData.map((dep,index) => (
                                         <FormControlLabel
+                                            key={index}
                                             control={ <Checkbox /> }
                                             color="success"
                                             label={dep}
                                             checked={ handleCheckedDep(dep) }
                                             onChange={() => handleCheckboxChange(dep)}
-                                            
-                                            
                                         />
                                 ))}
-
-                                
                             </FormGroup>
                         </Typography>
 

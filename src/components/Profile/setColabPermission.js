@@ -27,7 +27,7 @@ const dialogStyle = {
 const areas = ["Cargando...", ""];
 export default function SetColabPermission({showCreatePublication, disp, isEditable = false, id}) {
 
-//si showCreatePublication == false, no mostrar este componente modal, display: none
+//si showCreatePublication === false, no mostrar este componente modal, display: none
     const [elevation, setElevation] = useState(1);
     const [open, setOpen] = useState(false);
     const [loaded, setLoaded] = useState(true);
@@ -50,7 +50,7 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
     let authorizedRole = false
 
 
-    if (disp == "admin") {
+    if (disp === "admin") {
         title = "Asignar permisos de colaboración"
         authorizedRole = true
     }
@@ -79,7 +79,7 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
     }
 
     const handleSetStudent = () => {
-        if(findedUser.rol[0] == "colab"){
+        if(findedUser.rol[0] === "colab"){
             setUserRole("estudiante")
         }
         setSelectedDeps([])
@@ -100,7 +100,7 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
             let checked = event.target.checked
             let temp = [...selectedDeps]
 
-            if(checked == true){
+            if(checked === true){
 
                 if(!temp.includes(dep)){
                     temp.push(dep)
@@ -112,7 +112,7 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
                 
                 if(temp.includes(dep)){
                     //quitarla
-                   const index = temp.findIndex(e => e == dep )
+                   const index = temp.findIndex(e => e === dep )
 
                    temp.splice(index,1)
                 }
@@ -218,11 +218,11 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
             setDisplayUserInfo(true)
             mySelectedDeps = []
             
-            if(findedUser.rol[0] == "admin"){
+            if(findedUser.rol[0] === "admin"){
                 //filtrar dependencias asigandas
                 for (let i = 0; i < findenDeps.length; i++) {
                     for (let j = 0; j < findedUser.dependenciasAdmin.length; j++) {
-                        if(findenDeps[i] == findedUser.dependenciasAdmin[j]){
+                        if(findenDeps[i] === findedUser.dependenciasAdmin[j]){
                                 mySelectedDeps.push(findenDeps[i])
                         }
                         
@@ -319,6 +319,7 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
 
                                 dependenciesData.map((dep,index) => (                     
                                         <FormControlLabel
+                                            key={index}
                                             control={ <Checkbox /> }
                                             color="success"
                                             label={dep}
@@ -330,7 +331,7 @@ export default function SetColabPermission({showCreatePublication, disp, isEdita
                             </FormGroup>
                         </Typography>
 
-                        <Typography sx={{ display: findedUser.rol[0] == "admin" && 'none', paddingTop: "20px", paddingLeft: "10px"}}  variant="subtitle2">
+                        <Typography sx={{ display: findedUser.rol[0] === "admin" && 'none', paddingTop: "20px", paddingLeft: "10px"}}  variant="subtitle2">
                             <strong>Atención: Al guardar los cambios este usuario se convertirá en rol colaborador.</strong>
                         </Typography>
 
