@@ -1,5 +1,5 @@
 import { storage } from "./firebase.config";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 export default class StorageManager{
     static _imageBucket = "./ "
@@ -10,12 +10,13 @@ export default class StorageManager{
     }
 
     static async uploadImages(files, postID){
-        const references = []
-        files.forEach(async file => {
+        let references = []
+        for(const file of files) {
             const ref = await this._createImageReference(postID, file.name)
-            references.push(ref)
             await uploadBytes(ref, file)
-        });
+            const url = await getDownloadURL(ref)
+            references.push(url)
+        };
         return references
     }
 }
