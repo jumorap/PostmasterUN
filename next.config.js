@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['picsum.photos', 'ingenieria.bogota.unal.edu.co', 'firebasestorage.googleapis.com'],
+    domains: ['picsum.photos', 'firebasestorage.googleapis.com'],
   },
 }
 

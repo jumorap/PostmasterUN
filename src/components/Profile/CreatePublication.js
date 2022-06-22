@@ -10,7 +10,7 @@ import FirestoreManager from "../../../firebase/FirestoreManager";
 import { addPost } from "../../../firebase/dataUpdate";
 
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
-import {getUser} from "../../../firebase/userManager;
+import {getUser} from "../../../firebase/userManager";
 
 const dialogStyle = {
     position: "absolute"
@@ -74,35 +74,6 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
         });
     };
 
-
-    useEffect(() => {
-         
-          firebaseAppAuth.onAuthStateChanged((user) => {
-            if (user) {
-              //if user is auth, then find role
-              const dbUser = getUser(user.uid)
-              dbUser.then(res => {
-                //verify if user field rol is admin or root
-                //TODO: create feature for colab
-                
-                const myUser = res.data()
-
-                const role = myUser.rol[0]
-                if(role == "admin" || role == "colab"){
-                    const deps = myUser.dependenciasAdmin
-                    setUserDeps(deps)
-                }
-                setUserRole(role)
-              })
-              
-            }
-          });
-        
-      }, []);
-
-
-      
-
     if (loaded){
         mapDependencies();
     }
@@ -110,6 +81,30 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
         setLoaded(false);
     }   
     }, [loaded]);
+
+
+    useEffect(() => {
+        firebaseAppAuth.onAuthStateChanged((user) => {
+            if (user) {
+                //if user is auth, then find role
+                const dbUser = getUser(user.uid)
+                dbUser.then(res => {
+                    //verify if user field rol is admin or root
+                    //TODO: create feature for colab
+
+                    const myUser = res.data()
+
+                    const role = myUser.rol[0]
+                    if(role === "admin" || role === "colab"){
+                        const deps = myUser.dependenciasAdmin
+                        setUserDeps(deps)
+                    }
+                    setUserRole(role)
+                })
+
+            }
+        })
+    }, []);
 
     return(
         <>
