@@ -32,7 +32,7 @@ export default function AddDependencies({ isUserAuthentified, user, setLoaded, d
         <hr/>
         <ListItem button onClick={()=>{handleClickOpenDialog()}} sx={{display: !disp && "none"}}>
           <ListItemText primary={"Agregar dependencia"} sx={{paddingLeft: '30px', paddingRight: '120px'}}/>
-          <ListItemIcon >
+          <ListItemIcon sx={{"&:hover": {color:"#c20000"}}}>
             <AddIcon />
           </ListItemIcon>
         </ListItem>
