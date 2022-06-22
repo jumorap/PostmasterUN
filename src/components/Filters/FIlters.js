@@ -20,8 +20,6 @@ function Filters(props) {
       elevation={3}
       sx={{
         p: 1,
-        position: "fixed",
-        paddingY: '1rem',
       }}
     >
       <Typography variant="h6" align="center">Filtros</Typography>

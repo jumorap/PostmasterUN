@@ -12,11 +12,11 @@ import { publication_t } from "../../types";
 import { DependencyContext } from "../contextProviders";
 import FavoriteButton from "./FavoriteButton";
 import DeleteButton from "./DeleteButton";
+import CollapsableText from "./CollapsableText";
 
 //This component display the information card of navegacion principal
 function InformationCard({ type, title, description, links, images, tags, postID }) {
   const [dependenciesDataById, setDependenciesDataById] = useContext(DependencyContext);
-  const [showFullDescription, setShowFullDescription] = useState(false);
 
   return (
     <Paper
@@ -41,32 +41,7 @@ function InformationCard({ type, title, description, links, images, tags, postID
         {/*Description of the publication*/}
         <Typography variant="body1" sx={{ textAlign: "justify" }}>
             {/* Limit the description to 200 characters with a button to show less or more */}
-            {description.length > 200
-                ? (
-                    <>
-                        {showFullDescription
-                            ? description
-                            : description.substring(0, 200) + "... "
-                        }
-                        <Typography
-                        variant={"subtitle1"}
-                        onClick={() => setShowFullDescription(!showFullDescription)}
-                        sx={{
-                            cursor: "pointer",
-                            color: "#8f8f8f",
-                            textDecoration: "underline",
-                            width: "fit-content",
-                            display: "inline-block",
-                            fontStyle: "italic",
-                            fontWeight: "bold",
-                        }}
-                        >
-                            {showFullDescription ? "Ocultar" : "Ver más"}
-                        </Typography>
-                    </>
-                )
-                : description
-            }
+           <CollapsableText description = {description}  />
 
         </Typography>
 
