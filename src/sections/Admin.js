@@ -5,7 +5,7 @@ import Formular from '../components/Formular/Formular'
 
 export default function Admin({section}) {
   return (
-    <Box>
+    <Box sx={{padding: "25px"}}>
         <Typography variant="h2">{section}</Typography>
         <Formular/>
     </Box>
