@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Button, Stack, TextField } from "@mui/material";
-import React from "react";
+import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import React, { useContext } from "react";
 import LinksForm from "./LinksForm";
 import TagsForm from "./TagsForm";
 import { Editor, EditorState, convertToRaw } from "draft-js";
@@ -9,17 +9,20 @@ import TextEditor from "./TextEditor";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import DropZone from "./DropZone";
 import Container from "./Container";
+import { DependencyContext } from "../contextProviders";
 
 export default function Formular() {
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [links, setLinks] = React.useState([]);
   const [fileList, setfileList] = React.useState([]);
+  const [dependency, setDependency] = React.useState(null);
   const [editorState, setEditorState] = React.useState(() =>
     EditorState.createEmpty()
   );
 
-  console.log(editorState)
+  //list of the dependencies in the database
+  const [dependencies, setDependencys] = useContext(DependencyContext);
 
   const handleTagDelete = (tag) => {
     setTags(tags.filter((item) => item.name !== tag.name));
@@ -41,19 +44,53 @@ export default function Formular() {
     }
   };
 
+  function reset() {
+    setEditorState(EditorState.createEmpty())
+    setDependency(null)
+    setfileList([])
+    setLinks([])
+    setTags([])
+    setTitle("")
+  }
+
   /**
    * Funcion para subir el formulario a la base de datos
    */
-  const upload = () => {
-    console.log(editorState)
+  async function upload(){
     const description = JSON.stringify(
       convertToRaw(editorState.getCurrentContent())
     );
-    //FirestoreManager.addPost(title, tags, links, description, "0", fileList);
+    await FirestoreManager.addPost(
+      title,
+      tags,
+      links,
+      description,
+      dependency.id,
+      fileList
+    );
+    reset()
   };
 
   return (
     <Stack direction={"column"} spacing={3}>
+      <Autocomplete
+        disablePortal
+        id="combo-box-demo"
+        options={dependencies}
+        onChange={(_, value) => setDependency(value)}
+        value={dependency}
+        getOptionLabel={(v) => v.name}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Dependencia"
+            value={dependency}
+            onChange={(e) => setDependency(e.target.value)}
+            variant="filled"
+          />
+        )}
+      />
+
       <TextField
         id="filled-basic"
         label="Titulo"
