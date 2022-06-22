@@ -6,30 +6,29 @@ import usePosts from "../components/Posts/usePosts";
 import PageNotFound from "../components/Posts/PageNotFound";
 import useFilters from "../components/Filters/useFilters";
 import FirestoreManager from "../../firebase/FirestoreManager";
+import { useRouter } from "next/router";
 
 /**
  * Component that renders the main content of the page including the filters and the information cards
  * @param {String} dependency - The dependency of the current page
  * @returns {JSX.Element}
  */
-export default function MainContent({ dependency }) {
+export default function MainContent({dependency}) {
   const { postsData, dependencyExists, dependency_id, filterPosts} = usePosts(dependency);
-  console.log(dependency_id);
   const [FiltersComponent, selectedTags, setTagList] = useFilters([]);
 
   //fethc the filters of the dependency
   useEffect(() => {
     if (dependencyExists) {
-      FirestoreManager.getTags(dependency_id).then((tags) => {
+      FirestoreManager.getTagsByDependency(dependency_id).then((tags) => {
         setTagList(tags);
       });
     }
-  }, [dependency_id]);
+  }, [dependency_id, dependencyExists]);
 
   //useEffect to filter the posts by the selected tags
   useEffect(() => {
     if (dependencyExists) {
-      console.log(selectedTags);
       filterPosts(selectedTags);
     }
   }

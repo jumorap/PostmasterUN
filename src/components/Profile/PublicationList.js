@@ -9,8 +9,10 @@ const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(-50%, -52.5%)",
   margin: "20px",
+  overflow: "auto",
+  maxHeight: "95%"
 };
 
 /**
@@ -48,7 +50,7 @@ export default function PublicationList({ list, children, selectItem, handleUnch
                 onClick={()=>handleOpen(index)}
                 key={index}
                 title={item.title}
-                description={item.description}
+                description={""} //item.description
                 date={item.date}
                 postId={item.id}
                 handleUncheck={()=>handleUncheck(item.id)}

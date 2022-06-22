@@ -11,7 +11,7 @@ import {
   arrayRemove,
   deleteDoc,
   addDoc,
-  setDoc
+  setDoc,
 } from "firebase/firestore";
 import StorageManager from "./StorageManager.js";
 
@@ -72,14 +72,23 @@ class FirestoreManager {
   }
 
   static async getTagsList() {
-    return await getDocs(this._getTags);
+    const tags = [];
+    const docs = await getDocs(this._getTags);
+    docs.forEach((doc) => {
+      tags.push(doc.data());
+    });
+    return tags;
   }
 
   static async getDependenciesList() {
     return await getDocs(this._getDependencies);
   }
 
-  static async getTags(dependency_id) {
+  static async getTagsByDependency(dependency_id) {
+    if (dependency_id === null) {
+      return await this.getTagsList();
+    }
+
     const tags = [];
     const q = query(this._getTags, where("dependency_id", "==", dependency_id));
     const docs = await getDocs(q);
@@ -91,13 +100,17 @@ class FirestoreManager {
 
   static async filterPosts(tagList, dependency_id) {
     const posts = [];
+    let q;
+    if (dependency_id) {
+      q = query(
+        this._getPosts,
+        where("type", "==", dependency_id),
+        where("tags", "array-contains-any", tagList)
+      );
+    } else {
+      q = query(this._getPosts, where("tags", "array-contains-any", tagList));
+    }
 
-    const q = query(
-      this._getPosts,
-      where("type", "==", dependency_id),
-      where("tags", "array-contains-any", tagList)
-    );
-    
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
@@ -106,19 +119,52 @@ class FirestoreManager {
     return posts;
   }
 
+  static async updateTag(tag, dependency_id) {
+    //get all the tags with the same name and dependency ID
+    const q = query(this._getTags, where("name", "==", tag));
+    const data = await getDocs(q);
+    //extract the data
+    const tags = [];
+    data.forEach((doc) => {
+      tags.push({ data: doc.data, id: doc.id });
+    });
+    if (tags.length === 0) {
+      // if the tag does exist it is created
+      await addDoc(this._getTags, { name: tag, dependency_id, uses: 1 });
+    }
+  }
 
-  static async addPost(title, tags, links, description, dependency_id, files){
+  /**
+   *
+   * @param {List[tag]} tagList tag with the form {name: "name_here"}
+   * @param {*} dependency_id
+   */
+  static async updateTags(tagList, dependency_id) {
+    tagList.forEach((tag) => {
+      this.updateTag(tag, dependency_id);
+    });
+  }
+
+  static async addPost(title, tags, links, description, dependency_id, files) {
     //create a reference to the new Post
     const postRef = doc(this._getPosts);
     //upload the images
-    const images = await StorageManager.uploadImages(files, postRef.id)
+    const images = await StorageManager.uploadImages(files, postRef.id);
     //prepare the new post for upload
-    const procesed_tags = tags.map((t)=>t.name)
-    const newPost = {title, tags: procesed_tags, links, description, type: dependency_id, images:images}
+    const procesed_tags = tags.map((t) => t.name);
+    const newPost = {
+      title,
+      tags: procesed_tags,
+      links,
+      description,
+      type: dependency_id,
+      images: images,
+    };
     //upload the new post
-    const docRef = await setDoc(postRef, newPost)
+    const docRef = await setDoc(postRef, newPost);
+    //add the tags
+    await this.updateTags(procesed_tags, dependency_id);
   }
-
 }
 
 export default FirestoreManager;
