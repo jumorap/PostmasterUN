@@ -18,7 +18,7 @@ const textStyle = {
  * @returns
  */
 export default function CollapsableText({
-  description,
+  description = "",
   limit = 200,
   expandable = true,
 }) {
