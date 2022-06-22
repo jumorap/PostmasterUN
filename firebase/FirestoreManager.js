@@ -11,7 +11,9 @@ import {
   arrayRemove,
   deleteDoc,
   addDoc,
+  setDoc
 } from "firebase/firestore";
+import StorageManager from "./StorageManager.js";
 
 class FirestoreManager {
   static _getUsers = collection(db, "users");
@@ -105,11 +107,16 @@ class FirestoreManager {
   }
 
 
-  static async addPost(title, tags, links, description, dependency_id){
+  static async addPost(title, tags, links, description, dependency_id, files){
+    //create a reference to the new Post
+    const postRef = doc(this._getPosts);
+    //upload the images
+    const images = await StorageManager.uploadImages(files, postRef.id)
+    //prepare the new post for upload
     const procesed_tags = tags.map((t)=>t.name)
-    const newPost = {title, tags: procesed_tags, links, description, type: dependency_id}
-    //const docRef = await addDoc(this._getPosts, newPost)
-    console.log(newPost)
+    const newPost = {title, tags: procesed_tags, links, description, type: dependency_id, images:images}
+    //upload the new post
+    const docRef = await setDoc(postRef, newPost)
   }
 
 }
