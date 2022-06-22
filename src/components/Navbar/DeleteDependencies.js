@@ -30,7 +30,7 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
     }
     return (
         <>
-            <IconButton>
+            <IconButton sx={{"&:hover": {color:"#c20000"}}}>
                 <DeleteIcon fontSize="small" onClick={()=>{handleClickOpen()}}/>
             </IconButton>
 

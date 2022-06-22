@@ -184,7 +184,7 @@ export default function Profile() {
           {/*Second column */}
 
           {/* <Divider  color='#FFC8C8'/> */}
-          <Paper elevation={4} sx = {{backgroundColor: '#fc3333'}}>
+          <Paper elevation={4} sx = {{backgroundColor: '#e00000'}}>
             <Typography style={{color: 'white'}} variant="h4" gutterBottom align="center" sx={{paddingTop: 1}}>Publicaciones Guardadas</Typography>
           </Paper>
 

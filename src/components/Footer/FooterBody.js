@@ -35,30 +35,16 @@ function FooterBody() {
       {data.map((data) => {
         return (
           <>
-            <ListItemButton onClick={() => handleClick(data.id)}>
-            <Link href={data.url}>
-              <ListItemIcon>
+            <ListItemButton href={data.url} rel="noopener" target="_blank" onClick={() => handleClick(data.id)}>
+            <Link href={data.url} rel="noopener" target="_blank">
+              <ListItemIcon sx={{color: "#e00000", "&:hover": {color:"gray"}}}>
                 <LinkIcon/>
               </ListItemIcon>
             </Link>
             <ListItemText primary={data.titulo} />
-              {open[data.id] ? <ExpandLess /> : <ExpandMore />}
-              
+            
             </ListItemButton>
-            <Collapse in={open[data.id]} timeout="auto" unmountOnExit>
-                {data.items.map((item) => {
-                  return (
-                    <List key={""} component="div" disablePadding>
-                      <ListItem sx={{ pl: 8 }}>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary={item} />
-                      </ListItem>
-                    </List>
-                  )
-                })}
-            </Collapse>
+            
           </>
         );
       })}
