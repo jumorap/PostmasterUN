@@ -11,7 +11,7 @@ import DropZone from "./DropZone";
 import Container from "./Container";
 import { DependencyContext } from "../contextProviders";
 
-export default function Formular() {
+export default function Formular({close}) {
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [links, setLinks] = React.useState([]);
@@ -69,6 +69,7 @@ export default function Formular() {
       fileList
     );
     reset()
+      close()
   };
 
   return (

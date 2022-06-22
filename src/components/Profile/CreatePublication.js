@@ -108,6 +108,10 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
         })
     }, []);
 
+    function close() {
+        setOpen(false)
+    }
+
     return(
         <>
             <Box sx={{
@@ -124,7 +128,7 @@ export default function CreatePublication({showCreatePublication, disp, isEditab
                 </Fab>
             </Box>
             <Dialog sx={dialogStyle} open={open} onClose={handleClose} fullWidth>
-                <Admin />
+                <Admin close={close} />
             </Dialog>
         
         </>
