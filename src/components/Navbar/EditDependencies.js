@@ -35,7 +35,7 @@ export default function EditDependencies({ isUserAuthentified, user, dependencyN
 
     return (
         <>
-            <IconButton>
+            <IconButton sx={{"&:hover": {color:"#c20000"}}}>
                 <EditIcon fontSize="small" onClick={()=>{handleClickOpen()}}/>
             </IconButton>
             <Dialog sx={dialogStyle} open={open} onClose={handleClose} fullWidth>

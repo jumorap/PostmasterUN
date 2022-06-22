@@ -19,7 +19,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const Puller = styled(Box)(({ theme }) => ({
   width: 250,
   height: drawerBleeding,
-  backgroundColor: theme.palette.primary.lightRed,
+  backgroundColor: "#e00000",
   borderRadius: 8,
   position: "relative",
   left: "50%",

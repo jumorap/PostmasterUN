@@ -274,30 +274,30 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                     </Stack>
 
                         <Button variant="contained" color="error" onClick={handleSearchUser}>Buscar</Button>
-
+                        <Divider sx={{padding:"8px"}}/>
 
                     <Stack  direction={"column"} marginBottom={2}
                             sx={{ display: !displayUserInfo && 'none'}}>
 
 
-                        <Typography variant="h5">
+                        <Typography variant="h6" sx={{paddingTop: "10px"}}>
                              Información de usuario
                         </Typography>
 
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              
                              Nombre: { displayUserInfo && findedUser.nombre}
                         </Typography>
 
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              Correo Institucional: { displayUserInfo && findedUser.email}
                         </Typography>
 
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              Tipo de usuario: { displayUserInfo && findedUser.rol[0]}
                         </Typography>
 
-                        <Typography variant="h6">
+                        <Typography variant="h6" sx={{paddingTop: "10px"}}>
                              Permisos de administración:
                         </Typography>
 
@@ -305,11 +305,11 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                              Atención: Al guardar los cambios este usuario se convertirá en rol administrador.
                         </Typography>
 
-                        <Typography variant="subtitle2">
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              Seleccione las dependencias que administrará este usuario:
                         </Typography>
 
-                        <Typography  variant="subtitle1">
+                        <Typography  variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              
                             <FormGroup >
                                 {
@@ -325,7 +325,10 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                                 ))}
                             </FormGroup>
                         </Typography>
-
+                        
+                        <Typography sx={{ display: findedUser.rol[0] === "admin" && 'none', paddingTop: "20px", paddingLeft: "10px"}}  variant="subtitle2">
+                            <strong>Atención: Al guardar los cambios este usuario se convertirá en rol administrador.</strong>
+                        </Typography>
                         <Button sx={{ display: findedUser.rol[0] !== "admin" && 'none'}} variant="outlined" color="error" onClick={handleSetStudent}>Remover Permisos y Designar como Estudiante</Button>
                     </Stack>
 
