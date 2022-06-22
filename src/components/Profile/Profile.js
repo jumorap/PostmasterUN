@@ -3,11 +3,12 @@ import React, { useState, useEffect, useContext } from "react";
 import SavedTags from "./SavedTags";
 import { InformationCard } from "../InformationCard";
 import PublicationList from "./PublicationList";
-import { getUser } from "../../../firebase/userManager"
+import {getUser} from "../../../firebase/userManager"
 import SetAdminPermission from "./setAdminPermission";
 import CreatePublication from "./CreatePublication";
 import FirestoreManager from "../../../firebase/FirestoreManager";
 import { firebaseAppAuth } from "../../../firebase/firebase.config";
+import { fontWeight } from "@mui/system";
 import { AuthContext } from "../../../firebase/AuthProvider.config";
 
 export default function Profile() {
@@ -57,7 +58,7 @@ export default function Profile() {
 
   /*Firebase methods */
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState("Estudiante");
 
   // Check if user is admin to show createNews component
   useEffect(() => {
@@ -84,10 +85,12 @@ export default function Profile() {
         if (user) {
           //if user is auth, then find role
           const dbUser = getUser(user.uid)
+          setUserRole("user2")
           dbUser.then(res => {
             //verify if user field rol is admin or root
             //TODO: create feature for colab
             const rol = res.data().rol[0]
+            console.log("rol:", rol)
             switch (rol) {
               case "user":
                 setUserRole("user")
@@ -101,8 +104,10 @@ export default function Profile() {
               case "colab":
                 setUserRole("colab")
                 break;
+              case "estudiante":
+                setUserRole("Estudiante")
               default:
-                setUserRole("user")
+                setUserRole("user3")
                 console.log("user doesn't have an specific role")
             }
           })
@@ -126,75 +131,54 @@ export default function Profile() {
     }
   }, [isUserAuthenticated, userRole]);
 
-  console.log(isUserAuthenticated);
-  console.log(userRole)
-
   // const display flex y none
   // if is admin -> display flex, else none
 
   return (
-    <Box sx={{ paddingLeft: 10, paddingRight: 10 }}>
-      <Typography style={{ fontWeight: 500 }} variant="h4" gutterBottom>
-        Información del Usuario
-      </Typography>
+    <Box sx={{ paddingLeft: 2, paddingRight: 2 }}>
 
-      <Divider />
 
-      <Stack marginBottom={5} marginTop={2}>
-        <Paper elevation={4} sx={{ px: 2, py: 2 }}>
-          <Stack direction={"row"} alignItems={"center"} spacing={5}>
-            {/*Foto de perfil*/}
-            <Avatar sx={{ width: 150, height: 150 }} src={user.src} />
+      <Stack marginBottom={5} marginTop={2} sx={{
+        display: !(userRole === "root" || userRole === "admin") && "none"
+      }} >
 
-            <Stack direction={"column"}>
-              <Typography style={{ fontWeight: 600 }} variant="h6">
-                {user.name}
-              </Typography>
-              <Typography variant="body2" color="#E51F1F" gutterBottom>
-                {user.email}
-              </Typography>
-              <Typography variant="body2">Estudiante</Typography>
-              <Typography variant="body2">
-                Se unió el 23 de abril del 2022
-              </Typography>
-              <Typography variant="body2">
-                Publicaciones guardadas: {user.favPost}
-              </Typography>
-            </Stack>
-          </Stack>
-        </Paper>
+        <Typography style={{fontWeight: 500}} variant="h6" gutterBottom >
+          Configuración de permisos de usuario
+        </Typography>
+
+        <SetAdminPermission disp={userRole === "root" && "root" || userRole === "admin" && "admin"}/>
+
       </Stack>
 
-        {/* begin */}
+      {/* Show create publication component if user is root or admin */}
+      <CreatePublication disp={userRole === "root" || userRole === "admin" || userRole == "colab"}/>
 
-        {/* if role is root */}
-        
+      <Stack direction={'row'}>
+        <Stack marginRight={2}>
 
-        
+          {/*First column */}
+          <Stack marginBottom={5} marginTop={1}>
+            <Paper elevation={4} sx={{ px: 2, py: 2 }}>
+              <Stack direction={"column"} alignItems={"center"} spacing={2}>
+                {/*Foto de perfil*/}
+                <Avatar sx={{ width: 200, height: 200 }} src={user.src} />
 
-        <Stack marginBottom={5} marginTop={2} sx={{
-            display: !(userRole === "root" || userRole === "admin") && "none"
-            }} >
-
-          <Typography style={{fontWeight: 500}} variant="h6" gutterBottom >
-            
-            Configuración de permisos de usuario
-          </Typography>
-          
-
-          <SetAdminPermission disp={userRole === "root" && "root" || userRole === "admin" && "admin"}/>
-
+                <Stack direction={'column'}>
+                  <Typography style={{fontWeight: 600}} variant="h6" align="center">{user.name}</Typography>
+                  <Typography variant="body2" color='#E51F1F' gutterBottom>{user.email}</Typography>
+                  <Typography variant="body2">{user.role}</Typography>
+                  <Typography variant="body2">Se unió el 23 de abril del 2022</Typography>
+                  <Typography variant="body2">Publicaciones guardadas: {user.favPost}</Typography>
+                </Stack>
+              </Stack>
+            </Paper>
+          </Stack>
         </Stack>
 
+          <Divider orientation={"vertical"} flexItem />
 
-
-
-          {/* Show create publication component if user is root or admin */}
-          <CreatePublication disp={userRole === "root" || userRole === "admin" || userRole == "colab"}/>
-
-          
-
-        {/* end */}
+          <Stack marginLeft={2}>
+            {/*Second column */}
 
         <Typography variant="h4" gutterBottom color='#FF2525'>
           Mis favoritos
@@ -202,18 +186,24 @@ export default function Profile() {
       <Typography variant="h4" gutterBottom color="#FF2525">
         Mis favoritos
       </Typography>
+            {/* <Divider  color='#FFC8C8'/> */}
+            <Paper elevation={4} sx = {{backgroundColor: '#fc3333'}}>
+              <Typography style={{color: 'white'}} variant="h4" gutterBottom align="center" sx={{paddingTop: 1}}>Publicaciones Guardadas</Typography>
+            </Paper>
+
 
       <Divider color="#FFC8C8" />
+            <Stack spacing={4} direction = {"column"} sx = {{py: 1}}>
 
-      <Stack spacing={4} direction={"column"} sx={{ py: 2 }}>
-        <PublicationList
-          list={savedPublications}
-          selectItem={selectItem}
-          handleUncheck={handleDeleteFavorite}
-        >
-          <InformationCard {...currPubication} />
-        </PublicationList>
-      </Stack>
-    </Box>
-  );
+              <PublicationList list={informationList} selectItem = {selectItem}>
+                <InformationCard {...currPubication} />
+              </PublicationList>
+            </Stack>
+
+          </Stack>
+
+        </Stack>
+
+      </Box>
+  )
 }

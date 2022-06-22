@@ -1,4 +1,4 @@
-import { Modal, Paper, Stack, Typography } from "@mui/material";
+import { Modal, Paper, Stack, Typography, Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Publication from "./Publication";
@@ -10,7 +10,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  margin: "20px",
+  margin: "20px"
 };
 
 /**
@@ -21,7 +21,7 @@ const modalStyle = {
  * @handleOpen funcion que se ejecuta cada vez que se oprime una publicacion
  * @returns
  */
-export default function PublicationList({ list, children, selectItem, handleUncheck = () => {} }) {
+export default function PublicationList({ list, children, selectItem }) {
   /*State to control the modal*/
   const [openModal, setOpenModal] = useState(false);
 
@@ -34,13 +34,14 @@ export default function PublicationList({ list, children, selectItem, handleUnch
   return (
     <Paper elevation={0} sx = {{px:2, py: 1}}>
       {/*List of publications*/}
-      <Box>
-      {list.length == 0 ? (
+
+      <Divider />
+      <Box sx={{py: 2}}>
+      {list.length === 0 ? (
         <Typography variant="h6" gutterBottom color = "seconday">
           No tienes ninguna publicación guardada
         </Typography>
       ) : ""}
-        
         <Stack direction={"column"} spacing={2}>
           {list.map((item, index) => {
             return (
