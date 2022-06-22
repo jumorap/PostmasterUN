@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
-import React, { useState } from "react";
+import {Typography} from "@mui/material";
+import React, {useState} from "react";
 
 const textStyle = {
   cursor: "pointer",
@@ -15,10 +15,11 @@ const textStyle = {
  * Compress a string to a certain length and return a body paragraph with the option to expand the text
  * @param {String} description the text to compress
  * @param {Number} limit the maximum length of the text
+ * @param {Boolean} expandable
  * @returns
  */
 export default function CollapsableText({
-  description,
+  description = "",
   limit = 200,
   expandable = true,
 }) {
@@ -40,7 +41,5 @@ export default function CollapsableText({
     </>
   );
 
-  const fullText = description;
-
-  return description.length > limit ? cuttedText : fullText;
+  return description.length > limit ? cuttedText : description;
 }
