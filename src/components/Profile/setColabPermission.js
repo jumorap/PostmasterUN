@@ -12,7 +12,7 @@ import {getUserByEmail} from "../../../firebase/userManager";
 
 //Firebase
 import { db } from "../../../firebase/firebase.config"
-import { collection, doc, getDoc, query, where, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, query, where, getDocs, updateDoc, arrayUnion } from "firebase/firestore";
 
 
 
@@ -25,47 +25,35 @@ const dialogStyle = {
 
 
 const areas = ["Cargando...", ""];
-export default function SetAdminPermission({showCreatePublication, disp, isEditable = false }) {
+export default function SetColabPermission({showCreatePublication, disp, isEditable = false, id}) {
 
 //si showCreatePublication == false, no mostrar este componente modal, display: none
     const [elevation, setElevation] = useState(1);
     const [open, setOpen] = useState(false);
     const [loaded, setLoaded] = useState(true);
     
-
-    
     const [email, setEmail] = useState('');
     const [findedUser, setFindedUser] = useState({rol: ["estudiante"]});
     const [displayUserInfo, setDisplayUserInfo] = useState(false);
 
     const [selectedDeps,setSelectedDeps] = useState([]);
+    const [findenDeps, setFindenDeps] = useState(areas);
 
     const [checkedDep,setCheckedDep] = useState(false)
     const [show, setShow] = useState(false);
-
-    
-
 
     var mySelectedDeps = []
 
     const [dependenciesData, setDependenciesData] = useState(areas);
 
-    // const [assignLabel, setAssignLabel] = useState("")
-    // const [assignBtnColor, setAssignBtnColor] = useState("error")
-
     let title = ""
     let authorizedRole = false
 
 
-    if (disp == "root") {
-        title = "Asignar permisos de administrador"
+    if (disp == "admin") {
+        title = "Asignar permisos de colaboración"
         authorizedRole = true
-
-    }else {
-        title = ""
-        authorizedRole = false
     }
-
 
     const handleClickOpen = () => {
     
@@ -79,8 +67,8 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
 
     const handleSubmit = () => {
         
-        if(findedUser.rol[0] !== "admin"){
-            setUserRole("admin")
+        if(findedUser.rol[0] !== "colab"){
+            setUserRole("colab")
         }
         setUserDeps(selectedDeps)
 
@@ -91,7 +79,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     }
 
     const handleSetStudent = () => {
-        if(findedUser.rol[0] == "admin"){
+        if(findedUser.rol[0] == "colab"){
             setUserRole("estudiante")
         }
         setSelectedDeps([])
@@ -103,13 +91,12 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
     }
 
     const handleSearchUser = () => {
-        // toFix, utilizar getUserByEmail(email) de userManager.js
-        // const dbUser = getUserByEmail(email)
+        
         getUserByEmail(email)
     }
 
     const handleCheckboxChange = (dep) => {
-            //event.target.checked  boolean
+   
             let checked = event.target.checked
             let temp = [...selectedDeps]
 
@@ -167,7 +154,6 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
               });
         })
         
-
       }
 
       async function setUserRole(rol){
@@ -178,17 +164,39 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
         });
       }
 
+       //this function should be in Firestore/userManager.js, not here
+    async function getMyDependencies(id){
+        const userRef = collection(db, "users");
+        const userSnap = query(userRef, where("id", "==", id));
+        const deps = [];
+        var docs = 0;  
+        const querySnapshot = await getDocs(userSnap);
 
-
+        querySnapshot.forEach((doc) => {
+            docs = doc.data()
+        });
+        
+        for (let i = 0; i < docs.dependenciasAdmin.length; i++) {
+            deps.push(docs.dependenciasAdmin[i])
+        }
+      
+        return deps;
+      }
 
       //list dependencies
       useEffect(() => {
         
         const mapDependencies = async () => {
+            getMyDependencies(id).then((data) => {
+                const dataArray = data.map((item) => item);
+                setDependenciesData(dataArray);
+                });
+            
             dataQueryArray(FirestoreManager.getDependenciesList()).then((data) => {
-            const dataArray = data.map((item) => item.name);
-            setDependenciesData(dataArray);
-            });
+                const dataArray = data.map((item) => item.name);
+                setFindenDeps(dataArray);
+                });
+            
         };
     
         if (loaded){
@@ -212,10 +220,10 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
             
             if(findedUser.rol[0] == "admin"){
                 //filtrar dependencias asigandas
-                for (let i = 0; i < dependenciesData.length; i++) {
+                for (let i = 0; i < findenDeps.length; i++) {
                     for (let j = 0; j < findedUser.dependenciasAdmin.length; j++) {
-                        if(dependenciesData[i] == findedUser.dependenciasAdmin[j]){
-                                mySelectedDeps.push(dependenciesData[i])
+                        if(findenDeps[i] == findedUser.dependenciasAdmin[j]){
+                                mySelectedDeps.push(findenDeps[i])
                         }
                         
                     }
@@ -225,7 +233,8 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
         }
     }, [findedUser])
 
-    console.log(selectedDeps)
+    
+    
     return(
         <>
             <Box sx={{ display: !authorizedRole && 'none'}}>
@@ -250,8 +259,6 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
 
             </Box>
 
-
-
             <Dialog sx={dialogStyle} open={open} onClose={handleClose} fullWidth>
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent width="80%">
@@ -259,7 +266,7 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                     <Stack direction={"column"} spacing={3} marginBottom={2} >
 
                         <Typography variant="subtitle2">
-                             Agregue o remueva permisos de administración a usuarios registrados.
+                             Agregue o remueva permisos de colaboración a usuarios registrados.
                              Para comenzar, ingrese el correo institucional del usuario a gestionar.
                         </Typography>
 
@@ -273,43 +280,39 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                         />
                     </Stack>
 
-                        <Button variant="contained" color="error" onClick={handleSearchUser}>Buscar</Button>
-
+                    <Button variant="contained" color="error" onClick={handleSearchUser}>Buscar</Button>
+                    <Divider sx={{padding:"8px"}}/>
 
                     <Stack  direction={"column"} marginBottom={2}
                             sx={{ display: !displayUserInfo && 'none'}}>
 
 
-                        <Typography variant="h5">
+                        <Typography variant="h6" sx={{paddingTop: "10px"}}>
                              Información de usuario
                         </Typography>
 
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              
                              Nombre: { displayUserInfo && findedUser.nombre}
                         </Typography>
 
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              Correo Institucional: { displayUserInfo && findedUser.email}
                         </Typography>
 
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              Tipo de usuario: { displayUserInfo && findedUser.rol[0]}
                         </Typography>
 
-                        <Typography variant="h6">
-                             Permisos de administración:
+                        <Typography variant="h6" sx={{paddingTop: "10px"}}>
+                             Permisos de colaboración:
                         </Typography>
 
-                        <Typography sx={{ display: findedUser.rol[0] == "admin" && 'none'}}  variant="subtitle2">
-                             Atención: Al guardar los cambios este usuario se convertirá en rol administrador.
+                        <Typography variant="subtitle2" sx={{paddingLeft: "10px"}}>
+                             Seleccione las dependencias en las que colaborará este usuario:
                         </Typography>
 
-                        <Typography variant="subtitle2">
-                             Seleccione las dependencias que administrará este usuario:
-                        </Typography>
-
-                        <Typography  variant="subtitle1">
+                        <Typography  variant="subtitle2" sx={{paddingLeft: "10px"}}>
                              
                             <FormGroup >
                                 {
@@ -320,17 +323,18 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                                             color="success"
                                             label={dep}
                                             checked={ handleCheckedDep(dep) }
-                                            onChange={() => handleCheckboxChange(dep)}
-                                            
-                                            
+                                            onChange={() => handleCheckboxChange(dep)}                                
                                         />
                                 ))}
-
-                                
+                          
                             </FormGroup>
                         </Typography>
 
-                        <Button sx={{ display: findedUser.rol[0] !== "admin" && 'none'}} variant="outlined" color="error" onClick={handleSetStudent}>Remover Permisos y Designar como Estudiante</Button>
+                        <Typography sx={{ display: findedUser.rol[0] == "admin" && 'none', paddingTop: "20px", paddingLeft: "10px"}}  variant="subtitle2">
+                            <strong>Atención: Al guardar los cambios este usuario se convertirá en rol colaborador.</strong>
+                        </Typography>
+
+                        <Button sx={{ display: findedUser.rol[0] !== "colab" && 'none'}} variant="outlined" color="error" onClick={handleSetStudent}>Remover Permisos y Designar como Estudiante</Button>
                     </Stack>
 
 
@@ -345,11 +349,5 @@ export default function SetAdminPermission({showCreatePublication, disp, isEdita
                 <Button variant="contained" onClick={handleSubmit} color="success">Guardar cambios</Button>
                 </DialogActions>
             </Dialog>
-        
-
-
-            
-           
-      
         </>
         )}
