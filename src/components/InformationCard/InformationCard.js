@@ -29,8 +29,7 @@ function InformationCard({
         p: "1em",
         position: "relative",
         maxWidth: "800px",
-        minWidth: "350px",
-        width: "700px",
+        width: "100%",
         overflow: "auto"
       }}
     >
