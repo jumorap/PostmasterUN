@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import PublicationTyper from "./PublicationTyper";
@@ -8,6 +8,8 @@ import FavoriteButton from "./FavoriteButton";
 import DeleteButton from "./DeleteButton";
 import CollapsableText from "./CollapsableText";
 import ReadOnlyEditor from "./ReadOnlyEditor";
+import {firebaseAppAuth} from "../../../firebase/firebase.config";
+import {getUser} from "../../../firebase/userManager";
 
 //This component display the information card of navegacion principal
 function InformationCard({
@@ -19,8 +21,28 @@ function InformationCard({
   tags,
   postID,
 }) {
-  const [dependenciesDataById, setDependenciesDataById] =
-    useContext(DependencyContext);
+  const [dependenciesDataById, setDependenciesDataById] = useContext(DependencyContext);
+  const [isAdmin,setIsAdmin] = useState(false);
+
+
+  //Verify if user is admin to show edit and create component
+  useEffect(() => {
+    firebaseAppAuth.onAuthStateChanged((u) => {
+      const user = getUser(u.uid)
+
+      user.then(res => {
+        //verify if user field rol is admin or root
+        //TODO: create feature for colab
+        const rol = res.data().rol[0]
+        if(rol === "admin" || rol === "root"){
+          setIsAdmin(true)
+        }
+      })
+    })
+  }, [])
+
+
+
 
   return (
     <Paper
@@ -29,14 +51,14 @@ function InformationCard({
         p: "1em",
         position: "relative",
         maxWidth: "800px",
-        minWidth: "350px",
-        width: "700px",
+        width: "100%",
         overflow: "auto"
       }}
     >
       {/* Delete button that must be showed to admin roles */}
-      <DeleteButton postId={postID} />
-
+      {
+        isAdmin ? <DeleteButton postId={postID}/> : <p></p>
+      }
       <Stack spacing={1}>
         {/*Type of the publication*/}
         {/* From dependenciesDataById we get the name of the publication based in the id */}

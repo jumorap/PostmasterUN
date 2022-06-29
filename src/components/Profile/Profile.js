@@ -157,7 +157,7 @@ export default function Profile() {
                   <Typography variant="body2" color='#E51F1F' gutterBottom>{user.email}</Typography>
                   <Typography variant="body2">{user.role}</Typography>
                   <Typography variant="body2">Se unió el 23 de abril del 2022</Typography>
-                  <Typography variant="body2">Publicaciones guardadas: {user.favPost}</Typography>
+
 
 
                   <Stack marginBottom={5} marginTop={2} sx={{
